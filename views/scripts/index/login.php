@@ -17,10 +17,10 @@
     <div id="content">
         <div id="right">
             <form id="loginform" method="post" action="#">
-                <label>Username</label>
+                <label for="username">Username</label>
                 <input id="username" type="text" name="username" />
 
-                <label>Password</label>
+                <label for="password">Password</label>
                 <input type="password" name="password" />
 
                 <input type="submit" name="submit" value="Login" />

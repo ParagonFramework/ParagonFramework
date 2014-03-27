@@ -30,7 +30,7 @@
     </div>
 </div>
 <div id="footer">
-    <a href="https://se45g1ss14.fh-hagenberg.at/">Paragon Framework</a>
+    <a href="https://se45g1ss14.fh-hagenberg.at/">Paragon Framework (<?= file_get_contents(getcwd() . "/plugins/ParagonFramework/version.txt") ?>)</a>
     <br />
     &copy; 2014 <a href="https://se45g1ss14.fh-hagenberg.at/">Project Group 1</a>, a proud member of the <a href="http://www.fh-hagenberg.at/">FH Hagenberg</a>
 </div>

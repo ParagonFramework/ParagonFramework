@@ -30,19 +30,7 @@
     </div>
 </div>
 <div id="footer">
-    <?php
-    $git_dir = "plugins/ParagonFramework";
-    $git_head = file_get_contents("$git_dir/.git/HEAD");
-    $git_headHash = "no repo version";
-    $git_headLink = "https://se45g1ss14.fh-hagenberg.at/pimcore-org/ParagonFramework";
-
-    if (preg_match("#ref: refs/heads/(\\w+)#", $git_head, $git_head)) {
-        $git_headHash = file_get_contents("$git_dir/.git/refs/heads/$git_head[1]");
-        $git_headLink = "https://se45g1ss14.fh-hagenberg.at/pimcore-org/ParagonFramework/commit/$git_headHash";
-        $git_headHash = substr($git_headHash, 0, 8);
-    }
-    ?>
-    <a href="https://se45g1ss14.fh-hagenberg.at/">Paragon Framework</a>&nbsp;(<a href="<?= $git_headLink ?>"><?= $git_headHash ?></a>)
+    <a href="https://se45g1ss14.fh-hagenberg.at/">Paragon Framework</a>&nbsp;(<a href="<?= ParagonFramework_Plugin::$GITCommit->Link ?>">#&nbsp;<?= ParagonFramework_Plugin::$GITCommit->Hash ?></a>)
     <br />
     &copy; 2014 <a href="https://se45g1ss14.fh-hagenberg.at/">Project Group 1</a>, a proud member of the <a href="http://www.fh-hagenberg.at/" target="_blank">FH Hagenberg</a>
 </div>

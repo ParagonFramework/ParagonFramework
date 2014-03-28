@@ -1,1 +1,3 @@
 ParagonFramework Plugin works!
+<?php
+?>

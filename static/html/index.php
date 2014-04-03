@@ -35,7 +35,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Product <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <!--Examples-->
-                            <li><a href="#">Use Template</a></li>
+                            <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li class="divider"></li>

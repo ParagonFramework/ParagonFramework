@@ -1,3 +1,1 @@
-ParagonFramework Plugin works!
-<?php
-?>
+<?php include("/plugins/ParagonFramework/static/");

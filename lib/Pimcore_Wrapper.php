@@ -6,7 +6,7 @@
 	 * Date: 04.04.14
 	 * Time: 09:53
 	 */
-	class PimcoreWrapper extends AbstractWrapper
+	class Pimcore_Wrapper extends Abstract_Wrapper
 	{
 		/**
 		 * @param $name
@@ -15,7 +15,7 @@
 		 */
 		public function getUserByName($name)
 		{
-			$pimUser = User::getByName($name); // get Pimcore User object
+			$pimUser = Paragon_User::getByName($name); // get Pimcore User object
 
 			$user           = new stdClass();
 			$user->_wrapper = $this;
@@ -26,6 +26,6 @@
 			$user->_mail     = $pimUser->getEmail();
 			$user->_password = $pimUser->getPassword();
 
-			return new User($user);
+			return new Paragon_User($user);
 		}
 	}

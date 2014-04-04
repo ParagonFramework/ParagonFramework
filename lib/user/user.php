@@ -6,43 +6,53 @@
  * Time: 09:03
  */
 
-class user
+class ParagonUser
 {
     /**
-     * @var int $id
+     * @var mixed $_wrapper
      */
-    private $id;
+    private $_wrapper;
     /**
-     * @var string $name
+     * @var int $_id
      */
-    private $name;
+    private $_id;
     /**
-     * @var string  $mail
+     * @var string $_username
      */
-    private $mail;
+    private $_username;
     /**
-     * @var string $password
+     * @var string $_name
      */
-    private $password;
+    private $_name;
+    /**
+     * @var string  $_mail
+     */
+    private $_mail;
+    /**
+     * @var string $_password
+     */
+    private $_password;
 
 
-    function __construct($c_id, $c_name, $c_mail, $c_pwd)
+
+    function __construct(stdClass $userInfo)
     {
-        $this->setId($c_id);
-        $this->setName($c_name);
-        $this->setMail($c_mail);
-        $this->setPassword($c_pwd);
+        $_wrapper = $userInfo->_wrapper;
+        $_id = $userInfo->_id;
+        $_username = $userInfo->_username;
+        $_mail = $userInfo->_mail;
+        $_password = $userInfo->_password;
     }
 
 
     /* Getter and Setter*/
 
     /**
-     * @param string $mail
+     * @return mixed
      */
-    public function setMail($mail)
+    public function getWrapper()
     {
-        $this->mail = $mail;
+        return $this->_wrapper;
     }
 
     /**
@@ -50,15 +60,7 @@ class user
      */
     public function getMail()
     {
-        return $this->mail;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+        return $this->_mail;
     }
 
     /**
@@ -66,15 +68,15 @@ class user
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->_password;
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName($name)
+    public function getUsername()
     {
-        $this->name = $name;
+        return $this->_username;
     }
 
     /**
@@ -82,15 +84,7 @@ class user
      */
     public function getName()
     {
-        return $this->name;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->_name;
     }
 
     /**
@@ -98,6 +92,11 @@ class user
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
+    }
+
+    public function isAllowed($controller, $action)
+    {
+        return true;
     }
 } 

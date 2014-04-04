@@ -1,20 +1,20 @@
 <?php
-/**
- * User: Johannes
- * Date: 03.04.14
- * Time: 10:28
- */
-include 'common.php';
+	/**
+	 * User: Johannes
+	 * Date: 03.04.14
+	 * Time: 10:28
+	 */
+	include 'common.php';
+	require_once __DIR__ . '/../../models/Product.php';
 
-$products = array(
-		array(
-				'name'   => 'Samsung Galaxy Ace',
-				'type'   => 'Mobile Phone',
-				'status' => 'needs update'
-		)
-);
+	$product  = new Product(1, "Samsung Galaxy Ace", "Mobile Phone", "needs update");
+	$product2 = new Product(2, "Samsung Galaxy Ace", "Mobile Phone", "needs update");
 
-echo $twig->render('index.html.twig', array(
-		'title'    => "Welcome!",
-		'test'     => "Lorem Ipsum",
-		'products' => $products));
+	$products = array(
+		$product, $product2
+	);
+
+	echo $twig->render('index.html.twig', array(
+		'title'       => "Welcome!",
+		'test'        => "Lorem Ipsum",
+		'products'    => $products));

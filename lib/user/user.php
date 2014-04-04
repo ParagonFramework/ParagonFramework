@@ -9,6 +9,10 @@
 class user
 {
     /**
+     * @var int $id
+     */
+    private $id;
+    /**
      * @var string $name
      */
     private $name;
@@ -22,11 +26,12 @@ class user
     private $password;
 
 
-    function __construct($name, $mail, $pwd)
+    function __construct($c_id, $c_name, $c_mail, $c_pwd)
     {
-        $this->setName($name);
-        $this->setMail($mail);
-        $this->setPassword($pwd);
+        $this->setId($c_id);
+        $this->setName($c_name);
+        $this->setMail($c_mail);
+        $this->setPassword($c_pwd);
     }
 
 
@@ -78,5 +83,21 @@ class user
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 } 

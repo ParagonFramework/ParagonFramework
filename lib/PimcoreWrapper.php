@@ -21,7 +21,8 @@ class PimcoreWrapper extends AbstractWrapper
         $user->_wrapper = $this;
 
         $user->_id = $pimUser->getId();
-        $user->_name = $pimUser->getName();
+        $user->_username = $pimUser->getName();
+        $user->_name = $pimUser->getFirstname()." ".$pimUser->getLastname();
         $user->_mail = $pimUser->getEmail();
         $user->_password = $pimUser->getPassword();
 

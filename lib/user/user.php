@@ -17,6 +17,10 @@ class ParagonUser
      */
     private $_id;
     /**
+     * @var string $_username
+     */
+    private $_username;
+    /**
      * @var string $_name
      */
     private $_name;
@@ -33,7 +37,11 @@ class ParagonUser
 
     function __construct(stdClass $userInfo)
     {
-
+        $_wrapper = $userInfo->_wrapper;
+        $_id = $userInfo->_id;
+        $_username = $userInfo->_username;
+        $_mail = $userInfo->_mail;
+        $_password = $userInfo->_password;
     }
 
 
@@ -61,6 +69,14 @@ class ParagonUser
     public function getPassword()
     {
         return $this->_password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->_username;
     }
 
     /**

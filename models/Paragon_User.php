@@ -112,11 +112,4 @@
             return $this->_permissions;
         }
 
-        /**
-         * @param mixed $permissions
-         */
-        public function setPermissions($permissions)
-        {
-            $this->_permissions = $permissions;
-        }
     }

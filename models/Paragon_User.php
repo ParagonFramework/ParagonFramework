@@ -33,6 +33,11 @@
 		 */
 		private $_password;
 
+        /**
+         * @var string[] $_permissions
+         */
+        private $_permissions;
+
 		function __construct(stdClass $userInfo)
 		{
 			$_wrapper  = $userInfo->_wrapper;
@@ -40,6 +45,7 @@
 			$_username = $userInfo->_username;
 			$_mail     = $userInfo->_mail;
 			$_password = $userInfo->_password;
+            $_permissions = $userInfo->_permissions;
 		}
 
 
@@ -97,4 +103,20 @@
 		{
 			return true;
 		}
-	}
+
+        /**
+         * @return \string[]
+         */
+        public function getPermissions()
+        {
+            return $this->_permissions;
+        }
+
+        /**
+         * @param \string[] $permissions
+         */
+        public function setPermissions($permissions)
+        {
+            $this->_permissions = $permissions;
+        }
+    }

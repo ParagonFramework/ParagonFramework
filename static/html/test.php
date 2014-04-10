@@ -14,7 +14,7 @@
 		$product, $product2
 	);
 
-	echo $twig->render('index.html.twig', array(
+	echo $twig->render('index.twig', array(
 		'title'       => "Welcome!",
 		'test'        => "Lorem Ipsum",
 		'products'    => $products));

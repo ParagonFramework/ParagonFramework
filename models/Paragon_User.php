@@ -34,7 +34,7 @@
 		private $_password;
 
         /**
-         * @var string[] $_permissions
+         * @var mixed $_permissions
          */
         private $_permissions;
 
@@ -105,7 +105,7 @@
 		}
 
         /**
-         * @return \string[]
+         * @return mixed
          */
         public function getPermissions()
         {
@@ -113,7 +113,7 @@
         }
 
         /**
-         * @param \string[] $permissions
+         * @param mixed $permissions
          */
         public function setPermissions($permissions)
         {

@@ -15,6 +15,7 @@
 	);
 
 	echo $twig->render('index.twig', array(
-		'title'       => "Welcome!",
-		'test'        => "Lorem Ipsum",
-		'products'    => $products));
+		'title'    => "Welcome!",
+		'test'     => "Lorem Ipsum",
+		'products' => $products,
+		"title"    => "Layout Prototype &middot; Twitter Bootstrap", "roles" => $roles, "menu" => $menu));

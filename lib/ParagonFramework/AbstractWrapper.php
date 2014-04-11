@@ -6,7 +6,7 @@
  * Time: 10:41
  */
 
-abstract class AbstractWrapper
+abstract class ParagonFramework_AbstractWrapper
 {
     public abstract function getUserByName($name);
 }

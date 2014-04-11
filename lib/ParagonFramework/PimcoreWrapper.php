@@ -6,7 +6,7 @@
  * Time: 09:53
  */
 
-class PimcoreWrapper extends AbstractWrapper
+class ParagonFramework_PimcoreWrapper extends ParagonFramework_AbstractWrapper
 {
     /**
      * @param $name
@@ -55,6 +55,6 @@ class PimcoreWrapper extends AbstractWrapper
         }
 
         $user->_permissions = $arr;
-        return new ParagonUser($user);
+        return new ParagonFramework_Models_User($user);
     }
 }

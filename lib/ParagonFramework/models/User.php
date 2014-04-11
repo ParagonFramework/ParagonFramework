@@ -46,20 +46,11 @@
 			$_mail     = $userInfo->_mail;
 			$_password = $userInfo->_password;
 
-            foreach($userInfo->_permissions as $key=>$value)
-            {
-                $this->_permissions[$key]=$userInfo->_permissions[$key];
-            }
-           // $_permissions = $userInfo->_permissions;
-
-            var_dump($_permissions);
+            $this->_permissions=$userInfo->_permissions;
 		}
 
         public function hasPermission($perm)
         {
-            echo("hallo has permission");
-            var_dump($_permissions);
-            //echo($this->_permissions[$permission]);
             return $this->_permissions[$perm];
         }
 

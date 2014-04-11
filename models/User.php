@@ -6,7 +6,7 @@
 	 * Date: 04.04.14
 	 * Time: 09:03
 	 */
-	class Paragon_User
+	class ParagonFramework_Model_User
 	{
 		/**
 		 * @var mixed $_wrapper

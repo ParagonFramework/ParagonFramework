@@ -16,7 +16,7 @@
 <div id="vcenter" class="">
     <div id="content">
         <div id="right">
-            <form id="loginform" method="post" action="#">
+            <form id="loginform" method="post" action="/plugin/ParagonFramework/login/login">
                 <label for="username">Username</label>
                 <input id="username" type="text" name="username" />
 

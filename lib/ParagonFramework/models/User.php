@@ -6,7 +6,7 @@
 	 * Date: 04.04.14
 	 * Time: 09:03
 	 */
-	class Paragon_User
+	class ParagonFramework_Models_User
 	{
 		/**
 		 * @var mixed $_wrapper
@@ -45,8 +45,23 @@
 			$_username = $userInfo->_username;
 			$_mail     = $userInfo->_mail;
 			$_password = $userInfo->_password;
-            $_permissions = $userInfo->_permissions;
+
+            foreach($userInfo->_permissions as $key=>$value)
+            {
+                $this->_permissions[$key]=$userInfo->_permissions[$key];
+            }
+           // $_permissions = $userInfo->_permissions;
+
+            var_dump($_permissions);
 		}
+
+        public function hasPermission($perm)
+        {
+            echo("hallo has permission");
+            var_dump($_permissions);
+            //echo($this->_permissions[$permission]);
+            return $this->_permissions[$perm];
+        }
 
 
 		/* Getter and Setter*/

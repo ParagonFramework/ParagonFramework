@@ -6,7 +6,18 @@
 	 * Date: 04.04.14
 	 * Time: 09:03
 	 */
-	class ParagonFramework_Models_User
+
+/**
+ * Class ParagonFramework_Models_User
+ *
+ * Usage:
+ * $pcw = new ParagonFramework_PimcoreWrapper();
+ * $user=$pcw->getUserByName("localhorst");
+ * $b1=$user->hasPermission("qr_codes");
+ * $b2=$user->hasPermission("horstiborsti"); -> throws Exception
+ *
+ */
+class ParagonFramework_Models_User
 	{
 		/**
 		 * @var mixed $_wrapper

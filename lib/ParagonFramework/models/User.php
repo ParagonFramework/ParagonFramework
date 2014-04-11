@@ -28,10 +28,6 @@
 		 * @var string $_mail
 		 */
 		private $_mail;
-		/**
-		 * @var string $_password
-		 */
-		private $_password;
 
         /**
          * @var mixed $_permissions
@@ -40,11 +36,11 @@
 
 		function __construct(stdClass $userInfo)
 		{
-			$_wrapper  = $userInfo->_wrapper;
-			$_id       = $userInfo->_id;
-			$_username = $userInfo->_username;
-			$_mail     = $userInfo->_mail;
-			$_password = $userInfo->_password;
+			$this->_wrapper  = $userInfo->_wrapper;
+            $this->_id       = $userInfo->_id;
+            $this->_username = $userInfo->_username;
+            $this->_name     = $userInfo->_name;
+            $this->_mail     = $userInfo->_mail;
 
             $this->_permissions=$userInfo->_permissions;
 		}
@@ -82,14 +78,6 @@
 		/**
 		 * @return string
 		 */
-		public function getPassword()
-		{
-			return $this->_password;
-		}
-
-		/**
-		 * @return string
-		 */
 		public function getUsername()
 		{
 			return $this->_username;
@@ -119,9 +107,9 @@
         /**
          * @return mixed
          */
-        public function getPermissions()
+        /*public function getPermissions()
         {
             return $this->_permissions;
-        }
+        }*/
 
     }

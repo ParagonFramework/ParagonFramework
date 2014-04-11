@@ -27,7 +27,7 @@ class ParagonFramework_PimcoreWrapper extends ParagonFramework_AbstractWrapper
         $user->_password = $pimUser->getPassword();
 
         $con = Pimcore_Resource::getConnection();
-        $definitionsData = $con->fetchAll("SELECT key FROM users_permission_definitions");
+        $definitionsData = $con->fetchAll("SELECT * FROM users_permission_definitions");
 
         $isAdmin = $pimUser->isAdmin();
         $pimPermissions = $pimUser->getPermissions();

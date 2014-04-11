@@ -51,6 +51,9 @@
 
         public function hasPermission($perm)
         {
+             if($this->_permissions[$perm]===NULL)
+                 throw new Exception("Permission is not existing!");
+
             return $this->_permissions[$perm];
         }
 

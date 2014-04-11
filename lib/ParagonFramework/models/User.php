@@ -49,16 +49,19 @@
             $this->_permissions=$userInfo->_permissions;
 		}
 
+        /**
+         * @return bool
+         */
         public function hasPermission($perm)
         {
              if($this->_permissions[$perm]===NULL)
-                 throw new Exception("Permission is not existing!");
+                 throw new ParagonFramework_Exception_PermissionException("Permission is not existing", $perm);
 
             return $this->_permissions[$perm];
         }
 
 
-		/* Getter and Setter*/
+		/* Getter*/
 
 		/**
 		 * @return mixed

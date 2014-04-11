@@ -9,8 +9,22 @@
 
 class ParagonFramework_Exception_PermissionException extends Exception
 {
-    function __construct($message, $permission)
+    /**
+     * @var string $_permission
+     */
+    private $_permission;
+
+    function __construct($message, $perm)
     {
-       parent::__construct($message." with role: ".$permission);
+       $this->_permission=$perm;
+       parent::__construct($message." with role: ".$this->permission);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPermission()
+    {
+        return $this->_permission;
     }
 } 

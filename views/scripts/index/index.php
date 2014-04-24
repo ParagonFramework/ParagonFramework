@@ -1,1 +1,0 @@
-<?php include("/plugins/ParagonFramework/static/");

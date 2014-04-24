@@ -12,8 +12,8 @@
 	 <link rel="stylesheet" type="text/css" href="/plugins/ParagonFramework/static/css/example.css?_dc=1395907441"/-->
 
 	<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/example.css">
-	<link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/ParagonFramework/static/css/example.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/ParagonFramework/static/css/login.css">
 </head>
 <body>
 

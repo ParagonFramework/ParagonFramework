@@ -7,8 +7,8 @@
 		<title>Paragon Framework</title>
 
 		<!-- Bootstrap -->
-		<?php $this->headLink()->appendStylesheet('/plugins/ParagonFramework/static/css/bootstrap.min.css'); ?>
-		<?php $this->headLink()->appendStylesheet('/plugins/ParagonFramework/static/css/site.css'); ?>
+		<?php echo $this->headLink()->appendStylesheet('/plugins/ParagonFramework/static/css/bootstrap.min.css'); ?>
+		<?php echo $this->headLink()->appendStylesheet('/plugins/ParagonFramework/static/css/site.css'); ?>
 		
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -1,4 +1,4 @@
-<?php
+   <?php
 
 	/**
 	 * Created by PhpStorm.
@@ -67,6 +67,22 @@ class ParagonFramework_Models_User
             return $this->_permissions[$perm];
         }
 
+        /**
+         * @return array
+         */
+        public function getPermissions()
+        {
+            $result = NULL;
+            $keys = array_keys($this->_permissions);
+
+            foreach ($keys as $key)
+            {
+                if($this->_permissions[$key]===true)
+                    $result[] = $key;
+            }
+
+            return $result;
+        }
 
 		/* Getter*/
 

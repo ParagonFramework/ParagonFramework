@@ -5,7 +5,7 @@
 	 * Time: 10:28
 	 */
 	include 'common.php';
-	require_once __DIR__ . '/../../models/Product.php';
+	require_once __DIR__ . '/../../Models/Product.php';
 
 	$product  = new Product(1, "Samsung Galaxy Ace", "Mobile Phone", "needs update");
 	$product2 = new Product(2, "Samsung Galaxy Ace", "Mobile Phone", "needs update");

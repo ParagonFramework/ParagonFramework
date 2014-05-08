@@ -39,7 +39,7 @@
 				<li>
 					<a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout</a>
 				</li>
-			</ul>9
+			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>

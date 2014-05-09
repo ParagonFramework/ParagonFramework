@@ -24,34 +24,36 @@ class ParagonFramework_PimcoreWrapper extends ParagonFramework_AbstractWrapper
         $user->_username = $pimUser->getName();
         $user->_name = $pimUser->getFirstname()." ".$pimUser->getLastname();
         $user->_mail = $pimUser->getEmail();
-        $user->_password = $pimUser->getPassword();
 
         $con = Pimcore_Resource::getConnection();
-        $definitionsData = $con->fetchAll("SELECT * FROM users_permission_definitions");
+        // $definitionsData = $con->fetchAll("SELECT * FROM users_permission_definitions");
+
+        $list = new User_Permission_Definition_List();
+        $definitionsData = $list->load();
 
         $isAdmin = $pimUser->isAdmin();
         $pimPermissions = $pimUser->getPermissions();
 
         $arr = null;
-        foreach($definitionsData as $def)
+        foreach ($definitionsData as $def)
         {
-            if($isAdmin)
+            if ($isAdmin)
             {
                 $hasPermission = true;
             }
             else
             {
                 $hasPermission = false;
-                foreach($pimPermissions as $perm)
+                foreach ($pimPermissions as $perm)
                 {
-                    if($perm == $def["key"])
+                    if ($perm == $def->getKey())
                     {
                         $hasPermission = true;
                     }
                 }
             }
-            $arr[$def["key"]] = $hasPermission;
 
+            $arr[$def->getKey()] = $hasPermission;
         }
 
         $user->_permissions = $arr;

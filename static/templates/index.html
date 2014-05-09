@@ -1,31 +1,32 @@
-<!--here begins the layout template-->
-<!--Default content is in comments-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Layout Prototype &middot; Twitter Bootstrap</title>
+    <title>Layout Prototype</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- CSS -->
     <link href="http://bs.incureforce.com/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="example.css" rel="stylesheet">
-    <script src="../plugins/ParagonFramework/static/js/jquery-1.10.2.js"></script>
-
+		<link rel="stylesheet" type="text/css" href="http://eonasdan.github.io/bootstrap-datetimepicker/content/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" type="text/css" href="http://eonasdan.github.io/bootstrap-datetimepicker/content/pygments-manni.css">
+		<link rel="stylesheet" type="text/css" href="http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css">
+	
+		<!--JS-->
     <script src="http://bs.incureforce.com/js/jquery.min.js"></script>
-    <script src="http://bs.incureforce.com/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../plugins/ParagonFramework/static/css/jquery-ui-1.10.4.custom.css">
-
-    <!--<script src="../plugins/ParagonFramework/static/js/jquery-ui-1.10.4.custom.js"></script>-->
-    <script src="../plugins/ParagonFramework/static/js/bootstrap-datepicker.js"></script>
-    <script src="../plugins/ParagonFramework/static/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="http://bs.incureforce.com/js/bootstrap.min.js"></script>	
+		<script src="http://eonasdan.github.io/bootstrap-datetimepicker/scripts/moment.js"></script>
+		<script src="http://eonasdan.github.io/bootstrap-datetimepicker/scripts/bootstrap-datetimepicker.js"></script>
+		<script src="http://eonasdan.github.io/bootstrap-datetimepicker/scripts/locales/bootstrap-datetimepicker.de.js"></script>
+		<script src="http://ckeditor.com/apps/ckeditor/4.4.0/ckeditor.js"></script>
 
 </head>
+
 <body>
 
 <!-- Part 1: Wrap all page content here -->
+
 <div id="wrap">
 <div id="navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -36,7 +37,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="Chrysanthemum.jpg" width="24" height="24" class="img-rounded"></a>
+            <a class="navbar-brand" href="#"><img src="http://www.pimcore.org/wiki/download/attachments/5308442/LABS?version=1&modificationDate=1393491266000&api=v2" width="24" height="24" class="img-rounded"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -76,7 +77,6 @@
                         <!--Examples-->
                         <li><a onclick="javascript:asdf_text.textContent = 'Translator'">Translator</a></li>
                         <li><a onclick="javascript:asdf_text.textContent = 'Mr.Salesman'">Mr.Sale</a></li>
-
                     </ul>
                 </li>
                 <li class="active"><a href="logout.php">Logout</a></li>
@@ -109,7 +109,6 @@
             <td>Mark</td>
             <td>Otto</td>
             <td>G</td>
-            <!--<td><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Edit</td>-->
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -180,20 +179,25 @@
             <span class="input-group-addon">
                 <input type="checkbox">
             </span>
-        <input type="text" class="form-control"> <!-- Label-->
+        <input type="text" class="form-control" value="Checkbox it is" disabled> <!-- Label-->
     </div><!-- /input-group -->
 
     <!-- Input -->
-    <input type="text" class="form-control">
 
-    <!-- Select alias Dropdon -->
+    <input type="text" class="form-control" value="TextInputLine">
+
+    <!-- Select alias Dropdown -->
     <ul class="dropdown-menu" role="menu">
         <li><a href="#">Edit</a></li>
         <li><a href="#">Delete</a></li>
     </ul>
 
+		<br>
     <!-- Multiselect-->
-    <select class="multiselect" multiple="multiple">
+		<div class="container">
+    <div class="form-group">
+		<label for="name">Multiselect</label>
+		<select class="multiselect" multiple="multiple">
         <option value="cheese">Cheese</option>
         <option value="tomatoes">Tomatoes</option>
         <option value="mozarella">Mozzarella</option>
@@ -201,6 +205,8 @@
         <option value="pepperoni">Pepperoni</option>
         <option value="onions">Onions</option>
     </select>
+		</div>
+		</div>
 
     <!-- Textarea-->
     <form role="form">
@@ -211,63 +217,93 @@
     </form>
 
     <!-- DatePicker-->
-    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy" style="width: 200px">
-        <input class="span2" size="16" type="text" value="12-02-2012">
-        <span class="add-on"><i class="icon-th"></i></span>
+		<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+						<label for="name">DatePicker</label>
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-
-    <!--DateTimePicker-->
-    <div id="datetimepicker1" class="input-append date">
-        <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
+		<!--DateTimePicker-->
+		<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+						<label for="name">DateTimePicker</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-
+</div>
+		
     <!--TimePicker-->
-    <div id="datetimepicker3" class="input-append">
-        <input data-format="hh:mm:ss" type="text"/>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
+ 	<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+						<label for="name">TimePicker</label>
+                <div class='input-group date' id='datetimepicker3'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
+</div>  
 
+   <script type="text/javascript">
 
-
-    <script type="text/javascript">
-        $('#dp3').click(function()
-        {
-            console.log("test");
-            $('#dp3').datepicker('show');
-
-
-            //{
-            //    language: 'pt-BR'
-            //});
-        });
-        $('#datetimepicker1').click(function()
-        {
-            console.log("test2");
-            $('#datetimepicker1').datetimepicker('show');
+        $(function () {
+				
+          $('#datetimepicker1').datetimepicker({
+						language: 'de'
+					}); 
         });
 
-        $('#datetimepicker3').click(function()
-        {
-            console.log("test3");
-            $('#datetimepicker3').datetimepicker({
-                pickDate: false
-            });
-            $('#datetimepicker3').datetimepicker('show');
-        });
+          $('#datetimepicker2').datetimepicker({
+           pickTime: false,
+					 language: 'de'
+         });
+    
+          $('#datetimepicker3').datetimepicker({
+            pickDate: false,
+						language: 'de'
+          });
 
+  ;
+    </script>		
+
+<form>
+    <textarea name="editor1" id="editor1" rows="10" cols="80">
+      This is my textarea to be replaced with CKEditor.
+    </textarea>
+    <script>
+      // Replace the <textarea id="editor1"> with a CKEditor
+      // instance, using default configuration.
+      CKEDITOR.replace('editor1');
     </script>
+</form>
 
 </div class="page-body">
 <div id="push"></div>
 </div>
+
+
+
+
 
 <div id="footer">
     <div class="container">

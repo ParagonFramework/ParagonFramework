@@ -46,4 +46,10 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
             $this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password")); // /error/1023            //exit;
         }
     }
+	
+	public function logoutAction() {
+		$instance = Zend_Auth::getInstance();
+		$instance->clearIdentity();
+		$this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
+	}
 }

@@ -11,12 +11,22 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
     private $username;
     private $password;
 
+    /**
+     * creates Auth Adapter
+     * hashes the password with Pimcore_Tool_Authentication
+     * @param $username
+     * @param $password
+     */
     public function __construct($username, $password)
     {
         $this->username = $username;
         $this->password = Pimcore_Tool_Authentication::getPasswordHash($username, $password);
     }
 
+    /**
+     * authenticates the user, writes the user object into session if it worked
+     * @return Zend_Auth_Result
+     */
     public function authenticate()
     {
         $pimUser = User::getByName($this->username);
@@ -32,6 +42,7 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
             return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->getUserObject($pimUser));
     }
 
+    //TODO rewrite select *
     private function getUserObject($pimcoreUser)
     {
         $user = new stdClass();

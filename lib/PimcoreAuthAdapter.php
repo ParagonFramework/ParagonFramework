@@ -29,6 +29,49 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
         if($pimPass != $this->password)
             return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null);
         else
-            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, null); //TODO insert user class
+            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->getUserObject($pimUser));
+    }
+
+    private function getUserObject($pimcoreUser)
+    {
+        $user = new stdClass();
+        $user->_wrapper = $this;
+
+        $user->_id = $pimcoreUser->getId();
+        $user->_username = $pimcoreUser->getName();
+        $user->_name = $pimcoreUser->getFirstname()." ".$pimcoreUser->getLastname();
+        $user->_mail = $pimcoreUser->getEmail();
+        $user->_password = $pimcoreUser->getPassword();
+
+        $con = Pimcore_Resource::getConnection();
+        $definitionsData = $con->fetchAll("SELECT * FROM users_permission_definitions");
+
+        $isAdmin = $pimcoreUser->isAdmin();
+        $pimPermissions = $pimcoreUser->getPermissions();
+
+        $arr = null;
+        foreach($definitionsData as $def)
+        {
+            if($isAdmin)
+            {
+                $hasPermission = true;
+            }
+            else
+            {
+                $hasPermission = false;
+                foreach($pimPermissions as $perm)
+                {
+                    if($perm == $def["key"])
+                    {
+                        $hasPermission = true;
+                    }
+                }
+            }
+            $arr[$def["key"]] = $hasPermission;
+
+        }
+
+        $user->_permissions = $arr;
+        return new ParagonFramework_Model_User($user);
     }
 }

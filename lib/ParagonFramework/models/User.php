@@ -136,12 +136,4 @@ class ParagonFramework_Models_User
 			return true;
 		}
 
-        /**
-         * @return mixed
-         */
-        /*public function getPermissions()
-        {
-            return $this->_permissions;
-        }*/
-
     }

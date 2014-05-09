@@ -1,6 +1,6 @@
 <?php
 
-class ParagonFramework_IndexController extends ParagonFramework_Controller_Action {
+class ParagonFramework_IndexController extends ParagonFramework_Controller_ActionAdmin {
 
 	public function indexAction() {
 		// reachable via http://your.domain/plugin/ParagonFramework/index/index

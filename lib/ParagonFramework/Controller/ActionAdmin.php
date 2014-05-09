@@ -5,7 +5,7 @@
  * Time: 09:41
  */
 
-class ParagonFramework_Controller_Action extends Pimcore_Controller_Action
+class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
 {
 	public function init()
     {

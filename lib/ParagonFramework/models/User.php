@@ -57,7 +57,11 @@ class ParagonFramework_Models_User
 		}
 
         /**
+         * Checks if the user has the permission $perm. If the permission does not exists an exception is thrown.
+         * @param string $perm
+         *
          * @return bool
+         * @throws ParagonFramework_Exception_PermissionException
          */
         public function hasPermission($perm)
         {
@@ -68,6 +72,7 @@ class ParagonFramework_Models_User
         }
 
         /**
+         * Returns an array of all permissions the user has.
          * @return array
          */
         public function getPermissions()

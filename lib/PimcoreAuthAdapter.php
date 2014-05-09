@@ -72,6 +72,6 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
         }
 
         $user->_permissions = $arr;
-        return new ParagonFramework_Model_User($user);
+        return new ParagonFramework_Models_User($user);
     }
 }

@@ -13,7 +13,7 @@ class ParagonFramework_Controller_Action extends Pimcore_Controller_Action
         $auth = Zend_Auth::getInstance();
         if(!$auth->hasIdentity())
         {
-            $this->redirect("/plugin/ParagonFramework/index/index");
+            $this->redirect("/plugin/ParagonFramework/login/index");
             exit;
         }
 	}

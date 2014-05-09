@@ -5,8 +5,6 @@
  * Date: 11.04.14
  * Time: 11:54
  */
-error_reporting(-1);
-ini_set('display_errors', 1);
 
 class ParagonFramework_LoginController extends Pimcore_Controller_Action
 {
@@ -24,7 +22,6 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
     {
         $username = $this->getRequest()->getParam('username', '');
         $password = $this->getRequest()->getParam('password', '');
-
 
         /*
         $wrapper = ParagonFramework_Wrapper_Factory::getWrapper();
@@ -50,7 +47,7 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         $authAdapter = new PimcoreAuthAdapter($username, $password);
         $auth = Zend_Auth::getInstance();
         $result = $auth->authenticate($authAdapter);
-
+		
         if (!$result->isValid())
         {
             //$this->forward("index", "login", null, array("message" => "Username or password invalid"));
@@ -58,13 +55,15 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         }
         else
         {
-            $this->redirect("/plugin/ParagonFramework/index/index");
+			$this->forward("index", "index", "ParagonFramework", null);
         }
     }
 	
 	public function logoutAction() {
 		$instance = Zend_Auth::getInstance();
 		$instance->clearIdentity();
+		Zend_Session::destroy();
+		
 		$this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
 	}
 }

@@ -53,8 +53,8 @@
                         <li><a onclick="javascript:asdf_text.textContent = 'Translator'">Translator</a></li>
                         <li><a onclick="javascript:asdf_text.textContent = 'Mr.Salesman'">Mr.Sale</a></li>
                     </ul>
-                </li>
-                <li class="active"><a href="logout.php">Logout</a></li>
+                </li>	
+                <li class="active"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout</a></li>
             </ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

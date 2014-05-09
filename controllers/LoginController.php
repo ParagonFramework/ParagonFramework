@@ -25,6 +25,8 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         $username = $this->getRequest()->getParam('username', '');
         $password = $this->getRequest()->getParam('password', '');
 
+
+        /*
         $wrapper = ParagonFramework_Wrapper_Factory::getWrapper();
         if($wrapper->authenticateUser($username, $password) === true)
         {
@@ -44,6 +46,19 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
             //die("not authenticated");
             //$this->setParam("message", "Invalid username or password");
             $this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password")); // /error/1023            //exit;
+        }*/
+        $authAdapter = new PimcoreAuthAdapter($username, $password);
+        $auth = Zend_Auth::getInstance();
+        $result = $auth->authenticate($authAdapter);
+
+        if (!$result->isValid())
+        {
+            //$this->forward("index", "login", null, array("message" => "Username or password invalid"));
+            $this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password"));
+        }
+        else
+        {
+            $this->redirect("/plugin/ParagonFramework/index/index");
         }
     }
 	

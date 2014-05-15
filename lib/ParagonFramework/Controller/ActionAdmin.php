@@ -7,9 +7,13 @@
 
 class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
 {
-	public function init()
+    /**
+     * get called from Zend before other method or action calls
+     * checks if the session is valid otherwise redirects to login page
+     */
+    public function init()
     {
-		//parent::init(); maybe not :D
+		parent::init();
         $auth = Zend_Auth::getInstance();
         if(!$auth->hasIdentity())
         {

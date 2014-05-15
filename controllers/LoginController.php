@@ -8,6 +8,9 @@
 
 class ParagonFramework_LoginController extends Pimcore_Controller_Action
 {
+    /**
+     * Sets parameter into view
+     */
     public function indexAction()
     {
         /*if($this->getParam("message") != null)
@@ -18,6 +21,9 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         $this->view->message = $this->getParam("message", "");
     }
 
+    /**
+     * Checks username and password from User
+     */
     public function loginAction()
     {
         $username = $this->getRequest()->getParam('username', '');
@@ -58,8 +64,11 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
 			$this->forward("index", "index", "ParagonFramework", null);
         }
     }
-	
-	public function logoutAction() {
+
+    /**
+     * clears the current identity from Zend_Auth and destroys the session, than forwards to index_login
+     */
+    public function logoutAction() {
 		$instance = Zend_Auth::getInstance();
 		$instance->clearIdentity();
 		Zend_Session::destroy();

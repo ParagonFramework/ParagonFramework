@@ -45,6 +45,8 @@ class ParagonFramework_Models_User
          */
         private $_permissions;
 
+        const sessionName = 'Role';
+
 		function __construct(stdClass $userInfo)
 		{
 			$this->_wrapper  = $userInfo->_wrapper;
@@ -54,7 +56,10 @@ class ParagonFramework_Models_User
             $this->_mail     = $userInfo->_mail;
 
             $this->_permissions=$userInfo->_permissions;
-		}
+
+            /*error_reporting(E_ALL|E_STRICT);
+            ini_set('display_errors', 'on');*/
+       	}
 
         /**
          * Checks if the user has the permission $perm. If the permission does not exists an exception is thrown.
@@ -131,9 +136,26 @@ class ParagonFramework_Models_User
 			return $this->_id;
 		}
 
-		public function isAllowed($controller, $action)
-		{
-			return true;
-		}
+        /**
+        * @return mixed role
+        */
+        public function getRole()
+        {
 
+            $sessionNamespace = new Zend_Session_Namespace(self::sessionName);
+
+            if (!isset($sessionNamespace->preferedRole))
+            {
+                //var_dump($this->getPermissions());
+                $sessionNamespace->preferedRole = $this->getPermissions()[0];
+                //var_dump($sessionNamespace->preferedRole);
+                //echo "i am herererererere";
+            }
+            return $sessionNamespace->preferedRole;
+        }
+
+        public static function getUser()
+        {
+            return Zend_Auth::getInstance()->getIdentity();
+        }
     }

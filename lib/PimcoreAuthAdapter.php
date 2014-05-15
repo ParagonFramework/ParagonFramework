@@ -44,6 +44,8 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
 
     private function getUserObject($pimcoreUser)
     {
+
+
         $user = new stdClass();
         $user->_wrapper = $this;
 
@@ -58,6 +60,14 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
 
         $isAdmin = $pimcoreUser->isAdmin();
         $pimPermissions = $pimcoreUser->getPermissions();
+
+        $roles = $pimcoreUser->getRoles();
+
+        foreach($roles as $role)
+        {
+            $pimPermissions = array_merge($pimPermissions, User_Role::getById($role)->getPermissions());
+            var_dump($pimPermissions);
+        }
 
         $arr = null;
         foreach($definitionsData as $def)
@@ -81,6 +91,7 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
         }
 
         $user->_permissions = $arr;
+
         return new ParagonFramework_Models_User($user);
     }
 }

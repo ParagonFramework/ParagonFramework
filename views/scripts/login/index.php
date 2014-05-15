@@ -22,7 +22,7 @@
 			<h2>Login to<br/>Paragon Framework</h2>
 
 			<div id="login">
-				<form role="form" id="loginform" method="post" action="#">
+				<form role="form" id="loginform" method="post" action="/plugin/ParagonFramework/login/login">
 					<label for="username">Username</label>
 					<input class="form-control" id="username" type="text" name="username"/>
 
@@ -33,6 +33,8 @@
 					<button type="submit" class="btn btn-default">Login</button>
 					<a style="margin-left: 10px;" href="/admin/login/lostpassword" class="lostpassword">Forgot your
 						password?</a>
+
+                    <div><?= $this->message ?></div>
 			</div>
 		</div>
 	</div>

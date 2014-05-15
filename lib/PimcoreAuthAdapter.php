@@ -42,7 +42,6 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
             return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->getUserObject($pimUser));
     }
 
-    //TODO rewrite select *
     private function getUserObject($pimcoreUser)
     {
         $user = new stdClass();

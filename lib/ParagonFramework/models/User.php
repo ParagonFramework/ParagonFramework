@@ -20,7 +20,7 @@
 class ParagonFramework_Models_User
 	{
 		/**
-		 * @var mixed $_wrapper
+		 * @var PimcoreAuthAdapter $_wrapper
 		 */
 		private $_wrapper;
 		/**
@@ -41,7 +41,7 @@ class ParagonFramework_Models_User
 		private $_mail;
 
         /**
-         * @var mixed $_permissions
+         * @var array $_permissions
          */
         private $_permissions;
 
@@ -56,9 +56,6 @@ class ParagonFramework_Models_User
             $this->_mail     = $userInfo->_mail;
 
             $this->_permissions=$userInfo->_permissions;
-
-            /*error_reporting(E_ALL|E_STRICT);
-            ini_set('display_errors', 'on');*/
        	}
 
         /**
@@ -137,23 +134,25 @@ class ParagonFramework_Models_User
 		}
 
         /**
-        * @return mixed role
-        */
+         * Returns the currently set user role (if set, from the cookies, otherwise from the database).
+         * @return string
+         */
         public function getRole()
         {
-
             $sessionNamespace = new Zend_Session_Namespace(self::sessionName);
 
             if (!isset($sessionNamespace->preferedRole))
             {
-                //var_dump($this->getPermissions());
                 $sessionNamespace->preferedRole = $this->getPermissions()[0];
-                //var_dump($sessionNamespace->preferedRole);
-                //echo "i am herererererere";
             }
+
             return $sessionNamespace->preferedRole;
         }
 
+        /**
+         * Returns the current Zend identity.
+         * @return mixed|null
+         */
         public static function getUser()
         {
             return Zend_Auth::getInstance()->getIdentity();

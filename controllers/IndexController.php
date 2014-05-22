@@ -5,15 +5,18 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 	public function indexAction() {
 		$this->view->content = array('products' => array());
 
-//		$products = new Object_Product_List();
-//		$products = Object_Product::getByStatus("Invalid");
-		$products = Object_Product::getByCategory("Mobile phone");
+		$products = new Object_Product_List();
 		$products->load();
+		foreach ($products as $product) {
+			$this->view->content['products'][] = array(
+				"id"	 => $product->product_id,
+				"name"	 => $product->name,
+				"type"	 => $product->product_type,
+				"status" => $product->status
+			);
+		}
 
-		$paginator = Zend_Paginator::factory($products);
-		$paginator->setCurrentPageNumber($this->_getParam('page'));
-		$paginator->setItemCountPerPage(5);
-		$this->view->paginator = $paginator; 
+		$product = ParagonFramework_IndexController::getProductById(1);
 	}
 
 	/**
@@ -31,10 +34,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 	 * the product in the pimcore database.
 	 */
 	public function createProduct() {
-		$id = $_POST['product_id'];
-		$name = $_POST['name'];
-		$type = $_POST['product_type'];
-		$status = $_POST['status'];
+		$id		 = $_POST['product_id'];
+		$name	 = $_POST['name'];
+		$type	 = $_POST['product_type'];
+		$status	 = $_POST['status'];
 
 		$product = Object_Product::create(array(
 					'product_id'	 => $id,

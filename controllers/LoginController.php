@@ -71,7 +71,10 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
     public function logoutAction() {
 		$instance = Zend_Auth::getInstance();
 		$instance->clearIdentity();
-		Zend_Session::destroy();
+
+        //DO NOT activate this statement because it causes problems with session namespaces
+        //logout works anyway
+		//Zend_Session::destroy();
 		
 		$this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
 	}

@@ -20,7 +20,7 @@
 class ParagonFramework_Models_User
 	{
 		/**
-		 * @var PimcoreAuthAdapter $_wrapper
+		 * @var mixed $_wrapper
 		 */
 		private $_wrapper;
 		/**
@@ -41,11 +41,12 @@ class ParagonFramework_Models_User
 		private $_mail;
 
         /**
-         * @var array $_permissions
+         * @var mixed $_permissions
          */
         private $_permissions;
 
         const sessionName = 'Role';
+        const lifeTime = 2592000;
 
 		function __construct(stdClass $userInfo)
 		{
@@ -56,6 +57,9 @@ class ParagonFramework_Models_User
             $this->_mail     = $userInfo->_mail;
 
             $this->_permissions=$userInfo->_permissions;
+
+            /*error_reporting(E_ALL|E_STRICT);
+            ini_set('display_errors', 'on');*/
        	}
 
         /**
@@ -134,25 +138,33 @@ class ParagonFramework_Models_User
 		}
 
         /**
-         * Returns the currently set user role (if set, from the cookies, otherwise from the database).
-         * @return string
+         * returns the preferred Role which is stored in session
+         * if there is no stored role than it returns default role
+         * @return mixed role
          */
         public function getRole()
         {
-            $sessionNamespace = new Zend_Session_Namespace(self::sessionName);
+            $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);
+            Zend_Session::rememberMe(self::lifeTime);
 
-            if (!isset($sessionNamespace->preferedRole))
+            if (!isset($sessionNamespace->preferredRole))
             {
-                $sessionNamespace->preferedRole = $this->getPermissions()[0];
+                $sessionNamespace->preferredRole = $this->getPermissions()[0];
             }
-
-            return $sessionNamespace->preferedRole;
+            return $sessionNamespace->preferredRole;
         }
 
         /**
-         * Returns the current Zend identity.
-         * @return mixed|null
+         * sets the role as preferred and stores it in session
+         * @param string $role
          */
+        public function setRole($role)
+        {
+            $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);
+            Zend_Session::rememberMe(self::lifeTime);
+            $sessionNamespace->preferredRole = $role;
+        }
+
         public static function getUser()
         {
             return Zend_Auth::getInstance()->getIdentity();

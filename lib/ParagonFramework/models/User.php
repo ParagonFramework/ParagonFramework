@@ -39,6 +39,10 @@ class ParagonFramework_Models_User
 		 * @var string $_mail
 		 */
 		private $_mail;
+        /**
+         * @var mixed $_image
+         */
+        private $_image;
 
         /**
          * @var array $_permissions
@@ -132,6 +136,14 @@ class ParagonFramework_Models_User
 		{
 			return $this->_id;
 		}
+
+        /**
+         * @return mixed
+         */
+        public function getImage()
+        {
+            return $this->_image;
+        }
 
         /**
          * Returns the currently set user role (if set, from the cookies, otherwise from the database).

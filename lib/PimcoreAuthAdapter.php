@@ -52,6 +52,7 @@ class PimcoreAuthAdapter implements Zend_Auth_Adapter_Interface
         $user->_name = $pimcoreUser->getFirstname()." ".$pimcoreUser->getLastname();
         $user->_mail = $pimcoreUser->getEmail();
         $user->_password = $pimcoreUser->getPassword();
+        $user->_image = $pimcoreUser->getImage();
 
         $list = new User_Permission_Definition_List();
         $definitionsData = $list->load();

@@ -8,13 +8,13 @@
 		</tr>
 	</thead>
 	<?php
-	foreach ($this->products as $product) {
+	foreach ($this->paginator as $product) {
 		?>
 		<tr>
-			<td><?php echo $product['id'] ?></td>
-			<td><?php echo $product['name'] ?></td>
-			<td><?php echo $product['type'] ?></td>
-			<td><?php echo $product['status'] ?></td>
+			<td><?php echo $product->o_id ?></td>
+			<td><?php echo $product->name ?></td>
+			<td><?php echo $product->category ?></td>
+			<td><?php echo $product->status ?></td>
 		</tr>
 		<?php
 	}

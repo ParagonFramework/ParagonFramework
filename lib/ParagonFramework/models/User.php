@@ -142,22 +142,18 @@ class ParagonFramework_Models_User
 			return $this->_id;
 		}
 
-        /**
-         * returns the preferred Role which is stored in session
-         * if there is no stored role than it returns default role
-         * @return mixed role
-         * @return string
-         */
+
         public function getImage()
         {
             return $this->_image;
         }
 
         /**
-         * Returns the currently set user role (if set, from the cookies, otherwise from the database).
+         * returns the preferred Role which is stored in session
+         * if there is no stored role than it returns default role
+         * @return mixed role
          * @return string
          */
-
         public function getRole()
         {
             $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);
@@ -181,6 +177,10 @@ class ParagonFramework_Models_User
             $sessionNamespace->preferredRole = $role;
         }
 
+        /**
+         * Returns the current Zend identity.
+         * @return mixed|null
+         */
         public static function getUser()
         {
             return Zend_Auth::getInstance()->getIdentity();

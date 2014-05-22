@@ -40,7 +40,7 @@ class ParagonFramework_Models_User
 		 */
 		private $_mail;
         /**
-         * @var mixed $_image
+         * @var string $_image
          */
         private $_image;
 
@@ -58,6 +58,7 @@ class ParagonFramework_Models_User
             $this->_username = $userInfo->_username;
             $this->_name     = $userInfo->_name;
             $this->_mail     = $userInfo->_mail;
+            $this->_image    = $userInfo->_image;
 
             $this->_permissions=$userInfo->_permissions;
        	}
@@ -138,7 +139,7 @@ class ParagonFramework_Models_User
 		}
 
         /**
-         * @return mixed
+         * @return string
          */
         public function getImage()
         {

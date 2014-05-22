@@ -39,6 +39,10 @@ class ParagonFramework_Models_User
 		 * @var string $_mail
 		 */
 		private $_mail;
+        /**
+         * @var string $_image
+         */
+        private $_image;
 
         /**
          * @var mixed $_permissions
@@ -55,6 +59,7 @@ class ParagonFramework_Models_User
             $this->_username = $userInfo->_username;
             $this->_name     = $userInfo->_name;
             $this->_mail     = $userInfo->_mail;
+            $this->_image    = $userInfo->_image;
 
             $this->_permissions=$userInfo->_permissions;
 
@@ -141,7 +146,18 @@ class ParagonFramework_Models_User
          * returns the preferred Role which is stored in session
          * if there is no stored role than it returns default role
          * @return mixed role
+         * @return string
          */
+        public function getImage()
+        {
+            return $this->_image;
+        }
+
+        /**
+         * Returns the currently set user role (if set, from the cookies, otherwise from the database).
+         * @return string
+         */
+
         public function getRole()
         {
             $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);

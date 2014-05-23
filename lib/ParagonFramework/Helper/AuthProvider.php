@@ -7,9 +7,6 @@
  */
 
 class ParagonFramework_Helper_AuthProvider implements Zend_Auth_Adapter_Interface {
-    private static
-        $_authTable = null;
-    
     private 
         $_username, 
         $_password, 

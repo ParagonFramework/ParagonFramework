@@ -12,8 +12,8 @@ echo $this->partial('templates/navigationTop.php', null);
 	<!-- pagination start -->
 	<?=
 	$this->paginationControl($this->paginator, 'Sliding', 'includes/paging.php', array(
-		'urlprefix'			 => "" . '?page=',
-		'appendQueryString'	 => true
+            'urlprefix'             => '?page=',
+            'appendQueryString'     => true
 	));
 	?>
 	<!-- pagination end -->

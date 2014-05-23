@@ -5,6 +5,7 @@
 			<th>Product Name</th>
 			<th>Product Type</th>
 			<th>Status</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<?php
@@ -15,6 +16,10 @@
 			<td><?php echo $product->name ?></td>
 			<td><?php echo $product->category ?></td>
 			<td><?php echo $product->status ?></td>
+			<td>
+				<input type="button" value="Edit"/>
+				<input type="button" value="Delete"/>
+			</td>
 		</tr>
 		<?php
 	}

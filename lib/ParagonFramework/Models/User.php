@@ -145,7 +145,7 @@ class ParagonFramework_Models_User
 
     public function getImage()
     {
-        return $this->_image;
+        return substr($this->_image, 38);
     }
 
     /**

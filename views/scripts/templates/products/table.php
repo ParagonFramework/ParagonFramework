@@ -1,10 +1,11 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>SKU</th>
+            <th>ID</th>
             <?php foreach($this->configProduct->getSelect() as $e) { ?>
             <th><?= $e; ?></th>
             <?php } ?>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,9 +17,12 @@
                 <?php foreach($this->configProduct->getSelect() as $e) { ?>
                 <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
                 <?php } ?>
+                <td><?= $product->status ?></td>
                 <td>
-                    <input type="button" value="Edit"/>
-                    <input type="button" value="Delete"/>
+                    <form role="form" id="loginform" method="post" action="edit">
+                        <button type="submit" class="btn btn-default">Edit</button>
+                        <input type="hidden" name="o_id" value="<?= $product->o_id ?>"/>
+                    </form>
                 </td>
             </tr>
             <?php

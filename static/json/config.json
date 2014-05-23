@@ -3,8 +3,7 @@
         "Object_Product": {
             "Select": [
                 "Name",
-                "Image", 
-                "Status"
+                "Image"
             ],
             "Where": {
                 "status": null

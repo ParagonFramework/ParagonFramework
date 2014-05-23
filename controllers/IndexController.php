@@ -1,19 +1,29 @@
 <?php
 
-class ParagonFramework_IndexController extends ParagonFramework_Controller_ActionAdmin {
+error_reporting(-1);
+ini_set('error_reporting', E_ALL);
+
+class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 
 	public function indexAction() {
-		$this->view->content = array('products' => array());
-
-//		$products = new Object_Product_List();
-//		$products = Object_Product::getByStatus("Invalid");
-		$products = Object_Product::getByCategory("Mobile phone");
+		$products = new Object_Product_List();
 		$products->load();
+
+		foreach ($products as $product) {
+			$missingFields = array();
+
+			if (!isset($product->image)) {
+				$missingFields[] = "Image";
+			}
+
+			$product->status = empty($missingFields) ? "Valid" :
+					implode("/", $missingFields) . " not set";
+		}
 
 		$paginator = Zend_Paginator::factory($products);
 		$paginator->setCurrentPageNumber($this->_getParam('page'));
-		$paginator->setItemCountPerPage(5);
-		$this->view->paginator = $paginator; 
+		$paginator->setItemCountPerPage(10);
+		$this->view->paginator = $paginator;
 	}
 
 	/**
@@ -43,10 +53,6 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 					'status'		 => $status
 		));
 		$product->save();
-	}
-
-	public function test() {
-		
 	}
 
 }

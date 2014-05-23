@@ -76,7 +76,7 @@ class ParagonFramework_Helper_AuthProvider implements Zend_Auth_Adapter_Interfac
         $this->_user = Pimcore_Tool_Authentication::authenticatePlaintext($this->_username, $this->_password);
         
         if($this->_user instanceof User) {
-            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->_user);
+            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->getUserObject($this->_user));
         }
        
         return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null);

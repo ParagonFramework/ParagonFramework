@@ -5,17 +5,30 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         // $this->view->content = array('products' => array());
 	// $products = new Object_Product_List();
 	// $products = Object_Product::getByImage(null);
-        $products = Object_Product::getByStatus("obsolete");
-        $products->load();
-
+        
         $a = Zend_Auth::getInstance();
         $user = $a->getIdentity();
+        
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $condigProduct = $configReader->getProductByGroup($user->getRole());
+        
+        if ($configProduct == null) {
+            // throw new Exception("Product is null");
+        }
+        
+        $className = $condigProduct->getName() . '_List';
+        
+        $products = new $className();
+        $products->load();
         
         $paginator = Zend_Paginator::factory($products);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         $paginator->setItemCountPerPage(10);
-        $this->view->paginator = $paginator; 
-        $this->view->test = $user->getImage();
+        
+        $this->view->configProduct = $condigProduct;
+        $this->view->configReader = $configReader;
+        $this->view->paginator = $paginator;
+        $this->view->user = $user;
         
         /*
         for($i = 0;$i < 100; ++$i) {
@@ -57,10 +70,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $status = $_POST['status'];
 
         $product = Object_Product::create(array(
-            'product_id'	 => $id,
-            'name'			 => $name,
-            'product_type'	 => $type,
-            'status'		 => $status
+            'product_id'        => $id,
+            'name'              => $name,
+            'product_type'      => $type,
+            'status'            => $status
         ));
         
         $product->save();

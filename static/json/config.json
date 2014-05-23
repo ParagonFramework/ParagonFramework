@@ -1,0 +1,20 @@
+{
+    "Products": {
+        "Object_Product": {
+            "Select": [
+                "Name",
+                "Image", 
+                "Status"
+            ],
+            "Where": {
+                "status": null
+            },
+            "Group": "asdf"
+        }
+    },
+    "Groups": {
+        "asdf": [
+            "admin"
+        ]
+    }
+}

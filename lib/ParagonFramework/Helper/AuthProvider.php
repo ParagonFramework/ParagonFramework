@@ -24,7 +24,7 @@ class ParagonFramework_Helper_AuthProvider implements Zend_Auth_Adapter_Interfac
 
         $user->_id = $pimcoreUser->getId();
         $user->_username = $pimcoreUser->getName();
-        $user->_name = $pimcoreUser->getFirstname()." ".$pimcoreUser->getLastname();
+        $user->_name = $pimcoreUser->getFirstname() . " " . $pimcoreUser->getLastname();
         $user->_mail = $pimcoreUser->getEmail();
         $user->_password = $pimcoreUser->getPassword();
         $user->_image = $pimcoreUser->getImage();

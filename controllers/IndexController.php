@@ -10,12 +10,22 @@ class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 		$products->load();
 
 		foreach ($products as $product) {
-			$missingFields = array();
-
-			if (!isset($product->image)) {
-				$missingFields[] = "Image";
+			if ($product->status == "Valid") {
+				continue;
 			}
 
+			$missingFields = array();
+			$exclude = array('lazyLoadedFields', 'scheduledTasks');
+			$properties = get_object_vars($product);
+			foreach ($properties as $property => $value) {
+				if (!preg_match("/o_/", $property) && 
+						!in_array($property, $exclude) &&
+						empty($value)) {
+					$missingFields[] = $property;
+				}
+			}
+
+			
 			$product->status = empty($missingFields) ? "Valid" :
 					implode("/", $missingFields) . " not set";
 		}

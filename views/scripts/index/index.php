@@ -12,12 +12,10 @@ echo $this->partial('templates/navigationTop.php', null);
 	<!-- pagination start -->
 	<?=
 	$this->paginationControl($this->paginator, 'Sliding', 'includes/paging.php', array(
-            'urlprefix'             => '?page=',
+            'urlprefix'             => '/plugin/ParagonFramework/index/index?page=',
             'appendQueryString'     => true
 	));
 	?>
-	<!-- pagination end -->
-
 </div>
 <?php
 echo $this->partial('templates/footer.php', null);

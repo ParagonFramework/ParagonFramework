@@ -4,7 +4,7 @@ function getGITCommit() {
     $git_dir = "plugins/ParagonFramework";
     $git_head = file_get_contents("$git_dir/.git/HEAD");
     $git_headHash = "<not available>";
-    $git_headLink = "https://se45g1ss14.fh-hagenberg.at/pimcore-org/ParagonFramework";
+    $git_headLink = "https://193.170.192.154/pimcore-org/ParagonFramework";
 
     if (preg_match("#ref: refs/heads/(\\w+)#", $git_head, $git_head)) {
         $git_headHash = file_get_contents("$git_dir/.git/refs/heads/$git_head[1]");

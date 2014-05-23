@@ -26,8 +26,10 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
      */
     public function loginAction()
     {
-        $username = $this->getRequest()->getParam('username', '');
-        $password = $this->getRequest()->getParam('password', '');
+        $request = $this->getRequest();
+        
+        $username = $request->getParam('username', '');
+        $password = $request->getParam('password', '');
 
         /*
         $wrapper = ParagonFramework_Wrapper_Factory::getWrapper();
@@ -49,11 +51,19 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
             //die("not authenticated");
             //$this->setParam("message", "Invalid username or password");
             $this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password")); // /error/1023            //exit;
-        }*/
-        $authAdapter = new PimcoreAuthAdapter($username, $password);
+        }
+        */
+        
+        $authAdapter = new ParagonFramework_Helper_AuthProvider($username, $password);
         $auth = Zend_Auth::getInstance();
         $result = $auth->authenticate($authAdapter);
-		
+	
+        try{
+            
+        } catch(Exception $e) {
+            echo ($e->getMessage());
+        }
+        
         if (!$result->isValid())
         {
             //$this->forward("index", "login", null, array("message" => "Username or password invalid"));
@@ -61,7 +71,7 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         }
         else
         {
-			$this->forward("index", "index", "ParagonFramework", null);
+            $this->forward("index", "index", "ParagonFramework", null);
         }
     }
 
@@ -69,13 +79,13 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
      * clears the current identity from Zend_Auth and destroys the session, than forwards to index_login
      */
     public function logoutAction() {
-		$instance = Zend_Auth::getInstance();
-		$instance->clearIdentity();
+        $instance = Zend_Auth::getInstance();
+        $instance->clearIdentity();
 
         //DO NOT activate this statement because it causes problems with session namespaces
         //logout works anyway
-		//Zend_Session::destroy();
-		
-		$this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
-	}
+        //Zend_Session::destroy();
+
+        $this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
+    }
 }

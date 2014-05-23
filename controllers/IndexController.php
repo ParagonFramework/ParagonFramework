@@ -7,33 +7,35 @@ class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 
 	public function indexAction() {
 		$products = new Object_Product_List();
+		$products->setCondition("status NOT LIKE ?", "%valid%");
 		$products->load();
 
-		foreach ($products as $product) {
-			if ($product->status == "Valid") {
-				continue;
-			}
 
+		foreach ($products as $key => $product) {
 			$missingFields = array();
 			$exclude = array('lazyLoadedFields', 'scheduledTasks');
 			$properties = get_object_vars($product);
 			foreach ($properties as $property => $value) {
-				if (!preg_match("/o_/", $property) && 
+				if (!preg_match("/o_/", $property) &&
 						!in_array($property, $exclude) &&
 						empty($value)) {
 					$missingFields[] = $property;
 				}
 			}
 
-			
-			$product->status = empty($missingFields) ? "Valid" :
-					implode("/", $missingFields) . " not set";
+			$product->status = implode("/", $missingFields) . " missing";
 		}
 
 		$paginator = Zend_Paginator::factory($products);
 		$paginator->setCurrentPageNumber($this->_getParam('page'));
 		$paginator->setItemCountPerPage(10);
 		$this->view->paginator = $paginator;
+	}
+
+	public function editAction() {
+		$id = filter_input(INPUT_POST, 'o_id');
+		$product = Object_Product::getById($id);
+		$this->view->product = $product;
 	}
 
 	/**

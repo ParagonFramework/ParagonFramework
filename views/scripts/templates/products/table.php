@@ -17,8 +17,10 @@
 			<td><?php echo $product->category ?></td>
 			<td><?php echo $product->status ?></td>
 			<td>
-				<input type="button" value="Edit"/>
-				<input type="button" value="Delete"/>
+				<form role="form" id="loginform" method="post" action="edit">
+                    <button type="submit" class="btn btn-default">Edit</button>
+					<input type="hidden" name="o_id" value="<?= $product->o_id ?>"/>
+				</form>
 			</td>
 		</tr>
 		<?php

@@ -61,7 +61,7 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action
         if (!$result->isValid())
         {
             //$this->forward("index", "login", null, array("message" => "Username or password invalid"));
-            $this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password"));
+            $this->forward("login", "login", "ParagonFramework", array("message" => "Invalid username or password"));
         }
         else
         {

@@ -5,7 +5,10 @@ ini_set('error_reporting', E_ALL);
 
 class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 
-	public function indexAction() {
+    /**
+     * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
+     */
+    public function indexAction() {
 		$products = new Object_Product_List();
 		$products->setCondition("status NOT LIKE ?", "%valid%");
 		$products->load();
@@ -32,7 +35,10 @@ class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 		$this->view->paginator = $paginator;
 	}
 
-	public function editAction() {
+    /**
+     * Redirects to edit product view.
+     */
+    public function editAction() {
 		$id = filter_input(INPUT_POST, 'o_id');
 		$product = Object_Product::getById($id);
 		$this->view->product = $product;

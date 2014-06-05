@@ -18,7 +18,7 @@
 			<td><?php echo $product->status ?></td>
 			<td>
 				<form role="form" id="loginform" method="post" action="edit">
-                    <button type="submit" class="btn btn-default">Edit</button>
+					<button type="submit" class="btn btn-default">Edit</button>
 					<input type="hidden" name="o_id" value="<?= $product->o_id ?>"/>
 				</form>
 			</td>

@@ -11,6 +11,7 @@ class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 		$products->load();
 
 
+
 		foreach ($products as $key => $product) {
 			$missingFields = array();
 			$exclude = array('lazyLoadedFields', 'scheduledTasks');
@@ -22,14 +23,16 @@ class ParagonFramework_IndexController extends Pimcore_Controller_Action {
 					$missingFields[] = $property;
 				}
 			}
-
 			$product->status = implode("/", $missingFields) . " missing";
 		}
 
 		$paginator = Zend_Paginator::factory($products);
 		$paginator->setCurrentPageNumber($this->_getParam('page'));
 		$paginator->setItemCountPerPage(10);
-		$this->view->paginator = $paginator;
+		$this->view->content = array(
+			'title'		 => 'pimcore.org',
+			'paginator'	 => $paginator
+		);
 	}
 
 	public function editAction() {

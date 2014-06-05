@@ -10,11 +10,11 @@ echo $this->partial('templates/navigationTop.php', $this);
     <p class="lead">Products that need to be completed.</p>
 
 	<?php
-	echo $this->partial('templates/products/table.php', $this);
+	echo $this->partial('templates/products/table.php', $this->content);
 	?>
 	<!-- pagination start -->
 	<?=
-	$this->paginationControl($this->paginator, 'Sliding', 'includes/paging.php', array(
+	$this->paginationControl($this->content['paginator'], 'Sliding', 'includes/paging.php', array(
             'urlprefix'             => '/plugin/ParagonFramework/index/index?page=',
             'appendQueryString'     => true
 	));

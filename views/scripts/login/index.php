@@ -15,15 +15,6 @@
     <link rel="stylesheet" type="text/css" href="/plugins/ParagonFramework/static/css/example.css">
     <link rel="stylesheet" type="text/css" href="/plugins/ParagonFramework/static/css/login.css">
 
-    <script type="text/javascript">
-        function toggle_visibility(id) {
-            var e = document.getElementById(id);
-            if(e.style.display == 'block')
-                e.style.display = 'none';
-            else
-                e.style.display = 'block';
-        }
-    </script>
 </head>
 <body>
     <div id="vcenter">
@@ -32,7 +23,7 @@
             <div id="viewSwitchingDialog" style="display: none;">
                 <div>
                     <form role="form" id="viewSwitchingForm" method="post" action="/plugin/ParagonFramework/login/login">
-                        <h3>Chose your view</h3>
+                        <h3>Choose your view</h3>
                         <br/>
                         <br/>
                         <label>View:</label>
@@ -76,6 +67,6 @@
             </p>
         </div>
     </nav>
-
 </body>
+<script src="/plugins/ParagonFramework/static/js/view-switching.js"></script>
 </html>

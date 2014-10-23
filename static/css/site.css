@@ -24,6 +24,7 @@ body {
 #viewSwitchingDialog div {
     width:400px;
     margin: 100px auto;
+    position: relative;
     background-color: #fff;
     border:1px solid #000;
     padding:15px;

@@ -5,6 +5,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
     const E_USERVIEW_NOT_VALID = "USERVIEW_NOT_VALID";
     const E_USERVIEW_NOT_PRESENT = "E_USERVIEW_NOT_PRESENT";
 
+    function getErrorURL() {
+        return $this->view->url(array('controller' => 'index', 'action' => 'error'));
+    }
+
     /**
      * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
      */
@@ -21,7 +25,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         if($userView == null) {
             // $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
             if(count($configReaderViews) == 0) {
-                $this->redirect("/plugin/ParagonFramework/index/error/?name=" . E_USERVIEW_NOT_PRESENT);
+                $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_PRESENT);
                 return;
             }
 
@@ -31,7 +35,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $configReaderView = $configReader->getViewByViewName($userView);
 
         if($configReaderView == null) {
-            $this->redirect("/plugin/ParagonFramework/index/error");
+            $this->redirect($this->getErrorURL());
             return;
         }
 
@@ -80,10 +84,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $user->setRole($configReaderView);
 
         if($configReaderView == $user->getRole($configReaderViews)) {
-            $this->redirect("/plugin/ParagonFramework");
+            $this->redirect($this->view->url(["action" => "index"]));
         }
 
-        $this->redirect("/plugin/ParagonFramework/index/error/?name=" . E_USERVIEW_NOT_VALID);
+        $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_VALID);
     }
 
     public function errorAction() {

@@ -19,7 +19,7 @@
                 <?php } ?>
                 <td><?= $product->status ?></td>
                 <td>
-                    <form role="form" method="post" action="edit">
+                    <form role="form" method="post" action="<?= $this->url(["action" => "edit" ]) ?>">
                         <button type="submit" class="btn btn-default">Edit</button>
                         <input type="hidden" name="o_id" value="<?= $product->o_id ?>"/>
                     </form>

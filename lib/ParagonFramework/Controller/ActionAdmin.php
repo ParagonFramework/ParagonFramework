@@ -14,9 +14,8 @@ class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
     public function init()
     {
         parent::init();
-        
-        $auth = Zend_Auth::getInstance();
-        if(!$auth->hasIdentity())
+
+        if(ParagonFramework_Models_User::getUser() == null)
         {
             $this->redirect("/plugin/ParagonFramework/login/index");
             exit;

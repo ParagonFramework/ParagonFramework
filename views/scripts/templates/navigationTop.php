@@ -50,9 +50,6 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="asdf_text">Select Role<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <!--Examples-->
-                        <?php foreach($this->user->getRoles() as $e) { ?>
-                        <li><a onclick="javascript:asdf_text.textContent = '<?= $e ?>'"><?= $e ?></a></li>
-                        <?php } ?>
                     </ul>
                 </li>	
                 <li class="active"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout (<?= $this->user->getUsername() ?>)</a></li>

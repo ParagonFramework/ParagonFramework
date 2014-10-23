@@ -1,20 +1,43 @@
 <?php
 
+error_reporting(-1);
+ini_set('error_reporting', E_ALL);
+
 class ParagonFramework_IndexController extends ParagonFramework_Controller_ActionAdmin {
 
+    /**
+     * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
+     */
     public function indexAction() {
+        $user = ParagonFramework_Models_User::getUser();
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderRoles = $configReader->getViewNamesByUser($user);
 
-        $a    = Zend_Auth::getInstance();
-        $user = $a->getIdentity();
+        $userRole = $user->getRole($configReaderRoles);
 
-        $configReader  = ParagonFramework_ConfigReader::getInstance();
-        $configProduct = $configReader->getProductByGroup($user->getRole());
+        $this->view->config = $configReaderRoles;
 
-        if ($configProduct == null) {
-            throw new Exception("Product is null");
+
+        if($userRole == null) {
+            // $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
+            if(count($configReaderRoles) == 0) {
+                die("UserRoles == null, refresh for test");
+            }
+
+            $user->setRole($configReaderRoles[0]);
+            die("UserRole == null, refresh for test");
+            return;
         }
 
-        $className     = $configProduct->getName();
+        $configReaderView = $configReader->getViewByViewName($userRole);
+
+        if($configReaderView == null) {
+            //$this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
+            die("ConfigReaderView == null");
+            return;
+        }
+
+        $className = $configReaderView->getProduct();
         $classNameList = $className . '_List';
 
         $object = new $className();
@@ -26,7 +49,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
         foreach ($products as $key => $product) {
             $missingFields = array();
-            
+
             foreach ($class->getFieldDefinitions() as $fieldname => $definition) {
                 //creating getter to object
                 $getterName = "get" . ucfirst($definition->getName());
@@ -35,7 +58,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
                     $missingFields[] = $fieldname;
                 }
             }
-            
+
             $product->status = implode("/", $missingFields) . " missing";
         }
 
@@ -43,10 +66,19 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         $paginator->setItemCountPerPage(10);
 
-        $this->view->configProduct = $configProduct;
-        $this->view->configReader  = $configReader;
-        $this->view->paginator     = $paginator;
-        $this->view->user          = $user;
+        $this->view->configReaderView = $configReaderView;
+        $this->view->configReader     = $configReader;
+        $this->view->paginator        = $paginator;
+        $this->view->user             = $user;
+    }
+
+    /**
+     * Redirects to edit product view.
+     */
+    public function editAction() {
+        $id = filter_input(INPUT_POST, 'o_id');
+        $product = Object_Product::getById($id);
+        $this->view->product = $product;
     }
 
     /**
@@ -56,7 +88,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      * @return Pimcore_Object The product fetched from the pimcore database.
      */
     public function getProductById($id) {
-        return Object_Abstract::getByProduct_Id($id, array('limit' => 1));
+            return Object_Product::getByProduct_Id($id, array('limit' => 1));
     }
 
     /**
@@ -64,29 +96,18 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      * the product in the pimcore database.
      */
     public function createProduct() {
-        $id     = $_POST['product_id'];
-        $name   = $_POST['name'];
-        $type   = $_POST['product_type'];
-        $status = $_POST['status'];
+            $id = $_POST['product_id'];
+            $name = $_POST['name'];
+            $type = $_POST['product_type'];
+            $status = $_POST['status'];
 
-        $product = Object_Abstract::create(array(
-                    'product_id'   => $id,
-                    'name'         => $name,
-                    'product_type' => $type,
-                    'status'       => $status
-        ));
-
-        $product->save();
-    }
-
-    public function editAction() {
-        $a    = Zend_Auth::getInstance();
-        $user = $a->getIdentity();
-
-        $id                  = filter_input(INPUT_POST, 'o_id');
-        $product             = Object_Abstract::getById($id);
-        $this->view->product = $product;
-        $this->view->user    = $user;
+            $product = Object_Product::create(array(
+                                    'product_id'	 => $id,
+                                    'name'			 => $name,
+                                    'product_type'	 => $type,
+                                    'status'		 => $status
+            ));
+            $product->save();
     }
 
 }

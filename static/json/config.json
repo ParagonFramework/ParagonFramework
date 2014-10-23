@@ -1,6 +1,9 @@
 {
-    "Products": {
-        "Object_Product": {
+    "Provider": "ParagonFramework_Helper_AuthProvider",
+    "Views": {
+        "MyObject ProductView": {
+            "Template": "static/templates/MyObject_ProductView",
+            "Product": "Object_Product",
             "Select": [
                 "Name",
                 "Image"
@@ -8,7 +11,9 @@
             "Where": {
                 "status": null
             },
-            "Group": "asdf"
+            "Groups": [
+                "asdf"
+            ]
         }
     },
     "Groups": {

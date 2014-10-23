@@ -152,17 +152,18 @@ class ParagonFramework_Models_User
      * returns the preferred Role which is stored in session
      * if there is no stored role than it returns default role
      * @return mixed role
-     * @return string
+     * @return string|null
      */
-    public function getRole()
+    public function getRole($userRoles)
     {
         $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);
         Zend_Session::rememberMe(self::lifeTime);
 
-        if (!isset($sessionNamespace->preferredRole))
+        if (!isset($sessionNamespace->preferredRole) || !in_array($sessionNamespace->preferredRole, $userRoles))
         {
-            $sessionNamespace->preferredRole = $this->getPermissions()[0];
+            $sessionNamespace->preferredRole = null;
         }
+
         return $sessionNamespace->preferredRole;
     }
 
@@ -179,10 +180,20 @@ class ParagonFramework_Models_User
 
     /**
      * Returns the current Zend identity.
-     * @return mixed|null
+     * @return ParagonFramework_Models_User
      */
     public static function getUser()
     {
-        return Zend_Auth::getInstance()->getIdentity();
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+
+            if ($user instanceof ParagonFramework_Models_User) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 }

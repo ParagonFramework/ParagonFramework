@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <?php foreach($this->configProduct->getSelect() as $e) { ?>
+            <?php foreach($this->configReaderView->getSelect() as $e) { ?>
             <th><?= $e; ?></th>
             <?php } ?>
             <th>Status</th>
@@ -14,7 +14,7 @@
             ?>
             <tr>
                 <td><?php echo $product->o_id ?></td>
-                <?php foreach($this->configProduct->getSelect() as $e) { ?>
+                <?php foreach($this->configReaderView->getSelect() as $e) { ?>
                 <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
                 <?php } ?>
                 <td><?= $product->status ?></td>

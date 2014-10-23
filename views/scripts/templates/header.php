@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<title><?php echo $this->title ?></title>
+		<title><?= $this->title ?></title>
 		<!-- Bootstrap -->
 		<?php $this->headLink()
 				->appendStylesheet('/plugins/ParagonFramework/static/css/bootstrap.min.css') 

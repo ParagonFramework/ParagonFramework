@@ -1,39 +1,37 @@
 <?php
 
-error_reporting(-1);
-ini_set('error_reporting', E_ALL);
-
 class ParagonFramework_IndexController extends ParagonFramework_Controller_ActionAdmin {
+
+    const E_USERVIEW_NOT_VALID = "USERVIEW_NOT_VALID";
+    const E_USERVIEW_NOT_PRESENT = "E_USERVIEW_NOT_PRESENT";
 
     /**
      * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
      */
     public function indexAction() {
         $user = ParagonFramework_Models_User::getUser();
+
         $configReader = ParagonFramework_ConfigReader::getInstance();
-        $configReaderRoles = $configReader->getViewNamesByUser($user);
+        $configReaderViews = $configReader->getViewNamesByUser($user);
 
-        $userRole = $user->getRole($configReaderRoles);
+        $userView = $user->getRole($configReaderViews);
 
-        $this->view->config = $configReaderRoles;
+        $this->view->configReaderViews = $configReaderViews;
 
-
-        if($userRole == null) {
+        if($userView == null) {
             // $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
-            if(count($configReaderRoles) == 0) {
-                die("UserRoles == null, refresh for test");
+            if(count($configReaderViews) == 0) {
+                $this->redirect("/plugin/ParagonFramework/index/error/?name=" . E_USERVIEW_NOT_PRESENT);
+                return;
             }
 
-            $user->setRole($configReaderRoles[0]);
-            die("UserRole == null, refresh for test");
-            return;
+            $user->setRole($userView = $configReaderViews[0]);
         }
 
-        $configReaderView = $configReader->getViewByViewName($userRole);
+        $configReaderView = $configReader->getViewByViewName($userView);
 
         if($configReaderView == null) {
-            //$this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
-            die("ConfigReaderView == null");
+            $this->redirect("/plugin/ParagonFramework/index/error");
             return;
         }
 
@@ -70,6 +68,43 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->view->configReader     = $configReader;
         $this->view->paginator        = $paginator;
         $this->view->user             = $user;
+    }
+
+    public function changeroleAction() {
+        $user = ParagonFramework_Models_User::getUser();
+
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderView = filter_input(INPUT_POST, 'configReaderView');
+        $configReaderViews = $configReader->getViewNamesByUser($user);
+
+        $user->setRole($configReaderView);
+
+        if($configReaderView == $user->getRole($configReaderViews)) {
+            $this->redirect("/plugin/ParagonFramework");
+        }
+
+        $this->redirect("/plugin/ParagonFramework/index/error/?name=" . E_USERVIEW_NOT_VALID);
+    }
+
+    public function errorAction() {
+        $this->view->user = ParagonFramework_Models_User::getUser();
+
+        switch($this->getParam('name', '')) {
+            case E_USERVIEW_NOT_VALID:
+                $this->view->error_title = "UserView not valid";
+                $this->view->error_message = "Your User is not associated with this UserView!";
+                return;
+
+            case E_USERVIEW_NOT_PRESENT:
+                $this->view->error_title = "UserView not present";
+                $this->view->error_message = "Your User is not associated with any UserView!";
+                return;
+
+            default:
+                $this->view->error_title = "Internal Error";
+                $this->view->error_message = "Something went south, we are sorry!";
+                return;
+        }
     }
 
     /**

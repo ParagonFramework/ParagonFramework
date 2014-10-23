@@ -154,12 +154,12 @@ class ParagonFramework_Models_User
      * @return mixed role
      * @return string|null
      */
-    public function getRole($userRoles)
+    public function getRole($userRoles = null)
     {
-        $sessionNamespace = new Zend_Session_Namespace(self::sessionName.'_'.$this->_username);
+        $sessionNamespace = new Zend_Session_Namespace(self::sessionName . '_' . $this->_username);
         Zend_Session::rememberMe(self::lifeTime);
 
-        if (!isset($sessionNamespace->preferredRole) || !in_array($sessionNamespace->preferredRole, $userRoles))
+        if (!isset($sessionNamespace->preferredRole) || ($userRoles != null && !in_array($sessionNamespace->preferredRole, $userRoles)))
         {
             $sessionNamespace->preferredRole = null;
         }

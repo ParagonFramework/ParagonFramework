@@ -47,13 +47,25 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="asdf_text">Select Role<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <!--Examples-->
-                        <li><a onclick="toggle_visibility('viewSwitchingDialog');">Test</a></li>
-                    </ul>
+                    <?php
+
+                    if(($user = $this->user)) {
+                        if(($userView = $user->getRole())) {
+                            // Empty Statement
+                        } else {
+                            $userView = "No View found";
+                        }
+
+                        $userName = $user->getUsername();
+                    } else {
+                        $userView = "No View found";
+                        $userName = "No Name found";
+                    }
+
+                    ?>
+                    <a href="#" class="dropdown-toggle" onclick="toggle_visibility('viewSwitchingDialog');">Select View (<?= $userView ?>)</b></a>
                 </li>	
-                <li class="active"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout (<?= $this->user->getUsername() ?>)</a></li>
+                <li class="active"><a href="<?= $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout (<?= $userName ?>)</a></li>
             </ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

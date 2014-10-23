@@ -1,8 +1,6 @@
-<?php
-echo $this->partial('templates/header.php', $this->content);
+<?= $this->partial('templates/header.php', $this); ?>
 
-echo $this->partial('templates/navigationTop.php', $this);
-?>
+<?= $this->partial('templates/navigationTop.php', $this); ?>
 
 <div class="container">
     <div class="page-header">
@@ -10,16 +8,15 @@ echo $this->partial('templates/navigationTop.php', $this);
     <!-- View switching dialog -->
     <div id="viewSwitchingDialog" style="display: none;">
         <div>
-            <form role="form" id="viewSwitchingForm" method="post" action="/plugin/ParagonFramework/login/login">
+            <form role="form" id="viewSwitchingForm" method="post" action="/plugin/ParagonFramework/index/changerole">
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>
                 <label>View:</label>
-                <select>
-                    <option value="view1">view1</option>
-                    <option value="view2">view2</option>
-                    <option value="view3">view3</option>
-                    <option value="view4">view4</option>
+                <select name="configReaderView">
+                    <?php foreach($this->configReaderViews as $view) { ?>
+                        <option><?= $view ?></option>
+                    <?php } ?>
                 </select>
                 <br/>
                 <br/>
@@ -30,9 +27,7 @@ echo $this->partial('templates/navigationTop.php', $this);
     </div>
     <p class="lead">Products that need to be completed.</p>
 
-	<?php
-	echo $this->partial('templates/products/table.php', $this);
-	?>
+	<?= $this->partial('templates/products/table.php', $this); ?>
 	<!-- pagination start -->
     <?=
 	$this->paginationControl($this->content['paginator'], 'Sliding', 'includes/paging.php', array(
@@ -41,6 +36,5 @@ echo $this->partial('templates/navigationTop.php', $this);
 	));
 	?>
 </div>
-<?php
-echo $this->partial('templates/footer.php', null);
-?>
+
+<?= $this->partial('templates/footer.php', null); ?>

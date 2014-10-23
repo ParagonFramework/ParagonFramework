@@ -50,10 +50,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="asdf_text">Select Role<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <!--Examples-->
+                        <li><a onclick="toggle_visibility('viewSwitchingDialog');">Test</a></li>
                     </ul>
                 </li>	
                 <li class="active"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout (<?= $this->user->getUsername() ?>)</a></li>
             </ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
+    <script src="/plugins/ParagonFramework/static/js/view-switching.js"></script>
 </nav>

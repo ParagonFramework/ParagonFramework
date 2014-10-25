@@ -58,11 +58,13 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action {
 		$auth = Zend_Auth::getInstance();
 		$result = $auth->authenticate($authAdapter);
 
+        // Redirect instead of forward
+
 		if (!$result->isValid()) {
 			//$this->forward("index", "login", null, array("message" => "Username or password invalid"));
 			$this->forward("index", "login", "ParagonFramework", array("message" => "Invalid username or password"));
 		} else {
-			$this->forward("index", "index", "ParagonFramework", null);
+            $this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
 		}
 	}
 

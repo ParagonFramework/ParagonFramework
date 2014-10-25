@@ -4,7 +4,7 @@ function getGITCommit() {
 	$git_dir = "plugins/ParagonFramework";
 	$git_head = file_get_contents("$git_dir/.git/HEAD");
 	$git_headHash = "<not available>";
-	$git_headLink = "https://193.170.192.154/pimcore-org/ParagonFramework";
+	$git_headLink = ParagonFramework_Plugin::$GITHubURL;
 
 	if (preg_match("#ref: refs/heads/(\\w+)#", $git_head, $git_head)) {
 		$git_headHash = file_get_contents("$git_dir/.git/refs/heads/$git_head[1]");
@@ -22,7 +22,9 @@ function getGITCommit() {
 
 class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_API_Plugin_Interface {
 
-	public static $GITCommit;
+    public static $GITCommit;
+    public static $GITHubURL;
+    public static $GITHubOrgURL;
 
 	public static function install() {
 		// implement your own logic here
@@ -41,4 +43,6 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
 
 }
 
+ParagonFramework_Plugin::$GITHubOrgURL = "https://github.com/orgs/ParagonFramework/people";
+ParagonFramework_Plugin::$GITHubURL = "https://github.com/ParagonFramework/ParagonFramework";
 ParagonFramework_Plugin::$GITCommit = getGITCommit();

@@ -8,7 +8,7 @@
     <!-- View switching dialog -->
     <div id="viewSwitchingDialog" style="display: none;">
         <div>
-            <form role="form" id="viewSwitchingForm" method="post" action="/plugin/ParagonFramework/index/changerole">
+            <form role="form" id="viewSwitchingForm" method="post" action="<?= $this->url(["action" => "changerole" ]) ?>">
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>
@@ -31,7 +31,7 @@
 	<!-- pagination start -->
     <?=
 	$this->paginationControl($this->content['paginator'], 'Sliding', 'includes/paging.php', array(
-            'urlprefix'             => '/plugin/ParagonFramework/index/index?page=',
+            'urlprefix'             => $this->url(["action" => "index" ]) . '?page=',
             'appendQueryString'     => true
 	));
 	?>

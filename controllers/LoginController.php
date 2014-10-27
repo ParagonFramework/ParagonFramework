@@ -7,8 +7,15 @@
  * Time: 11:54
  */
 class ParagonFramework_LoginController extends Pimcore_Controller_Action {
+    public function init()
+    {
+        $this->enableLayout();
 
-	/**
+        parent::init();
+    }
+
+
+    /**
 	 * Sets parameter into view
 	 */
 	public function indexAction() {

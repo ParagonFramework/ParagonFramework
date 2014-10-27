@@ -15,6 +15,8 @@ class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
     {
         parent::init();
 
+        $this->enableLayout();
+
         if(ParagonFramework_Models_User::getUser() == null)
         {
             $this->redirect("/plugin/ParagonFramework/login/index");

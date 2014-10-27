@@ -9,23 +9,14 @@
             <th>Actions</th>
         </tr>
     </thead>
-    <?php
-        foreach ($this->paginator as $product) {
-            ?>
-            <tr>
-                <td><?php echo $product->o_id ?></td>
-                <?php foreach($this->configReaderView->getSelect() as $e) { ?>
-                <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
-                <?php } ?>
-                <td><?= $product->status ?></td>
-                <td>
-                    <form role="form" method="post" action="<?= $this->url(["action" => "edit" ]) ?>">
-                        <button type="submit" class="btn btn-default">Edit</button>
-                        <input type="hidden" name="o_id" value="<?= $product->o_id ?>"/>
-                    </form>
-                </td>
-            </tr>
-            <?php
-        }
-    ?>
+    <?php foreach ($this->paginator as $product) { ?>
+        <tr>
+            <td><?= $product->o_id ?></td>
+            <?php foreach($this->configReaderView->getSelect() as $e) { ?>
+            <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
+            <?php } ?>
+            <td><?= $product->status ?></td>
+            <td><?= $this->pgProductEditForm($product->o_id, $this->url(["action" => "edit" ])) ?></td>
+        </tr>
+        <?php } ?>
 </table>

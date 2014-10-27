@@ -1,7 +1,3 @@
-<?= $this->partial('templates/header.php', $this); ?>
-
-<?= $this->partial('templates/navigationTop.php', $this); ?>
-
 <div class="container">
     <div class="page-header">
     </div>
@@ -36,5 +32,3 @@
 	));
 	?>
 </div>
-
-<?= $this->partial('templates/footer.php', null); ?>

@@ -1,6 +1,6 @@
 <?php
 $this->headLink()
-    ->appendStylesheet('/plugins/ParagonFramework/static/css/bootstrap.min.css')
+    ->appendStylesheet('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
 
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/pygments-manni.css')
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css')
@@ -15,7 +15,7 @@ $this->inlineScript()
 
     ->appendFile('http://ckeditor.com/apps/ckeditor/4.4.0/ckeditor.js')
 
-    ->appendFile('/plugins/ParagonFramework/static/js/bootstrap.min.js');
+    ->appendFile('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js');
 
 $showNavigation = false;
 

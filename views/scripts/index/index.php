@@ -2,18 +2,13 @@
     <div class="page-header">
     </div>
     <!-- View switching dialog -->
-    <div id="viewSwitchingDialog" style="display: none;">
-        <div>
-            <form role="form" id="viewSwitchingForm" method="post" action="<?= $this->url(["action" => "changerole" ]) ?>">
+    <div id="viewSwitchingDialog" class="viewSwitchingDialog" style="display: none;">
+        <div class="test">
+            <form role="form" method="post" action="<?= $this->url(["action" => "changerole" ]) ?>">
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>
-                <label>View:</label>
-                <select name="configReaderView">
-                    <?php foreach($this->configReaderViews as $view) { ?>
-                        <option><?= $view ?></option>
-                    <?php } ?>
-                </select>
+                <select name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown"></select>
                 <br/>
                 <br/>
                 <button type="submit" class="btn btn-default">Next</button>

@@ -58,7 +58,7 @@ class ParagonFramework_ConfigReader {
     }
     
     /**
-     * 
+     * Returns the view by its name in the config file
      * @param string $role
      * @return ParagonFramework_ConfigReaderView[]
      */
@@ -73,7 +73,7 @@ class ParagonFramework_ConfigReader {
     }
     
     /**
-     * Returns the ViewNames
+     * Returns the views to the user
      * @return string[]
      */
     public function getViewNamesByUser(ParagonFramework_Models_User $user) {

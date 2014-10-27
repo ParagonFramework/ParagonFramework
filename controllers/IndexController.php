@@ -20,8 +20,6 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
         $userView = $user->getRole($configReaderViews);
 
-        $this->view->configReaderViews = $configReaderViews;
-
         if($userView == null) {
             // $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
             if(count($configReaderViews) == 0) {
@@ -74,11 +72,28 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->view->user             = $user;
     }
 
+    public function respondWithJSON($json) {
+        $this->removeViewRenderer();
+        $this->disableLayout();
+        $this->getResponse()
+            ->setHeader('Content-type', 'text/json')
+            ->setBody(json_encode($json));
+    }
+
+    public function rolesAction() {
+        $user = ParagonFramework_Models_User::getUser();
+
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
+
+        $this->respondWithJSON([ 'roles' => $configReaderViews]);
+    }
+
     public function changeroleAction() {
         $user = ParagonFramework_Models_User::getUser();
 
         $configReader = ParagonFramework_ConfigReader::getInstance();
-        $configReaderView = filter_input(INPUT_POST, 'configReaderView');
+        $configReaderView = filter_input(INPUT_POST, 'viewSwitchingDialog_Dropdown');
         $configReaderViews = $configReader->getViewNamesByUser($user);
 
         $user->setRole($configReaderView);
@@ -116,7 +131,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      */
     public function editAction() {
         $id = filter_input(INPUT_POST, 'o_id');
-        $product = Object_Product::getById($id);
+        $product = Object_Abstract::getById($id);
         $this->view->product = $product;
     }
 
@@ -127,7 +142,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      * @return Pimcore_Object The product fetched from the pimcore database.
      */
     public function getProductById($id) {
-            return Object_Product::getByProduct_Id($id, array('limit' => 1));
+            return Object_Abstract::getByProduct_Id($id, array('limit' => 1));
     }
 
     /**

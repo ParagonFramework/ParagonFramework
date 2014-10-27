@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of ConfigReaderProduct
  *
@@ -24,7 +18,7 @@ class ParagonFramework_ConfigReaderView {
         $_name;
     
     public function __construct($name, $view) {
-        $this->_product = $view['Template'];
+        $this->_template = $view['Template'];
         $this->_product = $view['Product'];
         $this->_select = $view['Select'];
         $this->_where = $view['Where'];
@@ -32,7 +26,7 @@ class ParagonFramework_ConfigReaderView {
     }
     
     /**
-     * 
+     * Returns the name of current the view
      * @return string
      */
     public function getName() {
@@ -40,7 +34,7 @@ class ParagonFramework_ConfigReaderView {
     }
 
     /**
-     * 
+     * The select in the config file represents the set of products which are specified
      * @return array
      */
     public function getSelect() {
@@ -48,7 +42,7 @@ class ParagonFramework_ConfigReaderView {
     }
     
     /**
-     * 
+     * The where in the config file represents the clause whether this product has to be edited or not.
      * @return array
      */
     public function getWhere() {
@@ -56,6 +50,7 @@ class ParagonFramework_ConfigReaderView {
     }
 
     /**
+     * Returns the Template Path of this view (default is the plugin folder)
      * @return array
      */
     public function getProduct() {
@@ -63,9 +58,10 @@ class ParagonFramework_ConfigReaderView {
     }
 
     /**
+     * Returns the Template Path of this view (default is the plugin folder)
      * @return array
      */
-    public function getTempalte() {
+    public function getTemplate() {
         return $this->_template;
     }
 }

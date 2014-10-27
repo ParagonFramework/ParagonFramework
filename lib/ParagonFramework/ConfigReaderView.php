@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Description of ConfigReaderProduct
+ * The ConfigReaderView represents a reader for a already specified view (specified at the construction of an instance of this class).
+ * It enables you to read properties specified in the config file in a comfortable way.
+ * If the desired view is not available, the ConfigReaderView is null.
  *
  * @author John Doe
  */

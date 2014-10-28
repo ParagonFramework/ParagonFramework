@@ -14,6 +14,20 @@
             "Groups": [
                 "asdf"
             ]
+        },
+        "MyObject ProductView 2": {
+            "Template": "static/templates/MyObject_ProductView",
+            "Product": "Object_Product",
+            "Select": [
+                "Name",
+                "Image"
+            ],
+            "Where": {
+                "status": null
+            },
+            "Groups": [
+                "asdf"
+            ]
         }
     },
     "Groups": {

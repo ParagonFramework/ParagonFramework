@@ -11,7 +11,10 @@ function toggle_visibility(id) {
             success: function(data) {
                 $("#viewSwitchingDialog_Dropdown").empty();
                 $.each(data.roles, function () {
-                    $("#viewSwitchingDialog_Dropdown").append($('<option></option>').val(this).html(this));
+                    var list_item = $('<li/>', {role: 'presentation'});
+                    var link = $('<a/>', {role: 'menuitem', tabindex: -1, href: '#'}).html(this);
+
+                    $("#viewSwitchingDialog_Dropdown").append(list_item.append(link));
                 });
 
                 estyle.display = 'block';

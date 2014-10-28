@@ -8,7 +8,15 @@
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>
-                <select name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown"></select>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown">
+
+                    </ul>
+                </div>
                 <br/>
                 <br/>
                 <button type="submit" class="btn btn-default">Next</button>

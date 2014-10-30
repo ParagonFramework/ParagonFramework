@@ -72,21 +72,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->view->user             = $user;
     }
 
-    /*
-
-    public function testAction() {
-        $this->removeViewRenderer();
-        $this->disableLayout();
-        $this->getResponse()
-            ->setHeader('Content-type', 'text/plain');
-
-
-
-        // Object_Class::create()
-    }
-
-    */
-
+    /**
+     * Sends json response to client.
+     * @param $json 
+     */
     public function respondWithJSON($json) {
         $this->removeViewRenderer();
         $this->disableLayout();
@@ -95,6 +84,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
             ->setBody(json_encode($json));
     }
 
+    /**
+     * Sends the views the user can access to the client.
+     */
     public function rolesAction() {
         $user = ParagonFramework_Models_User::getUser();
 
@@ -104,6 +96,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->respondWithJSON([ 'roles' => $configReaderViews]);
     }
 
+    /**
+     * Sets another view and loads the index page or throws an error if the view is not valid.
+     */
     public function changeroleAction() {
         $user = ParagonFramework_Models_User::getUser();
 
@@ -120,6 +115,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_VALID);
     }
 
+    /**
+     * Prints an error message.
+     */
     public function errorAction() {
         $this->view->user = ParagonFramework_Models_User::getUser();
 

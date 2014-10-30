@@ -17,10 +17,11 @@
         },
         "MyObject ProductView 2": {
             "Template": "static/templates/MyObject_ProductView",
-            "Product": "Object_Product",
+            "Product": "Object_Person",
             "Select": [
-                "Name",
-                "Image"
+                "Firstname",
+                "Lastname",
+                "Gender"
             ],
             "Where": {
                 "status": null

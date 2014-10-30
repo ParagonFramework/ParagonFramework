@@ -5,16 +5,16 @@
     <div id="viewSwitchingDialog" class="viewSwitchingDialog" style="display: none;">
         <div class="test">
             <form role="form" method="post" action="<?= $this->url(["action" => "changerole" ]) ?>">
+                <input type="hidden" name="viewSwitchingDialog_Selected" id="viewSwitchingDialog_Selected"></input>
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                        <span id="viewName"></span>
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span name="viewSwitchingDialog_Label" id="viewSwitchingDialog_Label"></span>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown">
-
+                    <ul class="dropdown-menu" role="menu" name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown">
                     </ul>
                 </div>
                 <br/>

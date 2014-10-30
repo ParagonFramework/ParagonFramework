@@ -31,7 +31,8 @@ function toggle_visibility(id) {
 
 // set current chosen item name to dropdown menu
 function set_view_name(text) {
-    $('#viewName').html(text);
+    $('#viewSwitchingDialog_Selected').val(text);
+    $('#viewSwitchingDialog_Label').html(text);
 }
 
 // sets default view into dropdown

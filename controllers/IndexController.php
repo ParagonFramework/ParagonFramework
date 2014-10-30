@@ -44,7 +44,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $class  = $object->getClass();
 
         $products = new $classNameList();
-        $products->setCondition("status NOT LIKE ?", "%valid%");
+        // $products->setCondition("status NOT LIKE ?", "%valid%");
         $products->load();
 
         foreach ($products as $key => $product) {
@@ -72,6 +72,28 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->view->user             = $user;
     }
 
+    public function testAction() {
+        $this->removeViewRenderer();
+        $this->disableLayout();
+        $this->getResponse()
+            ->setHeader('Content-type', 'text/plain');
+
+        /*
+        $var = Object_Product::([
+            "name" => "Apple IPhone 4",
+            "status" => null,
+            "category" => "",
+        ]);
+
+        $var->setId(50);
+        $var->setParent(48);
+        $var->create();
+
+        var_dump($var);
+        */
+        // Object_Class::create()
+    }
+
     public function respondWithJSON($json) {
         $this->removeViewRenderer();
         $this->disableLayout();
@@ -93,7 +115,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $user = ParagonFramework_Models_User::getUser();
 
         $configReader = ParagonFramework_ConfigReader::getInstance();
-        $configReaderView = filter_input(INPUT_POST, 'viewSwitchingDialog_Dropdown');
+        $configReaderView = filter_input(INPUT_POST, 'viewSwitchingDialog_Selected');
         $configReaderViews = $configReader->getViewNamesByUser($user);
 
         $user->setRole($configReaderView);

@@ -14,7 +14,7 @@ function toggle_visibility(id) {
                 set_view_name(data.roles[0]);
                 $.each(data.roles, function (index) {
                     var list_item = $('<li/>', {role: 'presentation'});
-                    var link = $('<a/>', {id: index, role: 'menuitem', tabindex: -1, href: '#', onclick: 'set_view_name(this)'}).html(this);
+                    var link = $('<a/>', {id: index, role: 'menuitem', tabindex: -1, href: '#', onclick: 'set_view_name(\'' + this + '\')'}).html(this);
 
                     $("#viewSwitchingDialog_Dropdown").append(list_item.append(link));
                 });
@@ -31,7 +31,7 @@ function toggle_visibility(id) {
 
 // set current chosen item name to dropdown menu
 function set_view_name(text) {
-    $('#viewName').html($(text).html());
+    $('#viewName').html(text);
 }
 
 // sets default view into dropdown

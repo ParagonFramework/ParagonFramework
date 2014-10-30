@@ -1,3 +1,4 @@
+// shows and hides the view switching dialog
 function toggle_visibility(id) {
     var e = document.getElementById(id);
     var estyle = e.style;
@@ -28,10 +29,12 @@ function toggle_visibility(id) {
     }
 }
 
+// set current chosen item name to dropdown menu
 function set_view_name(text) {
     $('#viewName').html($(text).html());
 }
 
+// sets default view into dropdown
 function get_default_item(id) {
     $.ajax({
         type: 'POST',

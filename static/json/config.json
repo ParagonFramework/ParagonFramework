@@ -17,11 +17,12 @@
         },
         "MyObject ProductView 2": {
             "Template": "static/templates/MyObject_ProductView",
-            "Product": "Object_Person",
+            "Product": "Object_News",
             "Select": [
-                "Firstname",
-                "Lastname",
-                "Gender"
+                "Title",
+                "ShortText",
+                "Text",
+                "Date"
             ],
             "Where": {
                 "status": null

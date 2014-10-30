@@ -16,3 +16,7 @@ pimcore.plugin.paragonframework = Class.create(pimcore.plugin.admin, {
 
 var paragonframeworkPlugin = new pimcore.plugin.paragonframework();
 
+$(document).ready(function() {
+
+});
+

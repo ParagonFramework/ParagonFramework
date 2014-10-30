@@ -72,27 +72,20 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $this->view->user             = $user;
     }
 
+    /*
+
     public function testAction() {
         $this->removeViewRenderer();
         $this->disableLayout();
         $this->getResponse()
             ->setHeader('Content-type', 'text/plain');
 
-        /*
-        $var = Object_Product::([
-            "name" => "Apple IPhone 4",
-            "status" => null,
-            "category" => "",
-        ]);
 
-        $var->setId(50);
-        $var->setParent(48);
-        $var->create();
 
-        var_dump($var);
-        */
         // Object_Class::create()
     }
+
+    */
 
     public function respondWithJSON($json) {
         $this->removeViewRenderer();
@@ -172,18 +165,17 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      * the product in the pimcore database.
      */
     public function createProduct() {
-            $id = $_POST['product_id'];
-            $name = $_POST['name'];
-            $type = $_POST['product_type'];
-            $status = $_POST['status'];
+        /*
+        $var = Object_Product::create([
+            "name" => "Apple IPhone 4",
+            "status" => null,
+            "category" => "",
+        ]);
 
-            $product = Object_Product::create(array(
-                                    'product_id'	 => $id,
-                                    'name'			 => $name,
-                                    'product_type'	 => $type,
-                                    'status'		 => $status
-            ));
-            $product->save();
+        $var->setKey('o50');
+        $var->setParentId(48);
+        $var->save();
+        */
     }
 
 }

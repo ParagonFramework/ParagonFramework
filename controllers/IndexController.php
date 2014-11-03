@@ -163,17 +163,21 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
      * the product in the pimcore database.
      */
     public function createProduct() {
-        /*
+
+        $name= $_POST["name"];
+        $status=$_POST["status"];
+        $category=$_POST["category"];
+
         $var = Object_Product::create([
-            "name" => "Apple IPhone 4",
-            "status" => null,
-            "category" => "",
+            "name" => $name,
+            "status" => $status,
+            "category" => $category,
         ]);
 
-        $var->setKey('o50');
+        $var->setKey($_POST["key"]);
         $var->setParentId(48);
         $var->save();
-        */
+
     }
 
 }

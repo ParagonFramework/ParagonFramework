@@ -1,5 +1,7 @@
 <?php
 
+if (!defined("PLUGINS_CONFIGURATION_DIRECTORY"))  define("PLUGINS_CONFIGURATION_DIRECTORY", PIMCORE_WEBSITE_VAR . "/plugins");
+
 function getGITCommit() {
 	$git_dir = "plugins/ParagonFramework";
 	$git_head = file_get_contents("$git_dir/.git/HEAD");
@@ -21,26 +23,86 @@ function getGITCommit() {
 }
 
 class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_API_Plugin_Interface {
-
     public static $GITCommit;
     public static $GITHubURL;
     public static $GITHubOrgURL;
 
+    /**
+     *
+     * @var ParagonFramework_Plugin $_instance
+     */
+    static private
+        $_instance;
+
+    /**
+     *
+     * @return ParagonFramework_Plugin
+     */
+    public static function getInstance() {
+        if(!(self::$_instance instanceof ParagonFramework_Plugin)) {
+            self::$_instance = new ParagonFramework_Plugin();
+        }
+
+        return self::$_instance;
+    }
+
 	public static function install() {
-		// implement your own logic here
-		return true;
+        $plugin = ParagonFramework_Plugin::getInstance();
+        $plugin->ensureFolder();
+        $plugin->deployPlugin();
+
+        return $plugin->statusFolder();
 	}
 
 	public static function uninstall() {
+        $plugin = ParagonFramework_Plugin::getInstance();
+        $plugin->deleteFolder();
+
 		// implement your own logic here
-		return true;
+		// return file_exists($filePath);
+        return $plugin->statusFolder() == false;
 	}
 
 	public static function isInstalled() {
+        $plugin = ParagonFramework_Plugin::getInstance();
+
 		// implement your own logic here
-		return true;
+		return $plugin->statusFolder();
 	}
 
+    private
+        $deployFolderPath,
+        $templateFolderPath;
+
+    public function __construct() {
+        $this->templateFolderPath = PIMCORE_PLUGINS_PATH . "/ParagonFramework";
+        $this->deployFolderPath = PIMCORE_WEBSITE_VAR . "/plugins" . "/ParagonFramework";
+    }
+
+    public function getDeployPath() {
+        return $this->deployFolderPath;
+    }
+
+    public function ensureFolder() {
+        if ($this->statusFolder() == false) {
+            mkdir($this->deployFolderPath, 0777, true);
+        }
+    }
+
+    public function deleteFolder() {
+        if($this->statusFolder()) {
+            unlink($this->deployFolderPath . "/config.json");
+            rmdir($this->deployFolderPath);
+        }
+    }
+
+    public function statusFolder() {
+        return file_exists($this->deployFolderPath);
+    }
+
+    public function deployPlugin() {
+        copy($this->templateFolderPath . "/static/json/config.json", $this->deployFolderPath . "/config.json");
+    }
 }
 
 ParagonFramework_Plugin::$GITHubOrgURL = "https://github.com/orgs/ParagonFramework/people";

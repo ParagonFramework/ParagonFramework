@@ -169,10 +169,11 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		if ($modificationDate != $product->getModificationDate()) {
 			// TODO Error message
 			$this->forward('edit', 'index', null, ["error" => "Product has been altered by another user. Reload the product."]);
+		} else {
+			$product->setCategory($category);
+			$product->save();
+			$this->redirect("plugin/ParagonFramework/index/index");
 		}
-		$product->setCategory($category);
-		$product->save();
-		$this->redirect("plugin/ParagonFramework/index/index");
 	}
 
 	/**

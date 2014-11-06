@@ -10,7 +10,7 @@ class ParagonFramework_View_Helper_PgProductEditForm extends Zend_View_Helper_Ab
     public function PgProductEditForm($productID, $productURL) {
         return "
 <form role='form' method='post' action='{$productURL}/id/$productID'>
-    <button type='submit' class='btn btn-default'>Edit</button>
+    <button type='submit' class='btn btn-default button-xs'>Edit</button>
     <input type='hidden' name='o_id' value='{$productID}'/>
 </form>
 ";

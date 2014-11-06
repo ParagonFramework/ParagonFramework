@@ -35,7 +35,7 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
         $_instance;
 
     /**
-     *
+     * Returns the Singleton Instance of ParagonFramework_Plugin
      * @return ParagonFramework_Plugin
      */
     public static function getInstance() {
@@ -71,37 +71,54 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
 	}
 
     private
-        $deployFolderPath,
-        $templateFolderPath;
+        $_deployFolderPath,
+        $_templateFolderPath;
 
     public function __construct() {
-        $this->templateFolderPath = PIMCORE_PLUGINS_PATH . "/ParagonFramework";
-        $this->deployFolderPath = PIMCORE_WEBSITE_VAR . "/plugins" . "/ParagonFramework";
+        $this->_templateFolderPath = PIMCORE_PLUGINS_PATH . "/ParagonFramework";
+        $this->_deployFolderPath = PIMCORE_WEBSITE_VAR . "/plugins" . "/ParagonFramework";
     }
 
+    /**
+     * Returns the Deployment Path (Config Directory) from this Plugin
+     * @return string
+     */
     public function getDeployPath() {
-        return $this->deployFolderPath;
+        return $this->_deployFolderPath;
     }
 
+    /**
+     * Create the Deployment Folder if necessary
+     */
     public function ensureFolder() {
         if ($this->statusFolder() == false) {
-            mkdir($this->deployFolderPath, 0777, true);
+            mkdir($this->_deployFolderPath, 0777, true);
         }
     }
 
+    /**
+     * Delete the Deployment Folder
+     */
     public function deleteFolder() {
         if($this->statusFolder()) {
-            unlink($this->deployFolderPath . "/config.json");
-            rmdir($this->deployFolderPath);
+            unlink($this->_deployFolderPath . "/config.json");
+            rmdir($this->_deployFolderPath);
         }
     }
 
+    /**
+     * Returns if the Deployment Folder exists
+     * @return bool
+     */
     public function statusFolder() {
-        return file_exists($this->deployFolderPath);
+        return file_exists($this->_deployFolderPath);
     }
 
+    /**
+     * Deploy the Sample Configuration File to the Deployment Folder
+     */
     public function deployPlugin() {
-        copy($this->templateFolderPath . "/static/json/config.json", $this->deployFolderPath . "/config.json");
+        copy($this->_templateFolderPath . "/static/json/config.json", $this->_deployFolderPath . "/config.json");
     }
 }
 

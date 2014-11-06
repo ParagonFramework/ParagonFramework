@@ -1,51 +1,55 @@
 <?php
-
 $this->headLink()
-    ->appendStylesheet('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css');
-
+		->appendStylesheet('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css');
 $this->inlineScript()
-    ->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
+		->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
 
+$product = $this->product;
+$error	 = $this->error;
 ?>
 <div class="container">
-    <div class="page-header">
-        <p class="lead">Edit Product: <?= $this->product->name ?></p>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3>Edit Product: <?= $product->name ?></h3>
+		</div>
+		<form role="form" id="loginform" method="post" action="<?= $this->url(array('controller' => 'index', 'action' => 'update', 'id' => $product->o_id)) ?>" class="form-horizontal" role="form">
+			<div class="panel-body">
+				<?php
+				if ($error) {
+					?>
+					<div class="alert alert-danger" role="alert"><?= $error ?></div>
+					<?php
+				}
+				?>
+				<div class="row">
+					<div class="col-md-6 borderRight">
+						<div class="border">
+							<h3>General Information</h3>
+							<div class="form-group">
+								<label for="id" class="col-sm-2 control-label">SKU</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="id" name="id" value="<?= $product->o_id ?>" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="category" class="col-sm-2 control-label">Category</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="category" name="category" placeholder="Category" value="<?= $product->category ?>">
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="">
+					<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : ''?>>Save</button>
+					<a href="/plugin/ParagonFramework/index/index" class="btn btn-default">Back</a>
+				</div>
+				<input type="hidden" name="modificationDate" value="<?= $product->getModificationDate(); ?>">
+			</div>
+		</form>
+	</div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-6 borderRight">
-            <div class="border">
-                <h3>General Information</h3>
-                <p>SKU: <?= $this->product->o_id ?></p>
-                <p>Main Category: <?= $this->product->category ?></p>
-                <p>Source: _PLACEHOLDER_</p>
-                <p>Make: _PLACEHOLDER_</p>
-            </div>
-            <h3>Description</h3>
-            <textarea rows="5" cols="50">
-                Enter your text here...
-            </textarea>
-        </div>
-        <div class="col-md-6">
-            <table class="table">
-                <tr>
-                    <td>Additional Category</td>
-                    <td>
-                        <select>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="vw">VW</option>
-                            <option value="audi" selected>Audi</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="pull-right">
-        <form role="form" id="loginform" method="post" action="index">
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
-    </div>
 </div>
 

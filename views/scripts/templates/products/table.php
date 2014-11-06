@@ -6,6 +6,7 @@
             <th><?= $e; ?></th>
             <?php } ?>
             <th>Status</th>
+            <th>Last Modification Date</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -16,6 +17,7 @@
             <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
             <?php } ?>
             <td><?= $product->status ?></td>
+			<td><?= date("d.M.Y H:i:s", $product->getModificationDate()) ?></td>
             <td><?= $this->pgProductEditForm($product->o_id, $this->url(["action" => "edit" ])) ?></td>
         </tr>
         <?php } ?>

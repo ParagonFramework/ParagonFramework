@@ -44,7 +44,7 @@ $error	 = $this->error;
 			<div class="panel-footer">
 				<div class="">
 					<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : ''?>>Save</button>
-					<a href="/plugin/ParagonFramework/index/index" class="btn btn-default">Back</a>
+                    <a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
 				</div>
 				<input type="hidden" name="modificationDate" value="<?= $product->getModificationDate(); ?>">
 			</div>

@@ -34,7 +34,8 @@ class ParagonFramework_ConfigReader {
     
     private function __construct() {
         //$filePath = PIMCORE_PLUGINS_PATH . "/ParagonFramework/static/json/config.json";
-        $filePath = PIMCORE_WEBSITE_VAR . "/plugins/ParagonFramework/config.json";
+        $plugin = ParagonFramework_Plugin::getInstance();
+        $filePath = $plugin->getDeployPath() . "/config.json";
 
         /*
         if(!file_exists(FILE_PATH)) {

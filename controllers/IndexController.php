@@ -2,206 +2,196 @@
 
 class ParagonFramework_IndexController extends ParagonFramework_Controller_ActionAdmin {
 
-	const E_USERVIEW_NOT_VALID	 = "USERVIEW_NOT_VALID";
-	const E_USERVIEW_NOT_PRESENT	 = "E_USERVIEW_NOT_PRESENT";
+    const E_USERVIEW_NOT_VALID = "USERVIEW_NOT_VALID";
+    const E_USERVIEW_NOT_PRESENT = "E_USERVIEW_NOT_PRESENT";
 
-	function getErrorURL() {
-		return $this->view->url(array('controller' => 'index', 'action' => 'error'));
-	}
+    function getErrorURL() {
+        return $this->view->url(array('controller' => 'index', 'action' => 'error'));
+    }
 
-	/**
-	 * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
-	 */
-	public function indexAction() {
-		$user = ParagonFramework_Models_User::getUser();
+    /**
+     * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
+     */
+    public function indexAction() {
+        $user = ParagonFramework_Models_User::getUser();
 
-		$configReader		 = ParagonFramework_ConfigReader::getInstance();
-		$configReaderViews	 = $configReader->getViewNamesByUser($user);
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
 
-		$userView = $user->getRole($configReaderViews);
+        $userView = $user->getRole($configReaderViews);
 
-		if ($userView == null) {
-			// $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
-			if (count($configReaderViews) == 0) {
-				$this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_PRESENT);
-				return;
-			}
+        if($userView == null) {
+            // $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
+            if(count($configReaderViews) == 0) {
+                $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_PRESENT);
+                return;
+            }
 
-			$user->setRole($userView = $configReaderViews[0]);
-		}
+            $user->setRole($userView = $configReaderViews[0]);
+        }
 
-		$configReaderView = $configReader->getViewByViewName($userView);
+        $configReaderView = $configReader->getViewByViewName($userView);
 
-		if ($configReaderView == null) {
-			$this->redirect($this->getErrorURL());
-			return;
-		}
+        if($configReaderView == null) {
+            $this->redirect($this->getErrorURL());
+            return;
+        }
 
-		$className		 = $configReaderView->getProduct();
-		$classNameList	 = $className . '_List';
+        $className = $configReaderView->getProduct();
+        $classNameList = $className . '_List';
 
-//        $object = new $className();
-//        $class  = $object->getClass();
+        $object = new $className();
+        $class  = $object->getClass();
 
-		$products = new $classNameList();
-		// $products->setCondition("status NOT LIKE ?", "%valid%");
-//        $products->load();
-//        foreach ($products as $key => $product) {
-//            $missingFields = array();
-//
-//            foreach ($class->getFieldDefinitions() as $fieldname => $definition) {
-//                //creating getter to object
-//                $getterName = "get" . ucfirst($definition->getName());
-//                $value = $product->$getterName();
-//                if (empty($value)) {
-//                    $missingFields[] = $fieldname;
-//                }
-//            }
-//
-//            $product->status = implode("/", $missingFields) . " missing";
-//        }
+        $products = new $classNameList();
+        // $products->setCondition("status NOT LIKE ?", "%valid%");
+        $products->load();
 
-		$paginator = Zend_Paginator::factory($products);
-		$paginator->setCurrentPageNumber($this->_getParam('page'));
-		$paginator->setItemCountPerPage(10);
+        foreach ($products as $key => $product) {
+            $missingFields = array();
 
-		$this->view->configReaderView	 = $configReaderView;
-		$this->view->configReader		 = $configReader;
-		$this->view->paginator			 = $paginator;
-		$this->view->user				 = $user;
-	}
+            foreach ($class->getFieldDefinitions() as $fieldname => $definition) {
+                //creating getter to object
+                $getterName = "get" . ucfirst($definition->getName());
+                $value = $product->$getterName();
+                if (empty($value)) {
+                    $missingFields[] = $fieldname;
+                }
+            }
 
-	/**
-	 * Sends json response to client.
-	 * @param $json 
-	 */
-	public function respondWithJSON($json) {
-		$this->removeViewRenderer();
-		$this->disableLayout();
-		$this->getResponse()
-				->setHeader('Content-type', 'text/json')
-				->setBody(json_encode($json));
-	}
+            $product->status = implode("/", $missingFields) . " missing";
+        }
 
-	/**
-	 * Sends the views the user can access to the client.
-	 */
-	public function rolesAction() {
-		$user = ParagonFramework_Models_User::getUser();
+        $paginator = Zend_Paginator::factory($products);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+        $paginator->setItemCountPerPage(10);
 
-		$configReader		 = ParagonFramework_ConfigReader::getInstance();
-		$configReaderViews	 = $configReader->getViewNamesByUser($user);
+        $this->view->configReaderView = $configReaderView;
+        $this->view->configReader     = $configReader;
+        $this->view->paginator        = $paginator;
+        $this->view->user             = $user;
+    }
 
-		$this->respondWithJSON([ 'roles' => $configReaderViews]);
-	}
+    /**
+     * Sends json response to client.
+     * @param $json 
+     */
+    public function respondWithJSON($json) {
+        $this->removeViewRenderer();
+        $this->disableLayout();
+        $this->getResponse()
+            ->setHeader('Content-type', 'text/json')
+            ->setBody(json_encode($json));
+    }
 
-	/**
-	 * Sets another view and loads the index page or throws an error if the view is not valid.
-	 */
-	public function changeroleAction() {
-		$user = ParagonFramework_Models_User::getUser();
+    /**
+     * Sends the views the user can access to the client.
+     */
+    public function rolesAction() {
+        $user = ParagonFramework_Models_User::getUser();
 
-		$configReader		 = ParagonFramework_ConfigReader::getInstance();
-		$configReaderView	 = filter_input(INPUT_POST, 'viewSwitchingDialog_Selected');
-		$configReaderViews	 = $configReader->getViewNamesByUser($user);
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
 
-		$user->setRole($configReaderView);
+        $this->respondWithJSON([ 'roles' => $configReaderViews]);
+    }
 
-		if ($configReaderView == $user->getRole($configReaderViews)) {
-			$this->redirect($this->view->url(["action" => "index"]));
-		}
+    /**
+     * Sets another view and loads the index page or throws an error if the view is not valid.
+     */
+    public function changeroleAction() {
+        $user = ParagonFramework_Models_User::getUser();
 
-		$this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_VALID);
-	}
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderView = filter_input(INPUT_POST, 'viewSwitchingDialog_Selected');
+        $configReaderViews = $configReader->getViewNamesByUser($user);
 
-	/**
-	 * Prints an error message.
-	 */
-	public function errorAction() {
-		$this->view->user = ParagonFramework_Models_User::getUser();
+        $user->setRole($configReaderView);
 
-		switch ($this->getParam('name', '')) {
-			case E_USERVIEW_NOT_VALID:
-				$this->view->error_title	 = "UserView not valid";
-				$this->view->error_message	 = "Your User is not associated with this UserView!";
-				return;
+        if($configReaderView == $user->getRole($configReaderViews)) {
+            $this->redirect($this->view->url(["action" => "index"]));
+        }
 
-			case E_USERVIEW_NOT_PRESENT:
-				$this->view->error_title	 = "UserView not present";
-				$this->view->error_message	 = "Your User is not associated with any UserView!";
-				return;
+        $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_VALID);
+    }
 
-			default:
-				$this->view->error_title	 = "Internal Error";
-				$this->view->error_message	 = "Something went south, we are sorry!";
-				return;
-		}
-	}
+    /**
+     * Prints an error message.
+     */
+    public function errorAction() {
+        $this->view->user = ParagonFramework_Models_User::getUser();
 
-	/**
-	 * Redirects to edit product view. 
-	 */
-	public function editAction() {
-		$request = $this->getRequest();
-		$error	 = $this->getParam('error');
-		$id		 = $request->getParam('id', '');
-		$product = Object_Abstract::getById($id);
+        switch($this->getParam('name', '')) {
+            case E_USERVIEW_NOT_VALID:
+                $this->view->error_title = "UserView not valid";
+                $this->view->error_message = "Your User is not associated with this UserView!";
+                return;
 
+            case E_USERVIEW_NOT_PRESENT:
+                $this->view->error_title = "UserView not present";
+                $this->view->error_message = "Your User is not associated with any UserView!";
+                return;
 
-		$product->category = $request->getParam('category', $product->category);
+            default:
+                $this->view->error_title = "Internal Error";
+                $this->view->error_message = "Something went south, we are sorry!";
+                return;
+        }
+    }
 
-		$this->view->product = $product;
-		$this->view->error	 = $error;
-	}
+    /**
+     * Redirects to edit product view.
+     */
+    public function editAction() {
+        $id = filter_input(INPUT_POST, 'o_id');
+        $product = Object_Abstract::getById($id);
+        $this->view->product = $product;
 
-	/**
-	 * Updates a product. If the modification date is out of sync an error message is printed on the edit screen.
-	 */
-	public function updateAction() {
-		$request = $this->getRequest();
+        $user = ParagonFramework_Models_User::getUser();
+        $configReader = ParagonFramework_ConfigReader::getInstance();
 
-		$id					 = $request->getParam('id', '');
-		$category			 = $request->getParam('category', '');
-		$modificationDate	 = $request->getParam('modificationDate', '');
+        $configReaderViewNames = $configReader->getViewNamesByUser($user);
+        $userViewName = $user->getRole($configReaderViewNames);
+        $userView = $configReader->getViewByViewName($userViewName);
 
-		$product = Object_Abstract::getById($id);
+        $templateName = $userView->getTemplate();
 
-		if ($modificationDate != $product->getModificationDate()) {
-			// TODO Error message
-			$this->forward('edit', 'index', null, ["error" => "Product has been altered by another user. Reload the product."]);
-		} else {
-			$product->setCategory($category);
-			$product->save();
-			$this->redirect("plugin/ParagonFramework/index/index");
-		}
-	}
+        $plugin = ParagonFramework_Plugin::getInstance();
+        $templateFilePath = $plugin->getDeployPath() . '/' . $templateName;
 
-	/**
-	 * Returns a single product based on a given id.
-	 * 
-	 * @param int $id The id to be looked up.
-	 * @return Pimcore_Object The product fetched from the pimcore database.
-	 */
-	public function getProductById($id) {
-		return Object_Abstract::getByProduct_Id($id, array('limit' => 1));
-	}
+        $this->view->pathToSnipplet = $templateFilePath;
+    }
 
-	/**
-	 * Creates a new product based on some necessary parameters, and saves
-	 * the product in the pimcore database.
-	 */
-	public function createProduct() {
-		/*
-		  $var = Object_Product::create([
-		  "name" => "Apple IPhone 4",
-		  "status" => null,
-		  "category" => "",
-		  ]);
+    /**
+     * Returns a single product based on a given id.
+     * 
+     * @param int $id The id to be looked up.
+     * @return Pimcore_Object The product fetched from the pimcore database.
+     */
+    public function getProductById($id) {
+            return Object_Abstract::getByProduct_Id($id, array('limit' => 1));
+    }
 
-		  $var->setKey('o50');
-		  $var->setParentId(48);
-		  $var->save();
-		 */
-	}
+    /**
+     * Creates a new product based on some necessary parameters, and saves
+     * the product in the pimcore database.
+     */
+    public function createProduct() {
+
+        $name= $_POST["name"];
+        $status=$_POST["status"];
+        $category=$_POST["category"];
+
+        $var = Object_Product::create([
+            "name" => $name,
+            "status" => $status,
+            "category" => $category,
+        ]);
+
+        $var->setKey($_POST["key"]);
+        $var->setParentId(48);
+        $var->save();
+
+    }
 
 }

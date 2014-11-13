@@ -21,19 +21,13 @@ body {
     text-align: center;
 }
 
-.viewSwitchingDialog .test {
-    width:400px;
+.viewSwitchingDialog form {
+    width: 400px;
     margin: 100px auto;
     position: relative;
     background-color: #fff;
-    border:1px solid #000;
-    padding:15px;
-}
-
-.viewSwitchingDialog-wrapper {
-    width: auto;
-    margin: 0 auto;
-    display: inline-block;
+    border: 1px solid #000;
+    padding: 15px;
 }
 
 body {

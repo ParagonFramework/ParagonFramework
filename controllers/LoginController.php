@@ -89,7 +89,7 @@ class ParagonFramework_LoginController extends Pimcore_Controller_Action {
 		//logout works anyway
 		//Zend_Session::destroy();
 
-		$this->forward("index", "login", "ParagonFramework", array("message" => "Auf Wiedersehen!"));
+		$this->forward("index", "login", "ParagonFramework", array("message" => "Goodbye!"));
 	}
 
 }

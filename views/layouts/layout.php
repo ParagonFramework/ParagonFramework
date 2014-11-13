@@ -5,7 +5,8 @@ $this->headLink()
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/pygments-manni.css')
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css')
 
-    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css');
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css')
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/footer.css');
 
 $this->inlineScript()
     ->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')

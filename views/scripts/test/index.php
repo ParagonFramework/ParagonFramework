@@ -6,7 +6,8 @@
     <title>My First Grid</title>
 
     <!--link rel="stylesheet" type="text/css" media="screen" href="/plugin/ParagonFramework/static/css/ui-lightness/jquery-ui-1.8.2.custom.css" /-->
-    <link rel="stylesheet" type="text/css" media="screen" href="/plugin/ParagonFramework/static/css/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.trirand.com/blog/jqgrid/themes/redmond/jquery-ui-custom.css" />
 
     <style type="text/css">
         html, body {
@@ -15,41 +16,42 @@
             font-size: 75%;
         }
     </style>
-
-    <script src="/plugin/ParagonFramework/static/js/jquery-1.11.1.min.js" type="text/javascript"></script>
-    <!--script src="/plugin/ParagonFramework/static/js/i18n/grid.locale-en.js" type="text/javascript"></script-->
-    <script src="/plugin/ParagonFramework/static/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $("#list").jqGrid({
-                url: "/plugin/ParagonFramework/test/example",
-                datatype: "xml",
-                mtype: "GET",
-                colNames: ["id", "name", "image", "status", "actions"],
-                colModel: [
-                    { name: "id", width: 55 },
-                    { name: "name", width: 90 },
-                    { name: "image", width: 80},
-                    { name: "status", width: 80},
-                    { name: "actions", width: 80},
-                ],
-                pager: "#pager",
-                rowNum: 10,
-                rowList: [10, 20, 30],
-                sortname: "name",
-                sortorder: "desc",
-                viewrecords: true,
-                gridview: true,
-                autoencode: true,
-                caption: "My first grid"
-            });
-        });
-    </script>
-
 </head>
 <body>
-    <table id="list"><tr><td></td></tr></table>
+    <table id="list27" ></table>
     <div id="pager"></div>
 </body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.src.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    jQuery().ready(function () {
+        jQuery("#list27").jqGrid({
+            url: "/plugin/ParagonFramework/test/example",
+            datatype: "xml",
+            mtype: "GET",
+            colNames: ["id", "name", "status", "actions"],
+            colModel: [
+                { name: "id", sorttype: 'integer', searchoptions:{sopt:['eq','ne','le','lt','gt','ge']} },
+                { name: "name" },
+                { name: "status"},
+                { name: "actions"},
+            ],
+            pager: "#pager",
+            rowNum: 50,
+            rowList: [50, 100, 500],
+            sortname: "name",
+            sortorder: "asc",
+            viewrecords: true,
+            gridview: true,
+            autowidth: true,
+            autoencode: true,
+            caption: "My first grid"
+        });
+        jQuery("#list27").jqGrid('filterToolbar',{searchOperators : true});
+    });
+</script>
+
 </html>

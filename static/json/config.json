@@ -4,26 +4,11 @@
         "MyObject ProductView 1": {
             "Template": "static/templates/MyObject_ProductView",
             "Product": "Object_Product",
-            "Select": [
-                "Name",
-                "Image"
-            ],
-            "Where": {
-                "status": null
+            "Select": {
+                "ID": "o_id",
+                "Name": "name",
+                "Status": "status"
             },
-            "Groups": [
-                "asdf"
-            ]
-        },
-        "MyObject ProductView 2": {
-            "Template": "static/templates/MyObject_ProductView",
-            "Product": "Object_News",
-            "Select": [
-                "Title",
-                "ShortText",
-                "Text",
-                "Date"
-            ],
             "Where": {
                 "status": null
             },

@@ -29,10 +29,12 @@ $this->inlineScript()
 
     ?>
 
-    <div class="pull-right">
-        <form role="form" id="loginform" method="post" action="index">
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
+    <div class="panel-footer">
+        <div class="">
+            <button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : ''?>>Save</button>
+            <a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
+        </div>
+        <input type="hidden" name="modificationDate" value="<?= $product->getModificationDate(); ?>">
     </div>
 </div>
 

@@ -2,7 +2,7 @@
     "Provider": "ParagonFramework_Helper_AuthProvider",
     "Views": {
         "MyObject ProductView 1": {
-            "Template": "static/templates/MyObject_ProductView",
+            "Template": "templates/MyObject_ProductView1Snipplet.php",
             "Product": "Object_Product",
             "Select": [
                 "Name",

@@ -27,30 +27,29 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    /*sorttype: 'integer', searchoptions:{sopt:['eq','ne','le','lt','gt','ge']}*/
     jQuery().ready(function () {
         jQuery("#list27").jqGrid({
             url: "/plugin/ParagonFramework/test/example",
             datatype: "xml",
             mtype: "GET",
-            colNames: ["id", "name", "status", "actions"],
+            colNames: [<?= '\'' . implode('\', \'', $this->columnNames) . '\', \'Actions\'' ?>],
             colModel: [
-                { name: "id", sorttype: 'integer', searchoptions:{sopt:['eq','ne','le','lt','gt','ge']} },
-                { name: "name" },
-                { name: "status"},
-                { name: "actions"},
+                <?php foreach($this->columnKeys as $k) { ?>
+                { name: "<?= $k ?>"},
+                <?php } ?>
+                { name: "actions" }
             ],
             pager: "#pager",
             rowNum: 50,
             rowList: [50, 100, 500],
-            sortname: "name",
-            sortorder: "asc",
             viewrecords: true,
             gridview: true,
             autowidth: true,
             autoencode: true,
             caption: "My first grid"
         });
-        jQuery("#list27").jqGrid('filterToolbar',{searchOperators : true});
+        // jQuery("#list27").jqGrid('filterToolbar',{searchOperators : true});
     });
 </script>
 

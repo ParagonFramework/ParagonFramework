@@ -14,6 +14,18 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
      */
     public function indexAction() {
         $this->disableLayout();
+
+        $user = ParagonFramework_Models_User::getUser();
+
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
+
+        $userView = $user->getRole($configReaderViews);
+
+        $configReaderView = $configReader->getViewByViewName($userView);
+
+        $this->view->columnNames = array_keys($configReaderView->getSelect());
+        $this->view->columnKeys = array_values($configReaderView->getSelect());
     }
 
     /**
@@ -43,17 +55,31 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
     function exampleAction() {
         // be sure to put text data in CDATA
 
-        $limit = $_REQUEST['rows']; // get how many rows we want to have into the grid
-        $page = $_REQUEST['page']; // get the requested page
-        $sidx = $_REQUEST['sidx']; // get index row - i.e. user click to sort
-        $sord = $_REQUEST['sord']; // get the direction
+        $totalrows = filter_input(INPUT_GET, 'totalrows');
+        $limit     = filter_input(INPUT_GET, 'rows'     ); // get how many rows we want to have into the grid
+        $page      = filter_input(INPUT_GET, 'page'     ); // get the requested page
+        $sidx      = filter_input(INPUT_GET, 'sidx'     ); // get index row - i.e. user click to sort
+        $sord      = filter_input(INPUT_GET, 'sord'     ); // get the direction
 
-        if(!$sidx) {
-            $sidx = 1;
+        if(!$totalrows) {
+            $totalrows = 50;
+            $limit = $totalrows;
         }
 
-        $totalrows = isset($_REQUEST['totalrows']) ? $_REQUEST['totalrows']: false;
-        if($totalrows) {
+        if(!$limit) {
+            $limit = 50;
+        }
+
+        if(!$sord) {
+        } else if ($sord == "1" || strtoupper($sord) == "DESC") {
+            $sord = "DESC";
+        } else if ($sord == "0" || strtoupper($sord) ==  "ASC") {
+            $sord = "ASC";
+        }
+
+        if(!$totalrows) {
+            //ghert so, ned löschen
+        } else {
             $limit = $totalrows;
         }
 
@@ -64,21 +90,7 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
 
         $userView = $user->getRole($configReaderViews);
 
-        if($userView == null) {
-            if(count($configReaderViews) == 0) {
-                $this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_PRESENT);
-                return;
-            }
-
-            $user->setRole($userView = $configReaderViews[0]);
-        }
-
         $configReaderView = $configReader->getViewByViewName($userView);
-
-        if($configReaderView == null) {
-            $this->redirect($this->getErrorURL());
-            return;
-        }
 
         $className = $configReaderView->getProduct();
         $classNameList = $className . '_List';
@@ -90,7 +102,7 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
         $productColumns = $configReaderView->getSelect();
 
         $products = new $classNameList();
-        $products->setOrderKey(array_values($productColumns)[$sidx - 1]);
+        $products->setOrderKey($sidx);
         $products->setOrder($sord);
         $products->load();
         $productsCount = $products->count();

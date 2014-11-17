@@ -8,15 +8,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
     function getErrorURL() {
         return $this->view->url(array('controller' => 'index', 'action' => 'error'));
     }
-
-    /**
-     * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
-     */
-    public function indexAction() {
-        $user = ParagonFramework_Models_User::getUser();
-
-        $configReader = ParagonFramework_ConfigReader::getInstance();
-        $configReaderViews = $configReader->getViewNamesByUser($user);
+	
+	function getView($user, $configReader) {
+		        $configReaderViews = $configReader->getViewNamesByUser($user);
 
         $userView = $user->getRole($configReaderViews);
 
@@ -36,6 +30,17 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
             $this->redirect($this->getErrorURL());
             return;
         }
+		return $configReaderView;
+	}
+
+    /**
+     * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
+     */
+    public function indexAction() {
+        $user = ParagonFramework_Models_User::getUser();
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+		$configReaderView = $this->getView($user, $configReader);
+
 
         $className = $configReaderView->getProduct();
         $classNameList = $className . '_List';
@@ -145,21 +150,21 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
     public function editAction() {
         $id = filter_input(INPUT_POST, 'o_id');
         $product = Object_Abstract::getById($id);
-        $this->view->product = $product;
-
+		
         $user = ParagonFramework_Models_User::getUser();
         $configReader = ParagonFramework_ConfigReader::getInstance();
+		$configReaderView = $this->getView($user, $configReader);
 
-        $configReaderViewNames = $configReader->getViewNamesByUser($user);
-        $userViewName = $user->getRole($configReaderViewNames);
-        $userView = $configReader->getViewByViewName($userViewName);
-
-        $templateName = $userView->getTemplate();
+        $templateName = $configReaderView->getTemplate();
+		
+		$class = $product->getClass();
 
         $plugin = ParagonFramework_Plugin::getInstance();
         $templateFilePath = $plugin->getDeployPath() . '/templates/' . $templateName;
 
         $this->view->pathToSnipplet = $templateFilePath;
+        $this->view->product = $product;
+        $this->view->user             = $user;
     }
 
     /**

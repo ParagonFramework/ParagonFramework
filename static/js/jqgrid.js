@@ -7,13 +7,13 @@ jQuery().ready(function () {
             colNames: $.merge(data.columnNames, [ 'Actions' ]),
             colModel: $.merge(data.columnKeys, [ { name: 'action' }]),
             pager: "#pager",
-            rowNum: 50,
-            rowList: [50, 100, 500],
+            rowNum: 30,
+            rowList: [30, 100, 500],
             viewrecords: true,
             gridview: true,
             autowidth: true,
-            autoencode: true,
-            caption: "My first grid"
+            height: 500,
+            autoencode: true
         });
     });
 // jQuery("#list27").jqGrid('filterToolbar',{searchOperators : true});

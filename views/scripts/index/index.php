@@ -27,9 +27,11 @@
         </div>
     </div>
     <p class="lead">Products that need to be completed.</p>
+    <div id="sepp">
+        <table id="table"></table>
+        <div id="pager"></div>
+    </div>
 
-    <table id="table" ></table>
-    <div id="pager"></div>
 
 	<!--?= $this->partial('templates/products/table.php', $this); ?-->
 	<!-- pagination start -->

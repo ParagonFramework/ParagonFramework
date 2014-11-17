@@ -169,7 +169,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $configReader = ParagonFramework_ConfigReader::getInstance();
         $configReaderViews = $configReader->getViewNamesByUser($user);
 
-        $this->respondWith([ 'roles' => $configReaderViews]);
+        $this->respondWith(json_encode([ 'roles' => $configReaderViews]));
     }
 
     /**

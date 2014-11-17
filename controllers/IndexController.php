@@ -157,7 +157,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $templateName = $userView->getTemplate();
 
         $plugin = ParagonFramework_Plugin::getInstance();
-        $templateFilePath = $plugin->getDeployPath() . '/' . $templateName;
+        $templateFilePath = $plugin->getDeployPath() . '/templates/' . $templateName;
 
         $this->view->pathToSnipplet = $templateFilePath;
     }

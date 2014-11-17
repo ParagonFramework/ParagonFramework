@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default">Next</button>
+                <button type="submit" class="btn btn-default">OK</button>
                 <input type="button" class="btn btn-default" name="btnCancel" value="Cancel" onclick="toggle_visibility('viewSwitchingDialog');">
             </div>
         </form>

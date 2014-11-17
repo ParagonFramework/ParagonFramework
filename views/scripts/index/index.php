@@ -28,12 +28,15 @@
     </div>
     <p class="lead">Products that need to be completed.</p>
 
-	<?= $this->partial('templates/products/table.php', $this); ?>
+    <table id="table" ></table>
+    <div id="pager"></div>
+
+	<!--?= $this->partial('templates/products/table.php', $this); ?-->
 	<!-- pagination start -->
-	<?=
+	<!--?=
 	$this->paginationControl($this->content['paginator'], 'Sliding', 'includes/paging.php', array(
 		'urlprefix'			 => $this->url(["action" => "index"]) . '?page=',
 		'appendQueryString'	 => true
 	));
-	?>
+	?-->
 </div>

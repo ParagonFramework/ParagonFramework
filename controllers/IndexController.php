@@ -37,51 +37,127 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
             return;
         }
 
-        $className = $configReaderView->getProduct();
-        $classNameList = $className . '_List';
-
-        $object = new $className();
-        $class  = $object->getClass();
-
-        $products = new $classNameList();
-        // $products->setCondition("status NOT LIKE ?", "%valid%");
-        $products->load();
-
-        foreach ($products as $key => $product) {
-            $missingFields = array();
-
-            foreach ($class->getFieldDefinitions() as $fieldname => $definition) {
-                //creating getter to object
-                $getterName = "get" . ucfirst($definition->getName());
-                $value = $product->$getterName();
-                if (empty($value)) {
-                    $missingFields[] = $fieldname;
-                }
-            }
-
-            $product->status = implode("/", $missingFields) . " missing";
-        }
-
-        $paginator = Zend_Paginator::factory($products);
-        $paginator->setCurrentPageNumber($this->_getParam('page'));
-        $paginator->setItemCountPerPage(10);
-
         $this->view->configReaderView = $configReaderView;
         $this->view->configReader     = $configReader;
-        $this->view->paginator        = $paginator;
         $this->view->user             = $user;
+        $this->view->columnNames = array_keys($configReaderView->getSelect());
+        $this->view->columnKeys = array_values($configReaderView->getSelect());
+        $this->view->headLink()
+            ->appendStylesheet('//cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css')
+            ->appendStylesheet('http://www.trirand.com/blog/jqgrid/themes/redmond/jquery-ui-custom.css');
+        //$this->view->inlineScript()
+        //    ->appendFile('/plugins/ParagonFramework/static/js/jqgrid.js');
     }
 
     /**
      * Sends json response to client.
-     * @param $json 
+     * @param $json
      */
-    public function respondWithJSON($json) {
+    public function respondWith($json, $contentType = 'text/json') {
         $this->removeViewRenderer();
         $this->disableLayout();
         $this->getResponse()
-            ->setHeader('Content-type', 'text/json')
-            ->setBody(json_encode($json));
+            ->setHeader('Content-type', $contentType)
+            ->setBody($json);
+    }
+
+    function columnsAction() {
+        $user = ParagonFramework_Models_User::getUser();
+
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
+
+        $userView = $user->getRole($configReaderViews);
+        $configReaderView = $configReader->getViewByViewName($userView);
+
+        $this->respondWith(json_encode([
+            'columnNames' => array_keys  ($configReaderView->getSelect()),
+            'columnKeys'  => iterator_to_array($this->prettifier(array_values($configReaderView->getSelect()))),
+        ]));
+    }
+
+    function prettifier($A) {
+        foreach($A as $e) {
+            yield [ 'name' => $e ];
+        }
+    }
+
+    function fetchAction() {
+        // be sure to put text data in CDATA
+
+        $totalrows = filter_input(INPUT_GET, 'totalrows');
+        $limit     = filter_input(INPUT_GET, 'rows'     ); // get how many rows we want to have into the grid
+        $page      = filter_input(INPUT_GET, 'page'     ); // get the requested page
+        $sidx      = filter_input(INPUT_GET, 'sidx'     ); // get index row - i.e. user click to sort
+        $sord      = filter_input(INPUT_GET, 'sord'     ); // get the direction
+
+        if(!$totalrows) {
+            $totalrows = 50;
+            $limit = $totalrows;
+        }
+
+        if(!$limit) {
+            $limit = 50;
+        }
+
+        if(!$sord) {
+        } else if ($sord == "1" || strtoupper($sord) == "DESC") {
+            $sord = "DESC";
+        } else if ($sord == "0" || strtoupper($sord) ==  "ASC") {
+            $sord = "ASC";
+        }
+
+        if(!$totalrows) {
+            //ghert so, ned löschen
+        } else {
+            $limit = $totalrows;
+        }
+
+        $user = ParagonFramework_Models_User::getUser();
+
+        $configReader = ParagonFramework_ConfigReader::getInstance();
+        $configReaderViews = $configReader->getViewNamesByUser($user);
+
+        $userView = $user->getRole($configReaderViews);
+
+        $configReaderView = $configReader->getViewByViewName($userView);
+
+        $className = $configReaderView->getProduct();
+        $classNameList = $className . '_List';
+
+        $itemsPage = $page;
+        $itemsPPage = $limit;
+        $itemsPOffset = ($itemsPage - 1) * $itemsPPage;
+
+        $productColumns = $configReaderView->getSelect();
+
+        $products = new $classNameList();
+        $products->setOrderKey($sidx);
+        $products->setOrder($sord);
+        $products->load();
+        $productsCount = $products->count();
+
+        $productList = $products->getItems($itemsPOffset, $itemsPPage);
+        $productListCount = count($productList);
+
+        $content = "<?xml version='1.0' encoding='utf-8'?>\n";
+        $content .= "<rows>";
+        $content .= "<page>$itemsPage</page>";
+        $content .= "<total>$productsCount</total>";
+        $content .= "<records>$productListCount</records>";
+
+        foreach ($productList as $product) {
+            $content .= "<row>";
+            foreach($productColumns as $productColumn) {
+                $content .= "<cell>{$product->$productColumn}</cell>";
+            }
+            $content .= "<cell />";
+            $content .= "</row>";
+
+        }
+        $content .= "</rows>";
+
+        $this->respondWith($content, 'text/xml');
     }
 
     /**
@@ -93,7 +169,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $configReader = ParagonFramework_ConfigReader::getInstance();
         $configReaderViews = $configReader->getViewNamesByUser($user);
 
-        $this->respondWithJSON([ 'roles' => $configReaderViews]);
+        $this->respondWith([ 'roles' => $configReaderViews]);
     }
 
     /**

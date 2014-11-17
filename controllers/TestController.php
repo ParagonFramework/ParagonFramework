@@ -26,6 +26,7 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
 
         $this->view->columnNames = array_keys($configReaderView->getSelect());
         $this->view->columnKeys = array_values($configReaderView->getSelect());
+
     }
 
     /**
@@ -78,7 +79,7 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
         }
 
         if(!$totalrows) {
-            //ghert so, ned löschen
+            //empty
         } else {
             $limit = $totalrows;
         }

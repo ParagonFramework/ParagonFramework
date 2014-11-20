@@ -3,7 +3,9 @@ $this->headLink()
     ->appendStylesheet('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/pygments-manni.css')
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css')
-    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css');
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css')
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.css')
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.font-awesome.css');
 $this->inlineScript()
     //->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     ->appendFile("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")

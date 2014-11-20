@@ -27,7 +27,7 @@
         </div>
     </div>
     <p class="lead">Products that need to be completed.</p>
-    <div id="sepp">
+    <div id="content">
         <table id="table"></table>
         <div id="pager"></div>
     </div>

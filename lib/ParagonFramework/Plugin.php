@@ -51,7 +51,7 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
         $plugin->ensureFolder();
         $plugin->deployPlugin();
 
-        return $plugin->statusFolder();
+        return ($plugin->statusFolder()) ? "Installation Completed and Deployed to" . PHP_EOL . $plugin->getDeployPath() : "Failed";
 	}
 
 	public static function uninstall() {
@@ -60,7 +60,7 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
 
 		// implement your own logic here
 		// return file_exists($filePath);
-        return $plugin->statusFolder() == false;
+        return ($plugin->statusFolder() == false) ? "Uninstallation Completed" : "Failed";
 	}
 
 	public static function isInstalled() {

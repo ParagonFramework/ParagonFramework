@@ -6,10 +6,10 @@ $this->inlineScript()
 		->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
 
 // $this->obj is assigned in the controller/action
-$object = $this->product;
+$id = $this->id;
 
 // TODO: retrieve the object form view helper
-// $ofh = $this->objectForm($object->getId());
+$ofh = new ParagonFramework_ViewHelper($id);
 ?>
 
 <div class="container">
@@ -19,6 +19,7 @@ $object = $this->product;
 		</div>
 		<div class="panel-body">
 			<?php
+			$ofh->field("name");
 			//For testing purpose
 			echo("Path to Snipplet: " . $this->pathToSnipplet);
 			echo("Content: " . file_get_contents($this->pathToSnipplet));

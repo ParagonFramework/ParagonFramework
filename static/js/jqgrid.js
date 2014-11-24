@@ -5,7 +5,7 @@ jQuery().ready(function () {
             datatype: "xml",
             mtype: "GET",
             colNames: $.merge(data.columnNames, [ 'Actions' ]),
-            colModel: $.merge(data.columnKeys, [ { name: 'action' }]),
+            colModel: $.merge(data.columnKeys, [ { name: 'action', search: false }]),
             pager: "#pager",
             rowNum: 30,
             rowList: [30, 100, 500],

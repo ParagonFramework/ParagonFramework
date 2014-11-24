@@ -45,6 +45,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$className		 = $configReaderView->getProduct();
 		$classNameList	 = $className . '_List';
 
+		$list = new Object_Baseproduct();
+		var_dump($list);
+		die($classNameList);
 		$object	 = new $className();
 		$class	 = $object->getClass();
 
@@ -148,7 +151,8 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 	 * Redirects to edit product view.
 	 */
 	public function editAction() {
-		$id = $this->getRequest()->getParam('id');
+		$id		 = $this->getRequest()->getParam('id');
+		$product = Object_Abstract::getById($id);
 
 		$user				 = ParagonFramework_Models_User::getUser();
 		$configReader		 = ParagonFramework_ConfigReader::getInstance();
@@ -161,7 +165,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
 		$this->view->pathToSnipplet	 = $templateFilePath;
 		$this->view->user			 = $user;
-		$this->view->id				 = $id;
+		$this->view->product		 = $product;
 	}
 
 	/**

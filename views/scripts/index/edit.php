@@ -6,7 +6,7 @@ $this->inlineScript()
 		->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
 
 // $this->obj is assigned in the controller/action
-$id = $this->id;
+$id = $this->product->o_id;
 
 // TODO: retrieve the object form view helper
 $ofh = new ParagonFramework_ViewHelper($id);
@@ -18,15 +18,17 @@ $ofh = new ParagonFramework_ViewHelper($id);
 			<h3 class="panel-title">Edit Product: <?= $this->product->name ?></h3>
 		</div>
 		<div class="panel-body">
-			<?php
-			$ofh->field("name");
-			//For testing purpose
-			echo("Path to Snipplet: " . $this->pathToSnipplet);
-			echo("Content: " . file_get_contents($this->pathToSnipplet));
+			<form class="form-horizontal" role="form">
+				<?php
+				$ofh->field("name", $this->product->name, ["label" => "Product name"]);
+				//For testing purpose
+				echo("Path to Snipplet: " . $this->pathToSnipplet);
+				echo("Content: " . file_get_contents($this->pathToSnipplet));
 
-			//TODO: After completion of the objectFormHelper the php content should be included
-			//include($this->pathToSnipplet);
-			?>
+				//TODO: After completion of the objectFormHelper the php content should be included
+				//include($this->pathToSnipplet);
+				?>
+			</form>
 		</div>
 		<div class="panel-footer">
 			<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : '' ?>>Save</button>

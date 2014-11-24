@@ -90,6 +90,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $page      = filter_input(INPUT_GET, 'page'     ); // get the requested page
         $sidx      = filter_input(INPUT_GET, 'sidx'     ); // get index row - i.e. user click to sort
         $sord      = filter_input(INPUT_GET, 'sord'     ); // get the direction
+        $filters   = [];
+
+        $plugin = ParagonFramework_Plugin::getInstance();
+        file_put_contents($plugin->getDeployPath() . '/test.log', json_encode($_REQUEST));
 
         if(!$totalrows) {
             $totalrows = 50;
@@ -131,9 +135,29 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
         $productColumns = $configReaderView->getSelect();
 
+        foreach(array_values($configReaderView->getSelect()) as $e) {
+            if(($value = filter_input(INPUT_GET, $e))) {
+                $filters[$e] = $value;
+            }
+        }
+
         $products = new $classNameList();
         $products->setOrderKey($sidx);
         $products->setOrder($sord);
+        $productsConditions = [];
+
+        foreach($filters as $k => $e) {
+            if ($k == 'o_id') {
+                $productsConditions[] = ("$k = '$e'");
+            } else {
+                $productsConditions[] = ("$k LIKE '%$e%'");
+            }
+        }
+
+        if(count($productsConditions) > 0) {
+            $products->setCondition(implode(" AND ", $productsConditions));
+        }
+
         $products->load();
         $productsCount = $products->count();
 

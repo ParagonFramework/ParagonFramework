@@ -15,6 +15,6 @@ jQuery().ready(function () {
             height: 500,
             autoencode: true
         });
+        jQuery("#table").jqGrid('filterToolbar',{searchOperators : true});
     });
-// jQuery("#list27").jqGrid('filterToolbar',{searchOperators : true});
 });

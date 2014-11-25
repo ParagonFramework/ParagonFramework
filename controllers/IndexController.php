@@ -115,9 +115,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
             $sord = "ASC";
         }
 
-        if(!$totalrows) {
-            //ghert so, ned löschen
-        } else {
+        if($totalrows) {
             $limit = $totalrows;
         }
 

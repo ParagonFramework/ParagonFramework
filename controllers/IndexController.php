@@ -163,10 +163,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         }
 
         $products->load();
-        $productsCount = $products->count();
+        $productsCount = ($products->count() / $itemsPPage) + 1;
 
         $productList = $products->getItems($itemsPOffset, $itemsPPage);
-        $productListCount = count($productList);
+        $productListCount = $products->count();
 
         $content = "<?xml version='1.0' encoding='utf-8'?>\n";
         $content .= "<rows>";

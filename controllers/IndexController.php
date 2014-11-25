@@ -61,6 +61,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
             ->setBody($json);
     }
 
+    /**
+     * Returns column names and keys
+     */
     function columnsAction() {
         $user = ParagonFramework_Models_User::getUser();
 
@@ -82,9 +85,10 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         }
     }
 
+    /**
+     * Returns data to table in json form
+     */
     function fetchAction() {
-        // be sure to put text data in CDATA
-
         $totalrows = filter_input(INPUT_GET, 'totalrows');
         $limit     = filter_input(INPUT_GET, 'rows'     ); // get how many rows we want to have into the grid
         $page      = filter_input(INPUT_GET, 'page'     ); // get the requested page

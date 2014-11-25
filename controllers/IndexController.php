@@ -45,9 +45,6 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$className		 = $configReaderView->getProduct();
 		$classNameList	 = $className . '_List';
 			
-		$list = new Object_Baseproduct();
-		var_dump($list);
-		die($classNameList);
 		$object	 = new $className();
 		$class	 = $object->getClass();
 

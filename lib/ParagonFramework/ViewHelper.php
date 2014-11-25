@@ -28,10 +28,10 @@ class ParagonFramework_ViewHelper extends Zend_View_Helper_Abstract {
 		$codeGeneratorClassName	 = "ParagonFramework_ViewHelper_CodeGenerator_$fieldType";
 		
 		if (!class_exists($codeGeneratorClassName)) {
-			echo "No code generator found for the field type: '$fieldType'";
+			echo "No code generator found for the field type: '$fieldType'<br>";
 			return;
 		}
-		$codeGenerator = new $codeGeneratorClassName();
+		$codeGenerator = new $codeGeneratorClassName($this->class);
 
 		if (key_exists("label", $attributes)) {
 			$label = $attributes["label"];
@@ -39,15 +39,15 @@ class ParagonFramework_ViewHelper extends Zend_View_Helper_Abstract {
 		} else {
 			$label = $name;
 		}
-		$attribute = "";
-		foreach ($attribute as $key => $value) {
-			$attribute .= "$key=\"$value\"";
+		$attribute = " ";
+		foreach ($attributes as $key => $val) {
+			$attribute .= "$key=\"$val\"";
 		}
 		$style = "";
-		foreach ($styles as $key => $value) {
-			$style .= "$key: $value;";
+		foreach ($styles as $key => $val) {
+			$style .= "$key: $val;";
 		}
-		echo $codeGenerator->getHTML($name, $label, $value, $attributes, $styles);
+		echo $codeGenerator->getHTML($name, $label, $value, $attribute, $style);
 	}
 
 }

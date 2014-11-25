@@ -1,5 +1,6 @@
 body {
     padding-top: 70px;
+    margin-bottom: 90px;
 }
 
 .borderRight {
@@ -29,11 +30,6 @@ body {
     border: 1px solid #000;
     padding: 15px;
 }
-
-body {
-    padding-bottom: 70px;   
-}
-
 
 .reset-this {
     animation : none;

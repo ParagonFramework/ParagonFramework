@@ -1,10 +1,4 @@
 <?php
-$this->headLink()
-		->appendStylesheet('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css');
-
-$this->inlineScript()
-		->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
-
 // $this->obj is assigned in the controller/action
 $id = $this->product->o_id;
 
@@ -21,6 +15,18 @@ $ofh = new ParagonFramework_ViewHelper($id);
 			<form class="form-horizontal" role="form">
 				<?php
 				$ofh->field("name", $this->product->name, ["label" => "Product name"]);
+				$ofh->field("productnumber", $this->product->productnumber, ["label" => "Product number"]);
+				$ofh->field("category", $this->product->category);
+				$ofh->field("os", $this->product->os);
+				$ofh->field("description", $this->product->description, ["rows" => 3]);
+				$ofh->field("image", $this->product->image);
+				$ofh->field("details", $this->product->details);
+				$ofh->field("releasedate", $this->product->releasedate);
+				$ofh->field("releasetime", $this->product->releasetime);
+				$ofh->field("lastmodified", $this->product->lastmodified);
+				$ofh->field("finished");
+
+
 				//For testing purpose
 				echo("Path to Snipplet: " . $this->pathToSnipplet);
 				echo("Content: " . file_get_contents($this->pathToSnipplet));

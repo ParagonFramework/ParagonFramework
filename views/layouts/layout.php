@@ -4,6 +4,7 @@ $this->headLink()
 		->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/pygments-manni.css')
 		->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css')
 		->appendStylesheet('/plugins/ParagonFramework/static/css/site.css')
+        ->appendStylesheet('/plugins/ParagonFramework/static/css/footer.css')
 		->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.css')
 		->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.font-awesome.css');
 $this->inlineScript()

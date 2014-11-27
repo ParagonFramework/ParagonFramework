@@ -16,9 +16,9 @@ class ParagonFramework_ViewHelper_CodeGenerator_Input extends ParagonFramework_V
 		ob_start();
 		?>
 		<div class="form-group">
-			<label for="objectField-$name" class="col-sm-2 control-label"><?= $label ?></label>
+			<label for="objectField-<?= $name ?>" class="col-sm-2 control-label"><?= $label ?></label>
 			<div class="col-sm-10">
-				<input type="{$this->type}" class="form-control" id="objectField-<?= $name ?>" name="objectField[$name]" <?= $attributes ?> style="<?= $styles ?>" <?= $value ?>>
+				<input type="<?= $this->type ?>" class="form-control" id="objectField-<?= $name ?>" name="objectField[<?= $name ?>]" <?= $attributes ?> style="<?= $styles ?>" <?= $value ?>>
 			</div>
 		</div>
 		<?php

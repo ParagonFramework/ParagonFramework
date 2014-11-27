@@ -10,9 +10,9 @@ class ParagonFramework_ViewHelper_CodeGenerator_Textarea extends ParagonFramewor
 		ob_start();
 		?>
 		<div class="form-group">
-			<label for="objectField-$name" class="col-sm-2 control-label"><?php $label ?></label>
+			<label for="objectField-<?= $name ?>" class="col-sm-2 control-label"><?php $label ?></label>
 			<div class="col-sm-10">
-				<textarea class="form-control" id="objectField-<?= $name ?>" name="objectField[$name]" <?= $attributes ?> style="<?= $styles ?>"><?= $value ?></textarea>
+				<textarea class="form-control" id="objectField-<?= $name ?>" name="objectField[<?= $name ?>]" <?= $attributes ?> style="<?= $styles ?>"><?= $value ?></textarea>
 			</div>
 		</div>
 

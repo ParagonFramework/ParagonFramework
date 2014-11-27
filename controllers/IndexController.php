@@ -41,13 +41,12 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$configReader		 = ParagonFramework_ConfigReader::getInstance();
 		$configReaderView	 = $this->getView($user, $configReader);
 
-
 		$className		 = $configReaderView->getProduct();
 		$classNameList	 = $className . '_List';
-			
+
 		$object	 = new $className();
 		$class	 = $object->getClass();
-
+		
 		$products = new $classNameList();
 		// $products->setCondition("status NOT LIKE ?", "%valid%");
 		$products->load();
@@ -163,6 +162,35 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$this->view->pathToSnipplet	 = $templateFilePath;
 		$this->view->user			 = $user;
 		$this->view->product		 = $product;
+	}
+
+	/*   ________________
+		/                \
+		| How about moo? |  ^__^
+		\________________/  (oo)\_______
+						  \ (__)\       )\/\
+								||----w |
+								||     ||
+	 */
+	public function updateAction() {
+		echo "<pre>";
+		$params = $_POST["objectField"];
+		$object = Object_Abstract::getById($params["id"]);
+		var_dump($object);
+		unset($params["id"]);
+		$object->setName("test");
+		$object->save();
+		
+		foreach ($params as $key => $value) {
+//			$object->$key = $value;
+			$setter = "set" . ucfirst($key);
+			echo $setter . "<br>";
+//			$object->$setter($value);
+		}
+//		$object->save();
+		
+		echo "</pre>";
+//		$this->redirect('index');
 	}
 
 	/**

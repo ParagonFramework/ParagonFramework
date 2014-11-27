@@ -17,7 +17,7 @@ class ParagonFramework_ViewHelper_CodeGenerator_Date extends ParagonFramework_Vi
 		ob_start();
 		?>
 		<div class="form-group">
-			<label for="objectField-$name" class="col-sm-2 control-label"><?= $label ?></label>
+			<label for="objectField-<?= $name ?>" class="col-sm-2 control-label"><?= $label ?></label>
 			<div class="col-sm-4">
 
 				<div class='input-group date'>

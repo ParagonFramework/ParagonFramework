@@ -3,10 +3,20 @@
     "Views": {
         "MyObject ProductView 1": {
             "Template": "MyObject_ProductView1Snipplet.php",
-            "Product": "Object_Product",
+            "Product": "Object_Baseproduct",
             "Select": [
+                "Productnumber",
                 "Name",
-                "Image"
+                "Status",
+                "Category",
+                "Os",
+                "Description",
+                "Image",
+                "Details",
+                "Releasedate",
+                "Releasetime",
+                "Lastmodified",
+                "Finished"
             ],
             "Where": {
                 "status": null

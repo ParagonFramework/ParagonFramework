@@ -11,8 +11,8 @@ $ofh = new ParagonFramework_ViewHelper($id);
 		<div class="panel-heading">
 			<h3 class="panel-title">Edit Product: <?= $this->product->name ?></h3>
 		</div>
-		<div class="panel-body">
-			<form class="form-horizontal" role="form">
+		<form method="POST" class="form-horizontal" role="form" action="<?= $this->url(['action' => 'update', 'id' => null]) ?>">
+			<div class="panel-body">
 				<?php
 				$ofh->field("name", $this->product->name, ["label" => "Product name"]);
 				$ofh->field("productnumber", $this->product->productnumber, ["label" => "Product number"]);
@@ -24,7 +24,7 @@ $ofh = new ParagonFramework_ViewHelper($id);
 				$ofh->field("releasedate", $this->product->releasedate);
 				$ofh->field("releasetime", $this->product->releasetime);
 				$ofh->field("lastmodified", $this->product->lastmodified);
-				$ofh->field("finished");
+				$ofh->field("finished", $this->product->finished);
 
 
 				//For testing purpose
@@ -34,11 +34,12 @@ $ofh = new ParagonFramework_ViewHelper($id);
 				//TODO: After completion of the objectFormHelper the php content should be included
 				//include($this->pathToSnipplet);
 				?>
-			</form>
-		</div>
-		<div class="panel-footer">
-			<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : '' ?>>Save</button>
-			<a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
-		</div>
+			</div>
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : '' ?>>Save</button>
+				<a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
+			</div>
+			<input type="hidden" name="objectField[id]" id="objectField-id" value="<?= $id ?>"/>
+		</form>
 	</div>
 </div>

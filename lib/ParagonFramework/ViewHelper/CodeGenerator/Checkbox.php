@@ -7,7 +7,7 @@ class ParagonFramework_ViewHelper_CodeGenerator_Checkbox extends ParagonFramewor
 	}
 
 	public function getHTML($name, $label, $value, $attributes, $styles) {
-		$checked = $value ? true : false;
+		$checked = $value ? "checked" : "";
 		ob_start();
 		?>
 		<div class="form-group">

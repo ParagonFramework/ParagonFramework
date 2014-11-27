@@ -100,12 +100,12 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         file_put_contents($plugin->getDeployPath() . '/test.log', json_encode($_REQUEST));
 
         if(!$totalrows) {
-            $totalrows = 50;
+            $totalrows = 20;
             $limit = $totalrows;
         }
 
         if(!$limit) {
-            $limit = 50;
+            $limit = 20;
         }
 
         if(!$sord) {

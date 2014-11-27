@@ -7,13 +7,14 @@ jQuery().ready(function () {
             colNames: $.merge(data.columnNames, [ 'Actions' ]),
             colModel: $.merge(data.columnKeys, [ { name: 'action', search: false }]),
             pager: "#pager",
-            rowNum: 50,
+            rowNum: 20,
             //rowList: [30, 100, 500],
             viewrecords: true,
             gridview: true,
             autowidth: true,
-            height: 500,
-            autoencode: true
+            height: 441,
+            autoencode: true,
+            scrollOffset: 1 // hide scroll bars
         });
         jQuery("#table").jqGrid('filterToolbar',{searchOperators : true});
     });

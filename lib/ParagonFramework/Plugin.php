@@ -49,25 +49,25 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
 	public static function install() {
         $plugin = ParagonFramework_Plugin::getInstance();
         $plugin->ensureFolder();
-        $plugin->deployPlugin();
+        $plugin->deployFiles();
 
-        return ($plugin->statusFolder()) ? "Installation Completed and Deployed to" . PHP_EOL . $plugin->getDeployPath() : "Failed";
+        return ($plugin->deployedCheck()) ? "Installation Completed and Deployed to '" . $plugin->getDeployPath() . "'" : "Failed";
 	}
 
 	public static function uninstall() {
         $plugin = ParagonFramework_Plugin::getInstance();
-        $plugin->deleteFolder();
+        $plugin->deleteFiles();
 
 		// implement your own logic here
 		// return file_exists($filePath);
-        return ($plugin->statusFolder() == false) ? "Uninstallation Completed" : "Failed";
+        return ($plugin->deployedCheck() == false) ? "Uninstallation Completed" : "Failed";
 	}
 
 	public static function isInstalled() {
         $plugin = ParagonFramework_Plugin::getInstance();
 
 		// implement your own logic here
-		return $plugin->statusFolder();
+		return $plugin->deployedCheck();
 	}
 
     private
@@ -83,26 +83,26 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
      * Returns the Deployment Path (Config Directory) from this Plugin
      * @return string
      */
-    public function getDeployPath() {
-        return $this->_deployFolderPath;
+    public function getDeployPath($suffix = '') {
+        return $this->_deployFolderPath . $suffix;
     }
 
     /**
      * Create the Deployment Folder if necessary
      */
     public function ensureFolder() {
-        if ($this->statusFolder() == false) {
-            mkdir($this->_deployFolderPath, 0777, true);
+        if (file_exists($this->getDeployPath()) == false) {
+            mkdir($this->getDeployPath(), 0777, true);
+            mkdir($this->getDeployPath('/templates'), 0777, true);
         }
     }
 
     /**
      * Delete the Deployment Folder
      */
-    public function deleteFolder() {
-        if($this->statusFolder()) {
-            unlink($this->_deployFolderPath . "/config.json");
-            rmdir($this->_deployFolderPath);
+    public function deleteFiles() {
+        if(file_exists($this->getDeployPath())) {
+            unlink($this->getDeployPath('/config.json'));
         }
     }
 
@@ -110,15 +110,15 @@ class ParagonFramework_Plugin extends Pimcore_API_Plugin_Abstract implements Pim
      * Returns if the Deployment Folder exists
      * @return bool
      */
-    public function statusFolder() {
-        return file_exists($this->_deployFolderPath);
+    public function deployedCheck() {
+        return file_exists($this->getDeployPath('/config.json'));
     }
 
     /**
      * Deploy the Sample Configuration File to the Deployment Folder
      */
-    public function deployPlugin() {
-        copy($this->_templateFolderPath . "/static/json/config.json", $this->_deployFolderPath . "/config.json");
+    public function deployFiles() {
+        copy($this->_templateFolderPath . "/static/json/config.json", $this->getDeployPath('/config.json'));
     }
 }
 

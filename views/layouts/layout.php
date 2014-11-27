@@ -5,6 +5,7 @@ $this->headLink()
     ->appendStylesheet('http://eonasdan.github.io/bootstrap-datetimepicker/content/site.css')
     ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css')
     ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.css')
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.ui-jqgrid.css')
     ->appendStylesheet('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
     ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.font-awesome.css');
 $this->inlineScript()

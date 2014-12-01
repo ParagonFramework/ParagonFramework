@@ -8,7 +8,7 @@ class ParagonFramework_ViewHelper_CodeGenerator_Datetime extends ParagonFramewor
 
 	public function getHTML($name, $label, $value, $attributes, $styles) {
 		$date	 = $value ? $value->get("yyyy-MM-dd") : "1970-01-01";
-		$time	 = $value ? $value->get("HH:mm:ss") : "00:00:00";
+		$time	 = $value ? $value->get("HH:mm") : "00:00";
 		ob_start();
 		?>
 		<div class="form-group">

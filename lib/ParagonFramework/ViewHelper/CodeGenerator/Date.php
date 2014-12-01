@@ -10,8 +10,10 @@ class ParagonFramework_ViewHelper_CodeGenerator_Date extends ParagonFramework_Vi
 	}
 
 	public function getHTML($name, $label, $value, $attributes, $styles) {
-		if ($value && $this->type == "date") {
-			$value = $value->get("yyyy-MM-dd");
+		if ( $this->type == "date") {
+			$value = $value ? $value->get("yyyy-MM-dd") : "1970-01-01";
+		} else if ($this->type = "time") {
+			$value = $value ?: "00:00:00";
 		}
 		$value		 = "value=\"$value\"";
 		ob_start();

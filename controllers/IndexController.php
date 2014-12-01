@@ -180,7 +180,8 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		unset($params["id"]);
 		// TODO handle date parameters as zend date objects.
 		foreach ($params as $key => $value) {
-			if (!$value) {
+			echo $key . " " . $value . "<br>";
+			if (!isset($value)) {
 				continue;
 			}
 			$fieldDefintion = $fieldDefinitions[$key];
@@ -195,7 +196,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		}
 		echo "</pre>";
 		$object->save();
-		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
+//		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
 	}
 
 	/**

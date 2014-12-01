@@ -32,18 +32,8 @@
 							}
 						}
 					} else {
-						echo $value;
+						echo $value ?: 0;
 					}
-//					$value = call_user_func(array($product, 'get' . $e));
-//					if (is_array($value)) {
-//						$string = "";
-//						foreach ($value as $child) {
-//							$string .= $child . "<br>";
-//						}
-//					} else {
-//						$string = $value;
-//					}
-//					echo $string;
 					?>
 				</td>
 			<?php } ?>

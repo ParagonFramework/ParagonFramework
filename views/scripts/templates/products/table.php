@@ -22,12 +22,14 @@
 					$value			 = call_user_func(array($product, 'get' . $e));
 					if (isset($fieldDefintion->options) && $fieldDefintion->options) {
 						$options = $fieldDefintion->options;
-						if (is_array($value)) {
-							foreach ($value as $index) {
-								echo isset($options[$index]) ? $options[$index]["key"] . "<br>" : "";
+
+						foreach ($options as $option) {
+							$key = $option["key"];
+							$val = $option["value"];
+
+							if ((is_array($value) && in_array($val, $value)) || $val == $value) {
+								echo $key . "<br>";
 							}
-						} else {
-							echo isset($options[$value]) ? $options[$value]["key"] : "";
 						}
 					} else {
 						echo $value;

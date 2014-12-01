@@ -3,7 +3,7 @@
 class ParagonFramework_ViewHelper_CodeGenerator_Image extends ParagonFramework_ViewHelper_CodeGenerator_Input {
 	
 	public function __construct($class) {
-		parent::__construct($class);
+		parent::__construct($class, "url");
 	}
 
 	public function getHTML($name, $label, $value, $attributes, $styles) {

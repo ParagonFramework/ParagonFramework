@@ -14,7 +14,7 @@
         <tr>
             <td><?= $product->o_id ?></td>
             <?php foreach($this->configReaderView->getSelect() as $e) { ?>
-            <td><?= call_user_func(array($product, 'get' . $e)); ?></td>
+            <td><?php var_dump(call_user_func(array($product, 'get' . $e))); ?></td>
             <?php } ?>
             <td><?= $product->status ?></td>
 			<td><?= date("d.M.Y H:i:s", $product->getModificationDate()) ?></td>

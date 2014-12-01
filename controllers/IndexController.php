@@ -46,7 +46,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
 		$object	 = new $className();
 		$class	 = $object->getClass();
-		
+
 		$products = new $classNameList();
 		// $products->setCondition("status NOT LIKE ?", "%valid%");
 		$products->load();
@@ -147,6 +147,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 	 * Redirects to edit product view.
 	 */
 	public function editAction() {
+		$this->enableLayout();
 		$id		 = $this->getRequest()->getParam('id');
 		$product = Object_Abstract::getById($id);
 
@@ -164,33 +165,37 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$this->view->product		 = $product;
 	}
 
-	/*   ________________
-		/                \
-		| How about moo? |  ^__^
-		\________________/  (oo)\_______
-						  \ (__)\       )\/\
-								||----w |
-								||     ||
-	 */
+	//         (__) 
+	//	       (oo) 
+	//   /------\/ 
+	//  / |    ||   
+	// *  /\---/\ 
+	//    ~~   ~~   
 	public function updateAction() {
 		echo "<pre>";
-		$params = $_POST["objectField"];
-		$object = Object_Abstract::getById($params["id"]);
-		var_dump($object);
+		$params				 = $_POST["objectField"];
+		$object				 = Object_Abstract::getById($params["id"]);
+		$class				 = $object->getClass();
+		$fieldDefinitions	 = $class->getFieldDefinitions();
 		unset($params["id"]);
-		$object->setName("test");
-		$object->save();
-		
+		// TODO handle date parameters as zend date objects.
 		foreach ($params as $key => $value) {
-//			$object->$key = $value;
+			if (!$value) {
+				continue;
+			}
+			$fieldDefintion = $fieldDefinitions[$key];
+			if ($fieldDefintion instanceof Object_Class_Data_Date) {
+				$value = new Pimcore_Date($value, "yyyy-MM-dd");
+			} else if ($fieldDefintion instanceof Object_Class_Data_Datetime) {
+				$date	 = $value[0] . ' ' . $value[1];
+				$value	 = new Pimcore_Date($date, "yyyy-MM-dd HH:mm:ss");
+			}
 			$setter = "set" . ucfirst($key);
-			echo $setter . "<br>";
-//			$object->$setter($value);
+			$object->$setter($value);
 		}
-//		$object->save();
-		
 		echo "</pre>";
-//		$this->redirect('index');
+		$object->save();
+		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
 	}
 
 	/**

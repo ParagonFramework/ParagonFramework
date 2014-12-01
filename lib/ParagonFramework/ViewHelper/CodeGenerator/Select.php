@@ -17,8 +17,9 @@ class ParagonFramework_ViewHelper_CodeGenerator_Select extends ParagonFramework_
 		?>
 		<div class="form-group">
 			<label for="objectField-<?= $name ?>" class="col-sm-2 control-label"><?= $label ?></label>
-			<div class="col-sm-10">
-				<select id="objectField-<?= $name ?>" name="objectField[<?= $name ?>][]" class="form-control" <?= $attributes ?> style="<?= $styles ?>" <?= $this->type ?>>
+			<div class="col-sm-10"> 
+				<select id="objectField-<?= $name ?>" name="objectField[<?= $name ?>]<?= strpos($this->type, "multiselect") ? "[]" : "" ?>" 
+						class="form-control" <?= $attributes ?> style="<?= $styles ?>" <?= $this->type ?>>
 					<?php
 					foreach ($category->options as $option) {
 						$key		 = $option["key"];

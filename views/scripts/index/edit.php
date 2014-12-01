@@ -26,17 +26,16 @@ $ofh = new ParagonFramework_ViewHelper($id);
 				$ofh->field("lastmodified", $this->product->lastmodified);
 				$ofh->field("finished", $this->product->finished);
 
-
 				//For testing purpose
-				echo("Path to Snipplet: " . $this->pathToSnipplet);
-				echo("Content: " . file_get_contents($this->pathToSnipplet));
+//				echo("Path to Snipplet: " . $this->pathToSnipplet);
+//				echo("Content: " . file_get_contents($this->pathToSnipplet));
 
 				//TODO: After completion of the objectFormHelper the php content should be included
 				//include($this->pathToSnipplet);
 				?>
 			</div>
 			<div class="panel-footer">
-				<button type="submit" class="btn btn-primary"<?= $error ? ' disabled' : '' ?>>Save</button>
+				<button type="submit" class="btn btn-primary">Save</button>
 				<a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
 			</div>
 			<input type="hidden" name="objectField[id]" id="objectField-id" value="<?= $id ?>"/>

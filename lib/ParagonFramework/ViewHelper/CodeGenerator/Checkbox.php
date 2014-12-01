@@ -15,7 +15,8 @@ class ParagonFramework_ViewHelper_CodeGenerator_Checkbox extends ParagonFramewor
 			<div class="col-sm-4">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" <?= $attributes ?> style="<?= $styles ?>" <?= $checked ?>> <?= $label ?>
+						<input type="hidden" name="objectField[<?= $name ?>]" value="0"/>
+						<input type="checkbox" id="objectField-<?= $name ?>" name="objectField[<?= $name ?>]" value="1" <?= $attributes ?> style="<?= $styles ?>" <?= $checked ?>> <?= $label ?>
 					</label>
 				</div>			
 			</div>

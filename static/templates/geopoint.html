@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd8mtg8rMF11DeChi_A-U4JhCCjfLMkkw">
+    </script>
+    <script type="text/javascript">
+      var map;
+      var marker;
+
+      function initialize() {
+        var mapOptions = {
+          center: { lat: 48.368263, lng: 14.513487 },
+          zoom: 8
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        var latlng = new google.maps.LatLng(48.368263, 14.513487);
+        marker = new google.maps.Marker({
+          position: latlng,
+          draggable: true,
+          map: map
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          placeMarker(event.latLng);
+          updateCoordinates();
+        });
+        google.maps.event.addListener(marker, 'drag', function(event) {
+          updateCoordinates()
+        });
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+          updateCoordinates();
+        });
+      }
+
+      function placeMarker(location) {
+        marker.setMap(null); // delete marker
+        marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+      }
+
+      function getAddress() {
+        var address = document.getElementById('address').value;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function(result, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            var latlng = result[0]["geometry"]["location"];
+            placeMarker(latlng);
+            updateCoordinates();
+          }
+        });
+      }
+
+      function updateCoordinates() {
+        document.getElementById('lat').value = marker.getPosition().lat();
+        document.getElementById('lng').value = marker.getPosition().lng();
+      }
+
+      function getCoordinates() {
+        var lat = parseFloat(document.getElementById('lat').value);
+        var lng = parseFloat(document.getElementById('lng').value);
+        placeMarker(new google.maps.LatLng(lat, lng));
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas" style="width: 800px; height: 500px;"></div>
+    <form role="form" id="map-form">
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input class="form-control" id="address" type="text" name="address" />
+            <button class="btn btn-default" id="addressbtn" onclick="getAddress(); return false;">Search</button>
+        </div>
+        <div class="form-group">
+            <label for="lat">Latitude</label>
+            <input class="form-control" id="lat" type="text" name="lat" value="48.368263" />
+            <label for="lng">Longitude</label>
+            <input class="form-control" id="lng" type="text" name="lng" value="14.513487" />
+            <button class="btn btn-default" id="okbtn" onclick="getCoordinates(); return false;">OK</button>
+        </div>
+    </form>
+  </body>
+</html>

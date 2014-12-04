@@ -4,13 +4,9 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Rectangle Events</title>
-    <style>
-        html, body, #map-canvas {
-            height: 100%;
-            margin: 0px;
-            padding: 0px
-        }
-        #map-canvas { width: 400px; height: 300px; }
+    <style type="text/css">
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+        #map-canvas { width: 800px; height: 500px; }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd8mtg8rMF11DeChi_A-U4JhCCjfLMkkw"></script>
     <script>
@@ -23,69 +19,65 @@
         var infoWindow;
 
         function initialize() {
-            var mapOptions = {
-                center: new google.maps.LatLng(44.5452, -78.5389),
-                zoom: 9
-            };
-            map = new google.maps.Map(document.getElementById('map-canvas'),
-                    mapOptions);
-
             var bounds = new google.maps.LatLngBounds(
-                    new google.maps.LatLng(44.490, -78.649),
-                    new google.maps.LatLng(44.599, -78.443)
+              new google.maps.LatLng(48.168263, 14.313487), // sw
+              new google.maps.LatLng(48.568263, 14.713487) // ne
             );
+            var mapOptions = {
+              center: bounds.getCenter(),
+              zoom: 8
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            // Define the rectangle and set its editable property to true.
             rectangle = new google.maps.Rectangle({
                 bounds: bounds,
                 editable: true,
                 draggable: true
             });
-
             rectangle.setMap(map);
 
-            // Add an event listener on the rectangle.
-            google.maps.event.addListener(rectangle, 'bounds_changed', showNewRect);
-
-            // Define an info window on the map.
-            infoWindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(rectangle, 'bounds_changed', updateCoordinates);
         }
-        // Show the new coordinates for the rectangle in an info window.
 
-        /** @this {google.maps.Rectangle} */
-        function showNewRect(event) {
-            var ne = rectangle.getBounds().getNorthEast();
+        function updateCoordinates() {
             var sw = rectangle.getBounds().getSouthWest();
+            var ne = rectangle.getBounds().getNorthEast();
 
-            var contentString = '<b>Rectangle moved.</b><br>' +
-                    'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
-                    'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+            document.getElementById('latsw').value = sw.lat();
+            document.getElementById('lngsw').value = sw.lng();
+            document.getElementById('latne').value = ne.lat();
+            document.getElementById('lngne').value = ne.lng();
+        }
 
-            // Set the info window's content and position.
-            infoWindow.setContent(contentString);
-            infoWindow.setPosition(ne);
-
-            infoWindow.open(map);
+        function getCoordinates() {
+            var latne = parseFloat(document.getElementById('latne').value);
+            var lngne = parseFloat(document.getElementById('lngne').value);
+            var latsw = parseFloat(document.getElementById('latsw').value);
+            var lngsw = parseFloat(document.getElementById('lngsw').value);
+            rectangle.setBounds(new google.maps.LatLngBounds(
+                    new google.maps.LatLng(latsw, lngsw),
+                    new google.maps.LatLng(latne, lngne)
+            ));
+            rectangle.setMap(map);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-
     </script>
 </head>
 <body>
     <div id="map-canvas"></div>
     <form role="form" id="map-form">
         <div class="form-group">
-            <label for="lat">Latitude</label>
-            <input class="form-control" id="lat" type="text" name="lat" value="48.368263" />
-            <label for="lng">Longitude</label>
-            <input class="form-control" id="lng" type="text" name="lng" value="14.513487" />
+            <label for="latne">NE Latitude</label>
+            <input class="form-control" id="latne" type="text" name="latne" value="48.368263" />
+            <label for="lngne">NE Longitude</label>
+            <input class="form-control" id="lngne" type="text" name="lngne" value="14.513487" />
         </div>
         <div class="form-group">
-            <label for="lat">Latitude</label>
-            <input class="form-control" id="lat" type="text" name="lat" value="48.368263" />
-            <label for="lng">Longitude</label>
-            <input class="form-control" id="lng" type="text" name="lng" value="14.513487" />
+            <label for="latsw">SW Latitude</label>
+            <input class="form-control" id="latsw" type="text" name="latsw" value="48.368263" />
+            <label for="lngsw">SW Longitude</label>
+            <input class="form-control" id="lngsw" type="text" name="lngsw" value="14.513487" />
             <button class="btn btn-default" id="okbtn" onclick="getCoordinates(); return false;">OK</button>
         </div>
     </form>

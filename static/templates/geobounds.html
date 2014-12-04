@@ -8,20 +8,16 @@
         html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
         #map-canvas { width: 800px; height: 500px; }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd8mtg8rMF11DeChi_A-U4JhCCjfLMkkw"></script>
-    <script>
-        // This example adds a user-editable rectangle to the map.
-        // When the user changes the bounds of the rectangle,
-        // an info window pops up displaying the new bounds.
-
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd8mtg8rMF11DeChi_A-U4JhCCjfLMkkw"></script>
+    <script type="text/javascript">
         var rectangle;
         var map;
-        var infoWindow;
 
         function initialize() {
             var bounds = new google.maps.LatLngBounds(
-              new google.maps.LatLng(48.168263, 14.313487), // sw
-              new google.maps.LatLng(48.568263, 14.713487) // ne
+                new google.maps.LatLng(48.168263, 14.313487), // sw
+                new google.maps.LatLng(48.568263, 14.713487) // ne
             );
             var mapOptions = {
               center: bounds.getCenter(),
@@ -32,9 +28,10 @@
             rectangle = new google.maps.Rectangle({
                 bounds: bounds,
                 editable: true,
-                draggable: true
+                draggable: true,
+                map: map
             });
-            rectangle.setMap(map);
+            updateCoordinates();
 
             google.maps.event.addListener(rectangle, 'bounds_changed', updateCoordinates);
         }
@@ -58,7 +55,6 @@
                     new google.maps.LatLng(latsw, lngsw),
                     new google.maps.LatLng(latne, lngne)
             ));
-            rectangle.setMap(map);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
@@ -69,15 +65,15 @@
     <form role="form" id="map-form">
         <div class="form-group">
             <label for="latne">NE Latitude</label>
-            <input class="form-control" id="latne" type="text" name="latne" value="48.368263" />
+            <input class="form-control" id="latne" type="text" name="latne" />
             <label for="lngne">NE Longitude</label>
-            <input class="form-control" id="lngne" type="text" name="lngne" value="14.513487" />
+            <input class="form-control" id="lngne" type="text" name="lngne" />
         </div>
         <div class="form-group">
             <label for="latsw">SW Latitude</label>
-            <input class="form-control" id="latsw" type="text" name="latsw" value="48.368263" />
+            <input class="form-control" id="latsw" type="text" name="latsw" />
             <label for="lngsw">SW Longitude</label>
-            <input class="form-control" id="lngsw" type="text" name="lngsw" value="14.513487" />
+            <input class="form-control" id="lngsw" type="text" name="lngsw" />
             <button class="btn btn-default" id="okbtn" onclick="getCoordinates(); return false;">OK</button>
         </div>
     </form>

@@ -13,7 +13,6 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
      * Loads products from pimcore and sets paginator. Evaluate missing fields and sets reason into type.
      */
     public function indexAction() {
-        $this->disableLayout();
 
         $user = ParagonFramework_Models_User::getUser();
 
@@ -26,6 +25,8 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
 
         $this->view->columnNames = array_keys($configReaderView->getSelect());
         $this->view->columnKeys = array_values($configReaderView->getSelect());
+        $this->view->inlineScript()
+            ->appendFile('/plugins/ParagonFramework/static/js/view-switching.js');
 
     }
 

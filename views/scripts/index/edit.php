@@ -11,7 +11,7 @@ $ofh = new ParagonFramework_ViewHelper($id);
 		<div class="panel-heading">
 			<h3 class="panel-title">Edit Product: <?= $this->product->name ?></h3>
 		</div>
-		<form method="POST" class="form-horizontal" role="form" action="<?= $this->url(['action' => 'update', 'id' => null]) ?>">
+		<form method="POST" enctype="multipart/form-data" class="form-horizontal" role="form" action="<?= $this->url(['action' => 'update', 'id' => null]) ?>">
 			<div class="panel-body">
 				<?php
 				$ofh->field("name", $this->product->name, ["label" => "Product name"]);

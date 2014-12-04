@@ -32,7 +32,11 @@
 							}
 						}
 					} else {
-						echo $value ?: 0;
+						if ($fieldDefintion->getFieldtype() == "image" && $value) {
+							echo "<img src=\"$value\" width=\"100\"/>";
+						} else {
+							echo $value;
+						}
 					}
 					?>
 				</td>

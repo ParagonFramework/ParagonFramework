@@ -178,16 +178,31 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		$class				 = $object->getClass();
 		$fieldDefinitions	 = $class->getFieldDefinitions();
 		unset($params["id"]);
+		$files				 = $_FILES["objectField"];
+		if ($files["name"]["image"]) {
+			$assetFolder = "/";
+			$key		 = Pimcore_File::getValidFilename($files["name"]["image"]);
+			$asset		 = Asset::getByPath($assetFolder . "/" . $key);
+			if (!$asset) {
+				$asset = new Asset_Image();
+			}
+			$asset->setParentId(Asset_Folder::getByPath($assetFolder)->getId());
+
+			$asset->setFilename($key);
+			$source = file_get_contents($files["tmp_name"]["image"]);
+			$asset->setData($source);
+			$asset->save();
+			$object->setImage($asset);
+		}
 		// TODO handle date parameters as zend date objects.
 		foreach ($params as $key => $value) {
-			echo $key . " " . $value . "<br>";
 			if (!isset($value)) {
 				continue;
 			}
-			$fieldDefintion = $fieldDefinitions[$key];
-			if ($fieldDefintion instanceof Object_Class_Data_Date) {
+			$fieldDefinition = $fieldDefinitions[$key];
+			if ($fieldDefinition instanceof Object_Class_Data_Date) {
 				$value = new Pimcore_Date($value, "yyyy-MM-dd");
-			} else if ($fieldDefintion instanceof Object_Class_Data_Datetime) {
+			} else if ($fieldDefinition instanceof Object_Class_Data_Datetime) {
 				$date	 = $value[0] . ' ' . $value[1];
 				$value	 = new Pimcore_Date($date, "yyyy-MM-dd HH:mm:ss");
 			}
@@ -196,7 +211,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 		}
 		echo "</pre>";
 		$object->save();
-//		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
+		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
 	}
 
 	/**

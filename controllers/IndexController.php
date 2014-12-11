@@ -72,10 +72,11 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
         $userView = $user->getRole($configReaderViews);
         $configReaderView = $configReader->getViewByViewName($userView);
+        $configReaderViewColumns = array_merge(["ID" => 'o_id'], $configReaderView->getSelect());
 
         $this->respondWith(json_encode([
-            'columnNames' => array_keys  ($configReaderView->getSelect()),
-            'columnKeys'  => iterator_to_array($this->prettifier(array_values($configReaderView->getSelect()))),
+            'columnNames' => array_keys($configReaderViewColumns),
+            'columnKeys'  => iterator_to_array($this->prettifier(array_values($configReaderViewColumns))),
         ]));
     }
 
@@ -97,7 +98,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $filters   = [];
 
         $plugin = ParagonFramework_Plugin::getInstance();
-        file_put_contents($plugin->getDeployPath() . '/test.log', json_encode($_REQUEST));
+        // file_put_contents($plugin->getDeployPath() . '/test.log', json_encode($_REQUEST));
 
         if(!$totalrows) {
             $totalrows = 20;
@@ -127,6 +128,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $userView = $user->getRole($configReaderViews);
 
         $configReaderView = $configReader->getViewByViewName($userView);
+        $configReaderViewColumns = array_merge(["ID" => 'o_id'], $configReaderView->getSelect());
 
         $className = $configReaderView->getProduct();
         $classNameList = $className . '_List';
@@ -135,9 +137,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $itemsPPage = $limit;
         $itemsPOffset = ($itemsPage - 1) * $itemsPPage;
 
-        $productColumns = $configReaderView->getSelect();
-
-        foreach(array_values($configReaderView->getSelect()) as $e) {
+        foreach(array_values($configReaderViewColumns) as $e) {
             if(($value = filter_input(INPUT_GET, $e))) {
                 $filters[$e] = $value;
             }
@@ -174,7 +174,7 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
         foreach ($productList as $product) {
             $content .= "<row>";
-            foreach($productColumns as $productColumn) {
+            foreach($configReaderViewColumns as $productColumn) {
                 $content .= "<cell>{$product->$productColumn}</cell>";
             }
             $content .= "<cell />";
@@ -242,25 +242,6 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
     }
 
     /**
-     * Redirects to edit product view.
-     */
-    public function editAction() {
-        $id = filter_input(INPUT_POST, 'o_id');
-        $product = Object_Abstract::getById($id);
-        $this->view->product = $product;
-    }
-
-    /**
-     * Returns a single product based on a given id.
-     * 
-     * @param int $id The id to be looked up.
-     * @return Pimcore_Object The product fetched from the pimcore database.
-     */
-    public function getProductById($id) {
-            return Object_Abstract::getByProduct_Id($id, array('limit' => 1));
-    }
-
-    /**
      * Creates a new product based on some necessary parameters, and saves
      * the product in the pimcore database.
      */
@@ -282,4 +263,111 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
 
     }
 
+	function getView($user, $configReader) {
+		$configReaderViews = $configReader->getViewNamesByUser($user);
+
+		$userView = $user->getRole($configReaderViews);
+
+		if ($userView == null) {
+			// $this->forward("index", "index", "ParagonFramework", [ "error" => "NO_VIEW_SELECTED_OR_ALLOWED"]);
+			if (count($configReaderViews) == 0) {
+				$this->redirect($this->getErrorURL() . "?name=" . E_USERVIEW_NOT_PRESENT);
+				return;
+			}
+
+			$user->setRole($userView = $configReaderViews[0]);
+		}
+
+		$configReaderView = $configReader->getViewByViewName($userView);
+
+		if ($configReaderView == null) {
+			$this->redirect($this->getErrorURL());
+			return;
+		}
+		return $configReaderView;
+	}
+
+
+	/**
+	 * Sends json response to client.
+	 * @param $json 
+	 */
+	public function respondWithJSON($json) {
+		$this->removeViewRenderer();
+		$this->disableLayout();
+		$this->getResponse()
+				->setHeader('Content-type', 'text/json')
+				->setBody(json_encode($json));
+	}
+
+	/**
+	 * Redirects to edit product view.
+	 */
+	public function editAction() {
+		$this->enableLayout();
+		$id		 = $this->getRequest()->getParam('id');
+		$product = Object_Abstract::getById($id);
+
+		$user				 = ParagonFramework_Models_User::getUser();
+		$configReader		 = ParagonFramework_ConfigReader::getInstance();
+		$configReaderView	 = $this->getView($user, $configReader);
+
+		$templateName = $configReaderView->getTemplate();
+
+		$plugin				 = ParagonFramework_Plugin::getInstance();
+		$templateFilePath	 = $plugin->getDeployPath() . '/templates/' . $templateName;
+
+		$this->view->pathToSnipplet	 = $templateFilePath;
+		$this->view->user			 = $user;
+		$this->view->product		 = $product;
+	}
+
+	//         (__) 
+	//	       (oo) 
+	//   /------\/ 
+	//  / |    ||   
+	// *  /\---/\ 
+	//    ~~   ~~   
+	public function updateAction() {
+		echo "<pre>";
+		$params				 = $_POST["objectField"];
+		$object				 = Object_Abstract::getById($params["id"]);
+		$class				 = $object->getClass();
+		$fieldDefinitions	 = $class->getFieldDefinitions();
+		unset($params["id"]);
+		$files				 = $_FILES["objectField"];
+		if ($files["name"]["image"]) {
+			$assetFolder = "/";
+			$key		 = Pimcore_File::getValidFilename($files["name"]["image"]);
+			$asset		 = Asset::getByPath($assetFolder . "/" . $key);
+			if (!$asset) {
+				$asset = new Asset_Image();
+			}
+			$asset->setParentId(Asset_Folder::getByPath($assetFolder)->getId());
+
+			$asset->setFilename($key);
+			$source = file_get_contents($files["tmp_name"]["image"]);
+			$asset->setData($source);
+			$asset->save();
+			$object->setImage($asset);
+		}
+		// TODO handle date parameters as zend date objects.
+		foreach ($params as $key => $value) {
+			if (!isset($value)) {
+				continue;
+			}
+			$fieldDefinition = $fieldDefinitions[$key];
+			if ($fieldDefinition instanceof Object_Class_Data_Date) {
+				$value = new Pimcore_Date($value, "yyyy-MM-dd");
+			} else if ($fieldDefinition instanceof Object_Class_Data_Datetime) {
+				$date	 = $value[0] . ' ' . $value[1];
+				$value	 = new Pimcore_Date($date, "yyyy-MM-dd HH:mm:ss");
+			}
+			$setter = "set" . ucfirst($key);
+			$object->$setter($value);
+		}
+		echo "</pre>";
+		$object->save();
+		$this->redirect($this->view->url(["controller" => "index", "action" => "index"]));
+	}
 }

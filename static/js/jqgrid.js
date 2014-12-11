@@ -4,8 +4,8 @@ jQuery().ready(function () {
             url: "/plugin/ParagonFramework/index/fetch",
             datatype: "xml",
             mtype: "GET",
-            colNames: $.merge(data.columnNames, [ 'Actions' ]),
-            colModel: $.merge(data.columnKeys, [ { name: 'action', search: false }]),
+            colNames: data.columnNames,
+            colModel: data.columnKeys,
             pager: "#pager",
             rowNum: 20,
             //rowList: [30, 100, 500],
@@ -14,7 +14,12 @@ jQuery().ready(function () {
             autowidth: true,
             height: 441,
             autoencode: true,
-            scrollOffset: 1 // hide scroll bars
+            scrollOffset: 1, // hide scroll bars
+            ondblClickRow: function (id) {
+                var productID = jQuery("#table").jqGrid('getCell', id, 'o_id');
+
+                window.location.href = "/plugin/ParagonFramework/index/edit/id/" + productID;
+            }
         });
         jQuery("#table").jqGrid('filterToolbar',{searchOperators : true});
     });

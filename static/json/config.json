@@ -2,12 +2,37 @@
     "Provider": "ParagonFramework_Helper_AuthProvider",
     "Views": {
         "MyObject ProductView 1": {
-            "Template": "static/templates/MyObject_ProductView",
-            "Product": "Object_Product",
+            "Template": "MyObject_ProductView1Snipplet.php",
+            "Product": "Object_Baseproduct",
             "Select": {
-                "ID": "o_id",
-                "Name": "name",
-                "Status": "status"
+                "Productnumber" : "productnumber",
+                "Name" : "name",
+                "Status": "status",
+                "Category": "category",
+                "Os": "os",
+                "Description": "description",
+                "Image": "image",
+                "Details": "details",
+                "Releasedate": "releasedate",
+                "Releasetime": "releasetime",
+                "Lastmodified": "lastmodified",
+                "Finished": "finished"
+            },
+            "Where": {
+                "status": null
+            },
+            "Groups": [
+                "asdf"
+            ]
+        },
+        "MyObject ProductView 2": {
+            "Template": "static/templates/MyObject_ProductView",
+            "Product": "Object_News",
+            "Select": {
+                "Title" : "title",
+                "ShortText" : "shorttext",
+                "Text" : "text",
+                "Date" : "date"
             },
             "Where": {
                 "status": null

@@ -39,7 +39,6 @@ if(($user = $this->user)) {
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Product <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <!--Examples-->
                         <li><a href="#">Use Template</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
@@ -52,7 +51,6 @@ if(($user = $this->user)) {
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Attribute <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <!--Examples-->
                         <li><a href="#">Action</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
@@ -63,6 +61,7 @@ if(($user = $this->user)) {
                     </ul>
                 </li>
                 <li><a href="#about">Create Category</a></li>
+                -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

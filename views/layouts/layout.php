@@ -34,30 +34,31 @@ switch ($this->getParam('controller')) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title><?= $this->title ?></title>
-    <!-- Bootstrap -->
-    <?= $this->headLink() ?>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title><?= $this->title ?></title>
+		<!-- Bootstrap -->
+<?= $this->headLink() ?>
+<?= $this->inlineScript() ?>
+	</head>
+	<body>
 <?php
 if ($showNavigation) {
-    echo $this->partial('templates/navigationTop.php', $this);
+	echo $this->partial('templates/navigationTop.php', $this);
 }
 ?>
-    <?= $this->layout()->content ?>
-    <nav id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <p class="muted credit">
-                <a href="<?= ParagonFramework_Plugin::$GITHubURL ?>">Paragon Framework</a>&nbsp;(<a href="<?= ParagonFramework_Plugin::$GITCommit->Link ?>">#&nbsp;<?= ParagonFramework_Plugin::$GITCommit->Hash ?></a>)
-                <br/>
-                &copy; 2014 <a href="<?= ParagonFramework_Plugin::$GITHubOrgURL ?>">Project Group 1</a>, a proud member of the <a href="http://www.fh-hagenberg.at/" target="_blank">FH Hagenberg</a>
-            </p>
-        </div>
-    </nav>
-</body>
-<?= $this->inlineScript() ?>
+		<?= $this->layout()->content ?>
+		<div class="clearfix"></div>
+<!--		<nav id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="container">
+				<p class="muted credit">
+					<a href="<?= ParagonFramework_Plugin::$GITHubURL ?>">Paragon Framework</a>&nbsp;(<a href="<?= ParagonFramework_Plugin::$GITCommit->Link ?>">#&nbsp;<?= ParagonFramework_Plugin::$GITCommit->Hash ?></a>)
+					<br/>
+					&copy; 2014 <a href="<?= ParagonFramework_Plugin::$GITHubOrgURL ?>">Project Group 1</a>, a proud member of the <a href="http://www.fh-hagenberg.at/" target="_blank">FH Hagenberg</a>
+				</p>
+			</div>
+		</nav>-->
+	</body>

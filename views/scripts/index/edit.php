@@ -1,51 +1,44 @@
 <?php
+// $this->obj is assigned in the controller/action
+$id = $this->product->o_id;
 
-$this->headLink()
-    ->appendStylesheet('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css');
-
-$this->inlineScript()
-    ->appendFile('http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js');
-
+// TODO: retrieve the object form view helper
+$ofh = new ParagonFramework_ViewHelper($id);
 ?>
+
 <div class="container">
-    <div class="page-header">
-        <p class="lead">Edit Product: <?= $this->product->name ?></p>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Edit Product: <?= $this->product->name ?></h3>
+		</div>
+		<form method="POST" enctype="multipart/form-data" class="form-horizontal" role="form" action="<?= $this->url(['action' => 'update', 'id' => null]) ?>">
+			<div class="panel-body">
+				<?php
+				$ofh->field("name", $this->product->name, ["label" => "Product name"]);
+				$ofh->field("productnumber", $this->product->productnumber, ["label" => "Product number"]);
+				$ofh->field("category", $this->product->category);
+				$ofh->field("os", $this->product->os);
+				$ofh->field("description", $this->product->description, ["rows" => 3]);
+				$ofh->field("image", $this->product->image);
+				$ofh->field("details", $this->product->details);
+				$ofh->field("releasedate", $this->product->releasedate);
+				$ofh->field("releasetime", $this->product->releasetime);
+				$ofh->field("lastmodified", $this->product->lastmodified);
+				$ofh->field("finished", $this->product->finished);
 
-    </div>
-    <div class="row">
-        <div class="col-md-6 borderRight">
-            <div class="border">
-                <h3>General Information</h3>
-                <p>SKU: <?= $this->product->o_id ?></p>
-                <p>Main Category: <?= $this->product->category ?></p>
-                <p>Source: _PLACEHOLDER_</p>
-                <p>Make: _PLACEHOLDER_</p>
-            </div>
-            <h3>Description</h3>
-            <textarea rows="5" cols="50">
-                Enter your text here...
-            </textarea>
-        </div>
-        <div class="col-md-6">
-            <table class="table">
-                <tr>
-                    <td>Additional Category</td>
-                    <td>
-                        <select>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="vw">VW</option>
-                            <option value="audi" selected>Audi</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="pull-right">
-        <form role="form" id="loginform" method="post" action="index">
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
-    </div>
+				//For testing purpose
+//				echo("Path to Snipplet: " . $this->pathToSnipplet);
+//				echo("Content: " . file_get_contents($this->pathToSnipplet));
+
+				//TODO: After completion of the objectFormHelper the php content should be included
+				//include($this->pathToSnipplet);
+				?>
+			</div>
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-primary">Save</button>
+				<a href="<?= $this->url(['action' => 'index', 'id' => null]) ?>" class="btn btn-default">Back</a>
+			</div>
+			<input type="hidden" name="objectField[id]" id="objectField-id" value="<?= $id ?>"/>
+		</form>
+	</div>
 </div>
-

@@ -42,6 +42,10 @@ class ParagonFramework_TestController extends ParagonFramework_Controller_Action
             ->setBody(json_encode($json));
     }
 
+    public function generateDeeplink() {
+
+    }
+
     /**
      * Sends the views the user can access to the client.
      */

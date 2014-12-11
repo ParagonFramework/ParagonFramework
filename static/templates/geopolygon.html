@@ -30,11 +30,9 @@
 
             polygon = new google.maps.Polygon({
                 paths: coords,
-                draggable: true,
                 geodesic: true,
                 map: map
             });
-            updateCoordinates();
 
             google.maps.event.addListener(polygon, 'dragend', updateCoordinates);
         }
@@ -46,20 +44,15 @@
             });
         }
 
-        function updateCoordinates() {
-            for (i = 0; i < groupids.length; ++i) {
-                var group = document.getElementById(groupids[i]);
-                group.getElementById('lat').value = polygon[i].lat;
-                group.getElementById('lng').value = polygon[i].lng;
-            }
-        }
-
         function getCoordinates() {
+            var coords = new Array();
             for (var i = 0; i < groupids.length; ++i) {
-                var group = document.getElementById(groupids[i]);
-                polygon[i].lat = group.getElementById('lat').value;
-                polygon[i].lng = group.getElementById('lng').value;
+                coords.push(new google.maps.LatLng(
+                        document.getElementById(groupids[i] + '-lat').value,
+                        document.getElementById(groupids[i] + '-lng').value
+                ));
             }
+            polygon.setPaths(coords);
         }
 
         function addCoordinate() {
@@ -68,22 +61,25 @@
             var form = document.getElementById('map-form');
             var latlnggroup = document.createElement('div');
             latlnggroup.setAttribute('class', 'form-group');
-            latlnggroup.setAttribute('name', 'latlngroup');
+            latlnggroup.setAttribute('name', uuid);
+            latlnggroup.setAttribute('id', uuid);
             var latlabel = document.createElement('label');
             latlabel.innerHTML = 'Latitude';
             var latinput = document.createElement('input');
             latinput.setAttribute('class', 'form-control');
             latinput.setAttribute('type', 'text');
-            latinput.setAttribute('name', 'lat');
+            latinput.setAttribute('name', uuid + '-lat');
+            latinput.setAttribute('id', uuid + '-lat');
             var lnglabel = document.createElement('label');
             lnglabel.innerHTML = 'Langitude';
             var lnginput = document.createElement('input');
             lnginput.setAttribute('class', 'form-control');
             lnginput.setAttribute('type', 'text');
-            lnginput.setAttribute('name', 'lng');
+            lnginput.setAttribute('name', uuid + '-lng');
+            lnginput.setAttribute('id', uuid + '-lng');
             var removebtn = document.createElement('button');
             removebtn.setAttribute('class', 'btn btn-default');
-            removebtn.setAttribute('onclick', 'removeCoordinate(&quot;' + uuid + '\&quot;); return false;');
+            removebtn.setAttribute('onclick', 'removeCoordinate("' + uuid + '"); return false;');
             removebtn.innerHTML = 'Remove';
             latlnggroup.appendChild(latlabel);
             latlnggroup.appendChild(latinput);
@@ -93,22 +89,11 @@
             form.appendChild(latlnggroup);
         }
 
-        Element.prototype.remove = function() {
-            this.parentElement.removeChild(this);
-        }
-
-        NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-            for (var i = 0, len = this.length; i < len; i++) {
-                if (this[i] && this[i].parentElement) {
-                    this[i].parentElement.removeChild(this[i]);
-                }
-            }
-        }
-
         function removeCoordinate(uuid) {
             var index = groupids.indexOf(uuid);
             if (index > -1) groupids.splice(index, 1);
-            document.getElementById(uuid).remove();
+            var group = document.getElementById(uuid);
+            group.parentNode.removeChild(group);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
@@ -117,12 +102,6 @@
 <body>
 <div id="map-canvas"></div>
 <form role="form" id="map-form">
-    <div class="form-group" name="latlnggroup">
-        <label>NE Latitude</label>
-        <input class="form-control" type="text" name="lat" />
-        <label>NE Longitude</label>
-        <input class="form-control" type="text" name="lng" />
-    </div>
     <div class="form-group">
         <button class="btn btn-default" id="addbtn" onclick="addCoordinate(); return false;">Add Coordinate</button>
         <button class="btn btn-default" id="okbtn" onclick="getCoordinates(); return false;">OK</button>

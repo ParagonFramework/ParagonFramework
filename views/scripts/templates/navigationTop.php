@@ -61,7 +61,6 @@ if(($user = $this->user)) {
                     </ul>
                 </li>
                 <li><a href="#about">Create Category</a></li>
-                -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

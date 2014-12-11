@@ -5,7 +5,7 @@
     <div id="viewSwitchingDialog" class="viewSwitchingDialog" style="display: none;">
         <div class="test">
             <form role="form" method="post" action="<?= $this->url(["action" => "changerole"]) ?>">
-                <input type="hidden" name="viewSwitchingDialog_Selected" id="viewSwitchingDialog_Selected"></input>
+                <input type="hidden" name="viewSwitchingDialog_Selected" id="viewSwitchingDialog_Selected" />
                 <h3>Choose your view</h3>
                 <br/>
                 <br/>

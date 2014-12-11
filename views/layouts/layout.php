@@ -17,7 +17,8 @@ $this->inlineScript()
     ->appendFile('http://eonasdan.github.io/bootstrap-datetimepicker/scripts/moment.js')
     ->appendFile('http://eonasdan.github.io/bootstrap-datetimepicker/scripts/bootstrap-datetimepicker.js')
     ->appendFile('http://ckeditor.com/apps/ckeditor/4.4.0/ckeditor.js')
-    ->appendFile('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js');
+    ->appendFile('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+    ->appendFile('/plugins/ParagonFramework/static/js/view-switching.js');
 
 $showNavigation = false;
 

@@ -31,16 +31,41 @@
             polygon = new google.maps.Polygon({
                 paths: coords,
                 geodesic: true,
+                editable: true,
                 map: map
             });
 
-            google.maps.event.addListener(polygon, 'dragend', updateCoordinates);
+            addPolygonListeners();
         }
 
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                 return v.toString(16);
+            });
+        }
+
+        function updateCoordinates() {
+            var coords = polygon.getPath();
+            for (i = 0; i < groupids.length; ++i) {
+                document.getElementById(groupids[i] + '-lat').value = coords.getAt(i).lat;
+                document.getElementById(groupids[i] + '-lng').value = coords.getAt(i).lng;
+            }
+        }
+
+        function addPolygonListeners() {
+            google.maps.event.addListener(polygon, 'click', function() {
+                google.maps.event.addListener(polygon.getPath(), 'set_at', function() {
+                    console.log("set");
+                    updateCoordinates();
+                });
+
+                google.maps.event.addListener(polygon.getPath(), 'insert_at', function() {
+                    console.log("insert");
+                    addCoordinate();
+                    updateCoordinates();
+                });
+                setSelection(newShape);
             });
         }
 
@@ -53,6 +78,7 @@
                 ));
             }
             polygon.setPaths(coords);
+            addPolygonListeners();
         }
 
         function addCoordinate() {

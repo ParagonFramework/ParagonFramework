@@ -27,7 +27,7 @@ if(($user = $this->user)) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<?= $this->url(array('controller' => 'index', 'action' => 'index')) ?>">
                 <img src="http://www.pimcore.org/wiki/download/attachments/5308442/LABS?version=1&modificationDate=1393491266000&api=v2" width="24" height="24" class="img-rounded">
             </a>
         </div>

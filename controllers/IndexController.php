@@ -172,6 +172,19 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         $content .= "<total>$productsCount</total>";
         $content .= "<records>$productListCount</records>";
 
+        /*
+         {
+  "total": "xxx",
+  "page": "yyy",
+  "records": "zzz",
+  "rows" : [
+    {"id" :"1", "cell" :["cell11", "cell12", "cell13"]},
+    {"id" :"2", "cell":["cell21", "cell22", "cell23"]},
+      ...
+  ]
+}
+         */
+
         foreach ($productList as $product) {
             $content .= "<row>";
             foreach($configReaderViewColumns as $productColumn) {

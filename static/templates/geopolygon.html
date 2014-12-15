@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Geographic Polygon</title>
     <style type="text/css">
-        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0; }
         #map-canvas { width: 800px; height: 500px; }
     </style>
     <script type="text/javascript"
@@ -18,7 +18,7 @@
 
         function initialize() {
             var coords = [
-                new google.maps.LatLng(25.774, -80.190),
+                new google.maps.LatLng(0, 0),
                 new google.maps.LatLng(18.466, -66.118),
                 new google.maps.LatLng(32.321, -64.757)
             ];
@@ -36,6 +36,7 @@
             });
 
             addPolygonListeners();
+            google.maps.event.addListener(polygon, 'click', updateCoordinates);
         }
 
         function generateUUID() {
@@ -45,27 +46,27 @@
             });
         }
 
-        function updateCoordinates() {
-            var coords = polygon.getPath();
-            for (i = 0; i < groupids.length; ++i) {
-                document.getElementById(groupids[i] + '-lat').value = coords.getAt(i).lat;
-                document.getElementById(groupids[i] + '-lng').value = coords.getAt(i).lng;
-            }
+        function addPolygonListeners() {
+            google.maps.event.addListener(polygon.getPath(), 'set_at', function() {
+                updateCoordinates();
+            });
+
+            google.maps.event.addListener(polygon.getPath(), 'insert_at', function() {
+                addCoordinate();
+                updateCoordinates();
+            });
+
+            google.maps.event.addListener(polygon.getPath(), 'remove_at', function() {
+                removeCoordinate(groupids[groupids.length - 1]);
+                updateCoordinates();
+            });
         }
 
-        function addPolygonListeners() {
-            google.maps.event.addListener(polygon, 'click', function() {
-                google.maps.event.addListener(polygon.getPath(), 'set_at', function() {
-                    console.log("set");
-                    updateCoordinates();
-                });
-
-                google.maps.event.addListener(polygon.getPath(), 'insert_at', function() {
-                    console.log("insert");
-                    addCoordinate();
-                    updateCoordinates();
-                });
-                setSelection(newShape);
+        function updateCoordinates() {
+            var coords = polygon.getPath();
+            coords.forEach(function(latlng, i) {
+                document.getElementById(groupids[i] + '-lat').value = latlng.lat();
+                document.getElementById(groupids[i] + '-lng').value = latlng.lng();
             });
         }
 
@@ -73,8 +74,8 @@
             var coords = new Array();
             for (var i = 0; i < groupids.length; ++i) {
                 coords.push(new google.maps.LatLng(
-                        document.getElementById(groupids[i] + '-lat').value,
-                        document.getElementById(groupids[i] + '-lng').value
+                    document.getElementById(groupids[i] + '-lat').value,
+                    document.getElementById(groupids[i] + '-lng').value
                 ));
             }
             polygon.setPaths(coords);
@@ -84,7 +85,7 @@
         function addCoordinate() {
             var uuid = generateUUID();
             groupids.push(uuid);
-            var form = document.getElementById('map-form');
+            var form = document.getElementById('map-coord');
             var latlnggroup = document.createElement('div');
             latlnggroup.setAttribute('class', 'form-group');
             latlnggroup.setAttribute('name', uuid);
@@ -128,6 +129,7 @@
 <body>
 <div id="map-canvas"></div>
 <form role="form" id="map-form">
+    <div id="map-coord"></div>
     <div class="form-group">
         <button class="btn btn-default" id="addbtn" onclick="addCoordinate(); return false;">Add Coordinate</button>
         <button class="btn btn-default" id="okbtn" onclick="getCoordinates(); return false;">OK</button>

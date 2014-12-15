@@ -48,8 +48,8 @@ body {
 /* Not required for template or sticky footer method. */
 
 .container {
-/*  width: auto; max-width: 1024 px; */
-    max-width: 90%;
+
+    max-width: 90%;/*former max-width: 1024 px*/
 }
 .container .credit {
     margin: 20px 0;

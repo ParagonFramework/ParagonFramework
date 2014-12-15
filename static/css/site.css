@@ -32,6 +32,11 @@ body {
     padding: 15px;
 }
 
+body {
+    padding-bottom: 70px;   
+}
+
+
 .reset-this {
     animation : none;
     animation-delay : 0;

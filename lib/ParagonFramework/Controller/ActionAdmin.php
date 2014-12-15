@@ -13,8 +13,6 @@ class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
      */
     public function init()
     {
-		// TODO
-		error_reporting(-1);
         parent::init();
 
         $this->enableLayout();

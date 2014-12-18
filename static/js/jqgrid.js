@@ -9,6 +9,7 @@ jQuery().ready(function () {
             pager: "#pager",
             rowNum: 20,
             //rowList: [30, 100, 500],
+            autodecode: true,
             viewrecords: true,
             gridview: true,
             autowidth: true,

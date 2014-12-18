@@ -188,9 +188,9 @@ class ParagonFramework_IndexController extends ParagonFramework_Controller_Actio
         foreach ($productList as $product) {
             $content .= "<row>";
             foreach($configReaderViewColumns as $productColumn) {
-                $content .= "<cell>{$product->$productColumn}</cell>";
+                $contentHTML = htmlentities("{$product->$productColumn}");
+                $content .= "<cell>{$contentHTML}</cell>";
             }
-            $content .= "<cell />";
             $content .= "</row>";
 
         }

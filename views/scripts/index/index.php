@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="container">
     <!-- View switching dialog -->
     <div id="viewSwitchingDialog" class="viewSwitchingDialog" style="display: none;">
         <form role="form" method="post" action="<?= $this->url(["action" => "changerole"]) ?>">

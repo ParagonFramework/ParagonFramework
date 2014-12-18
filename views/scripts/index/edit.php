@@ -6,7 +6,7 @@ $id = $this->product->o_id;
 $ofh = new ParagonFramework_ViewHelper($id);
 ?>
 
-<div class="container">
+<div class="container" id="container">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Edit Product: <?= $this->product->name ?></h3>

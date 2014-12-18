@@ -7,8 +7,7 @@ $this->headLink()
     ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.ui-jqgrid.css')
     ->appendStylesheet('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
     ->appendStylesheet('/plugins/ParagonFramework/static/css/jquery.ui.theme.font-awesome.css')
-    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css')
-    ->appendStylesheet('/plugins/ParagonFramework/static/css/footer.css');
+    ->appendStylesheet('/plugins/ParagonFramework/static/css/site.css');
 $this->inlineScript()
     //->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     ->appendFile("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")

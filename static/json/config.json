@@ -5,7 +5,7 @@
             "Template": "MyObject_ProductView1Snipplet.php",
             "Product": "Object_Product",
             "Select": {
-                "Name" : "name",
+                "Name": "name",
                 "Status": "status",
                 "Category": "category"
             },
@@ -13,29 +13,31 @@
                 "status": null
             },
             "Groups": [
-                "asdf"
+                "admins"
             ]
         },
-        "MyObject ProductView 2": {
-            "Template": "static/templates/MyObject_ProductView",
-            "Product": "Object_News",
+        "Smartphone View": {
+            "Template": "SmartphoneSnipplet.php",
+            "Product": "Object_Smartphone",
             "Select": {
-                "Title" : "title",
-                "ShortText" : "shorttext",
-                "Text" : "text",
-                "Date" : "date"
+                "Name": "name",
+                "Manufacturer": "manufacturer",
+                "Features": "features",
+                "Description": "description",
+                "Image": "image",
+                "Finished": "finished"
             },
             "Where": {
                 "status": null
             },
             "Groups": [
-                "asdf"
+                "admins"
             ]
         }
     },
     "Groups": {
         "asdf": [
-            "admin"
+            "admins"
         ]
     }
 }

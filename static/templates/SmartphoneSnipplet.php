@@ -9,4 +9,8 @@ $ofh->field("shortText",$this->product->shortText,["width" => 300,"height" => 12
 $ofh->field("releaseDate", $this->product->releaseDate);
 $ofh->field("image", $this->product->image);
 $ofh->field("finished", $this->product->finished);
+$ofh->field("annoucedDateTime", $this->product->annoucedDateTime);
+$ofh->field("timeForUpdates", $this->product->timeForUpdates);
+$ofh->field("batteryHours", $this->product->batteryHours);
 ?>
+

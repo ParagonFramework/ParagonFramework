@@ -50,7 +50,31 @@ if ($showNavigation) {
 	echo $this->partial('templates/navigationTop.php', $this);
 }
 ?>
-		<?= $this->layout()->content ?>
+        <div class="container" id="container">
+            <!-- View switching dialog -->
+            <div id="viewSwitchingDialog" class="viewSwitchingDialog" style="display: none;">
+                <form role="form" method="post" action="<?= $this->url(["action" => "changerole"]) ?>">
+                    <input type="hidden" name="viewSwitchingDialog_Selected" id="viewSwitchingDialog_Selected" />
+                    <h3><?= $this->t('Choose your view') ?></h3>
+                    <br/>
+                    <div class="form-group" style="display: inline-block;">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <span name="viewSwitchingDialog_Label" id="viewSwitchingDialog_Label"></span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" name="viewSwitchingDialog_Dropdown" id="viewSwitchingDialog_Dropdown">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default"><?= $this->t('OK') ?></button>
+                        <input type="button" class="btn btn-default" value="<?= $this->t('Cancel') ?>" name="btnCancel" onclick="toggle_visibility('viewSwitchingDialog');" />
+                    </div>
+                </form>
+            </div>
+            <?= $this->layout()->content ?>
+        </div>
 		<div class="clearfix"></div>
 -		<nav id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 			<div class="container">

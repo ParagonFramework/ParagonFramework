@@ -15,6 +15,8 @@ class ParagonFramework_Controller_ActionAdmin extends Pimcore_Controller_Action
     {
         parent::init();
 
+        Zend_Registry::set('Zend_Locale', new Zend_Locale('en_US'));
+
         $this->enableLayout();
 
         if(ParagonFramework_Models_User::getUser() == null)

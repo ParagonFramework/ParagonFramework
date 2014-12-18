@@ -7,13 +7,13 @@ if(($user = $this->user)) {
     if(($userView = $user->getRole())) {
         // Empty Statement
     } else {
-        $userView = "No View found";
+        $userView = $this->t('No View found');
     }
 
     $userName = $user->getUsername();
 } else {
-    $userView = "No View found";
-    $userName = "No Name found";
+    $userView = $this->t('No View found');
+    $userName = $this->t('No Name found');
 }
 
 ?>
@@ -34,13 +34,13 @@ if(($user = $this->user)) {
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?= $this->url(array('controller' => 'index', 'action' => 'index')) ?>">Overview</a></li>
+                <li class="active"><a href="<?= $this->url(array('controller' => 'index', 'action' => 'index')) ?>"><?=$this->t('Overview') ?></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" onclick="toggle_visibility('viewSwitchingDialog');">Select View (<?= $userView ?>)</b></a>
+                    <a href="#" class="dropdown-toggle" onclick="toggle_visibility('viewSwitchingDialog');"><?=$this->t('Select View') ?> (<?= $userView ?>)</b></a>
                 </li>
-                <li class="active"><a href="<?= $this->url(array('controller' => 'login', 'action' => 'logout')) ?>">Logout (<?= $userName ?>)</a></li>
+                <li class="active"><a href="<?= $this->url(array('controller' => 'login', 'action' => 'logout')) ?>"><?=$this->t('Logout') ?> (<?= $userName ?>)</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

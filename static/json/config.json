@@ -25,7 +25,10 @@
                 "Features": "features",
                 "Description": "description",
                 "Image": "image",
-                "Finished": "finished"
+                "Finished": "finished",
+                "AnnoucedDateTime": "annoucedDateTime",
+                "TimeForUpdates": "timeForUpdates",
+                "BatteryHours": "batteryHours"
             },
             "Where": {
                 "status": null
@@ -36,8 +39,8 @@
         }
     },
     "Groups": {
-        "asdf": [
-            "admins"
+        "admins": [
+            "admin"
         ]
     }
 }

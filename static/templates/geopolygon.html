@@ -23,7 +23,7 @@
                 new google.maps.LatLng(32.321, -64.757)
             ];
             var mapOptions = {
-                center: coords[0],
+                center: new google.maps.LatLng(0, 0),
                 zoom: 8
             };
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -121,6 +121,7 @@
             if (index > -1) groupids.splice(index, 1);
             var group = document.getElementById(uuid);
             group.parentNode.removeChild(group);
+            getCoordinates();
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);

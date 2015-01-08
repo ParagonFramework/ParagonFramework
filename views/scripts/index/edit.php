@@ -2,7 +2,6 @@
 // $this->obj is assigned in the controller/action
 $id = $this->product->o_id;
 
-// TODO: retrieve the object form view helper
 $ofh = new ParagonFramework_ViewHelper($id);
 ?>
 

@@ -39,7 +39,7 @@ class ParagonFramework_ViewHelper extends Zend_View_Helper_Abstract {
 
 		if (!$fieldDefinition) {
 			// Check if the field definition exists 
-			throw "The field '$name' is not correctly defined. Check if a class definition for this field exists in pimcore.";
+			throw new Exception("The field '$name' is not correctly defined. Check if a class definition for this field exists in pimcore.");
 		}
 
 		// Generate the class name of the code generator.
@@ -48,7 +48,7 @@ class ParagonFramework_ViewHelper extends Zend_View_Helper_Abstract {
 
 		if (!class_exists($codeGeneratorClassName)) {
 			// Checks if the code generator exists. If not an error message is thrown.
-			throw "No code generator found for the field type: '$fieldType'<br>";
+			throw new Exception("No code generator found for the field type: '$fieldType'<br>");
 		}
 		
 		// If the code generator exists it's instantiated. 
